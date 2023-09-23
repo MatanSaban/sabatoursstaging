@@ -1,0 +1,61 @@
+.popupWrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  background-color: rgba(
+    255,
+    255,
+    255,
+    0.7
+  ); /* Initial background color with transparency */
+  backdrop-filter: blur(8px); /* Initial backdrop blur */
+  z-index: -1;
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+.popupWrapper.showPopup {
+  z-index: 999;
+  opacity: 1;
+  transition: all 0.3s ease;
+}
+.popup {
+  width: 50vw;
+  background-color: #ffffff;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+  border-radius: 8px;
+  overflow: hidden;
+  transform: translateY(-50px); /* Initial translate position */
+  transition: all 0.5s ease;
+}
+
+.showPopup {
+  background-color: rgba(255, 255, 255, 0.7); /* Show popup background color */
+  backdrop-filter: blur(8px); /* Show popup backdrop blur */
+  transform: translateY(0); /* Show popup translate position */
+}
+
+.hiddenPopup {
+  background-color: rgba(255, 255, 255, 0); /* Hide popup background color */
+  backdrop-filter: blur(0); /* Hide popup backdrop blur */
+  transform: translateY(-50px); /* Hide popup translate position */
+}
+
+.closePopupButton {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  cursor: pointer;
+  font-size: 30px;
+  color: red;
+  z-index: 9;
+}
+
+.content {
+  padding: 20px;
+}

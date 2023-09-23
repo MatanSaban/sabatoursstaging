@@ -1,0 +1,12 @@
+$color-black: #000000;
+$color-white: #ffffff;
+$color-pink: #e11a61;
+$color-green: #7fc342;
+$color-blue: #008bcd;
+// Define the linear gradient as a separate variable
+$linear-gradient: linear-gradient(
+  90deg,
+  $color-blue 33.3%,
+  $color-green 33.3%,
+  $color-pink 33.3%
+);

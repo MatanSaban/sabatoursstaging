@@ -1,0 +1,34 @@
+@import "../../styles/globals.scss"; // Import the _variables.scss file
+@import "../../styles/variables.scss"; // Import the _variables.scss file
+
+.footer {
+  box-shadow: 0 -10px #000000 15%;
+  a {
+    text-decoration: none;
+    color: $color-black;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+  h3 {
+    margin: 0 0 10px 0;
+  }
+  .footerLinks {
+    padding: 60px 100px;
+    display: flex;
+    justify-content: space-between;
+    background-color: #e6e6e6;
+  }
+  .creditStripe {
+    background-color: $color-black;
+    color: $color-white;
+    text-align: center;
+    display: flex;
+    justify-content: space-around;
+    padding: 0 300px;
+  }
+}

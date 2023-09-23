@@ -1,0 +1,98 @@
+/* styles/globals.scss */
+
+@import "variables"; // Import the _variables.scss file
+
+@mixin font-face($font-family, $font-weight, $font-style, $file-name) {
+  @font-face {
+    font-family: #{$font-family};
+    src: url("/fonts/ploni/#{$file-name}.otf") format("otf"),
+      url("/fonts/ploni/#{$file-name}.eot") format("eot"),
+      url("/fonts/ploni/#{$file-name}.woff") format("woff"),
+      url("/fonts/ploni/#{$file-name}.woff2") format("woff2");
+    font-weight: #{$font-weight};
+    font-style: #{$font-style};
+  }
+}
+
+@include font-face("Ploni", 100, normal, "ploni-ultralight-aaa");
+@include font-face("Ploni", normal, normal, "ploni-light-aaa");
+@include font-face("Ploni", 400, normal, "ploni-regular-aaa");
+@include font-face("Ploni", 500, normal, "ploni-medium-aaa");
+@include font-face("Ploni", 600, normal, "ploni-demibold-aaa");
+@include font-face("Ploni", 700, normal, "ploni-bold-aaa");
+@include font-face("Ploni", 800, normal, "ploni-ultrabold-aaa");
+@include font-face("Ploni", 900, normal, "ploni-black-aaa");
+
+#__next {
+  padding: 0;
+  margin: 0;
+  direction: rtl;
+  font-family: "Ploni" !important;
+  * {
+    font-family: "Ploni" !important;
+  }
+  button {
+    cursor: pointer;
+  }
+}
+
+.pinkButton {
+  background-color: $color-pink;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 24px;
+  font-weight: 800;
+  color: white;
+  border-radius: 30px;
+  padding: 10px 20px;
+  border: none;
+  opacity: 1;
+  svg {
+    margin-right: 20px;
+  }
+  transition: all 0.4s ease;
+  &:hover {
+    opacity: 0.9;
+    box-shadow: 0 0px 20px $color-pink;
+  }
+}
+.section {
+  h1 {
+    font-size: 80px;
+    text-align: center;
+    line-height: 80px;
+    margin-top: 10px;
+    font-weight: bold;
+    margin: 0;
+    line-height: 80px;
+  }
+  h2 {
+    font-size: 60px;
+    font-weight: bold;
+    color: $color-blue;
+    margin: 0;
+    line-height: 80px;
+  }
+  h3 {
+    font-size: 40px;
+    font-weight: bold;
+    margin: 0;
+    line-height: 80px;
+  }
+  h4 {
+    font-size: 35px;
+    font-weight: 600;
+    margin: 0;
+    line-height: 80px;
+  }
+  h5 {
+    font-size: 26px;
+    font-weight: 500;
+    margin: 0;
+    line-height: 80px;
+  }
+  .centeredText {
+    text-align: center;
+  }
+}

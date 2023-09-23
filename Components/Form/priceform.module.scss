@@ -1,0 +1,426 @@
+.formWrapper {
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1882352941);
+  border-radius: 20px;
+  padding: 25px 50px;
+  background-color: white;
+  min-height: 500px;
+  position: relative;
+  width: 80%;
+  form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    width: 100%;
+  }
+  hr {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border: 1px solid #ececec;
+    width: 100%;
+  }
+  .labelAndInputWrapper {
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    width: 100%;
+    .inputWrapper {
+      max-width: fit-content;
+      z-index: 99;
+      .custom_date_input {
+        width: 100%;
+        z-index: 99;
+      }
+    }
+    label {
+      font-weight: bold;
+      font-size: 16px;
+      color: #000;
+    }
+    // .datePickerWrapper {
+    //   position: relative;
+    //   .datePickerIcon {
+    //     position: absolute;
+    //   }
+    //   input {
+    //     padding: 0 30px;
+    //     text-align: right;
+    //   }
+    // }
+    .custom_date_input {
+      position: relative;
+      input {
+        padding-right: 30px;
+      }
+      svg {
+        position: absolute;
+        top: 50%;
+        right: 10px;
+        width: auto;
+        height: auto;
+        transform: translateY(-50%);
+      }
+    }
+    .timeInputWrapper {
+      position: relative;
+      .timePickerIcon {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        margin-top: 3px;
+        transform: translateY(-50%);
+        color: #686868;
+      }
+      input {
+        text-align: right;
+        padding: 0 30px;
+      }
+    }
+    .react-datepicker__input-container input,
+    input {
+      background-color: #ececec;
+      border-radius: 20px;
+      border: none;
+      font-size: 16px;
+      padding-right: 10px;
+      width: 100%;
+      height: 30px;
+      max-width: -webkit-fill-available;
+
+      &:focus {
+        outline: 1px solid #c6c6c6;
+      }
+    }
+  }
+  .routeType {
+    display: flex;
+    align-items: center;
+    h5 {
+      font-size: 24px;
+      font-weight: bold;
+    }
+    .radioWrapper {
+      display: flex;
+      align-items: center;
+      margin: 0 20px;
+      label {
+        font-size: 24px;
+        font-weight: bold;
+        margin: 0 10px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        &:hover {
+          text-decoration: underline #00000030;
+        }
+        cursor: pointer;
+        .customInputIcon {
+          background-color: #c6c6c6;
+          border-radius: 50%;
+          width: 20px;
+          height: 20px;
+          display: flex;
+          align-items: flex-end;
+          justify-content: flex-end;
+          img {
+            width: 30px;
+            height: 30px;
+          }
+        }
+        span {
+          margin-right: 10px;
+        }
+      }
+      input {
+        width: 20px;
+        height: 20px;
+        display: none;
+      }
+    }
+  }
+  .twoWays {
+    display: flex;
+    justify-content: space-between;
+    margin-right: 100px;
+    margin-left: 100px;
+    .wayStyle {
+      margin: 0 50px;
+      .fields {
+        .hasStops {
+          .stepsIcon {
+            height: 50px;
+            width: 25px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            svg {
+              height: 25px;
+              width: 25px;
+            }
+          }
+        }
+        .stopWrapper {
+          display: flex;
+          //   margin-top: 5px;
+          align-items: center;
+          position: relative;
+          .stopInput {
+            padding-left: 30px !important;
+          }
+          .stop {
+            margin-right: 15px;
+            margin-bottom: 15px;
+            width: 45%;
+            transform: translateY(-50%);
+            .removeRow {
+              position: absolute;
+              left: 0;
+              top: 50%;
+              transform: translate(5px, 2px);
+              cursor: pointer;
+              svg {
+                border: 1px solid red;
+                border-radius: 50%;
+                padding: 2px;
+                fill: #e11a61;
+                height: 20px;
+                width: 20px;
+                opacity: 0.5;
+              }
+              &:hover {
+                svg {
+                  opacity: 1;
+                  font-weight: bold;
+                }
+              }
+            }
+          }
+          .stopIconWrapper {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            .stopIcon {
+              height: 25px;
+              width: 25px;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              img {
+                height: 15px;
+                width: 15px;
+              }
+            }
+            .stepsIcon {
+              height: 50px;
+              width: 25px;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              svg {
+                height: 25px;
+                width: 25px;
+              }
+            }
+          }
+        }
+        .startPointWrapper {
+          display: grid;
+          align-items: flex-end;
+          grid-template-columns: 5% 40% 25% 25%; /* Adjusted percentages */
+          column-gap: 15px;
+
+          .locationIcon {
+            img {
+              height: 25px;
+              width: 25px;
+            }
+          }
+        }
+        .endPointWrapper {
+          display: grid;
+          align-items: flex-end;
+          grid-template-columns: 5% 40% 55%;
+          column-gap: 15px;
+          .locationIcon {
+            img {
+              height: 25px;
+              width: 25px;
+            }
+          }
+          .addStopWrapper {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            &:hover {
+              .addStopIcon {
+                background-color: #4f8a17;
+              }
+            }
+            .addStopIcon {
+              height: 20px;
+              width: 20px;
+              background-color: #80c341;
+              color: white;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              border-radius: 50%;
+              margin-left: 10px;
+              transition: all 0.3s ease;
+            }
+          }
+          .addStopWrapper.canAdd {
+            color: #4f8a17;
+            .addStopIcon {
+              background-color: #80c341;
+              transform: rotate(90deg);
+            }
+          }
+          .addStopWrapper.cannotAdd {
+            color: #d75a5a;
+            .addStopIcon {
+              background-color: red;
+              transform: rotate(45deg);
+            }
+          }
+        }
+      }
+    }
+  }
+  .formFooter {
+    display: flex;
+    justify-content: flex-start;
+    select,
+    input {
+      background-color: #ececec;
+      border-radius: 20px;
+      border: none;
+      font-size: 16px;
+      padding-right: 10px;
+      height: 30px;
+      padding-right: 30px;
+      &:focus {
+        outline: 1px solid #c6c6c6;
+      }
+    }
+    .inputWithIconWrapper {
+      position: relative;
+      i {
+        position: absolute;
+        top: 50%;
+        right: 0%;
+        transform: translate(-50%, -50%);
+        height: 15px;
+        width: 15px;
+        z-index: 2;
+        svg {
+          width: 100%;
+          height: 100%;
+        }
+      }
+    }
+    .checkboxWrapper,
+    .passengersCountWrapper,
+    .eventTypeWrapper,
+    .suitcasesCountWrapper {
+      display: flex;
+      align-items: center;
+      margin-left: 15px;
+      font-size: 14px;
+      span {
+        margin-left: 5px;
+      }
+      .tooltipWrapper {
+        i {
+          background-color: #686868;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border-radius: 50%;
+          color: white;
+          font-size: 14px;
+          padding: 3px;
+          margin-left: 5px;
+          cursor: pointer;
+          &:hover {
+            background-color: #4a4a4a;
+          }
+        }
+      }
+    }
+    .passengersCountWrapper,
+    .suitcasesCountWrapper {
+      input {
+        max-width: 75px;
+      }
+    }
+    .suitcasesCountWrapper {
+      i {
+        svg {
+          width: 16px;
+          height: 16px;
+        }
+      }
+    }
+    .acceptanceWrapper,
+    .sameWayCheckboxWrapper {
+      display: flex;
+      input {
+        display: none;
+      }
+      .customInputIcon {
+        cursor: pointer;
+        background-color: #c6c6c6;
+        border-radius: 5px;
+        width: 15px;
+        height: 15px;
+        display: flex;
+        align-items: flex-end;
+        justify-content: flex-end;
+        img {
+          width: 20px;
+          height: 20px;
+        }
+      }
+      span {
+        margin-right: 10px;
+        font-size: 14px;
+      }
+    }
+    .priceRequestButton {
+      margin-right: auto;
+      font-weight: 800;
+      color: white;
+      background-color: #80c341;
+      box-shadow: 0 5px 20px #80c34189;
+      text-shadow: 0 3px 6px #00000030;
+      border: none;
+      border-radius: 50px;
+      font-size: 22px;
+      display: flex;
+      align-items: center;
+      padding: 10px 15px;
+      transition: all 0.3s ease;
+      i {
+        height: 20px;
+      }
+      span {
+        margin-left: 10px;
+      }
+      &:hover {
+        background-color: #4e8c15;
+        box-shadow: 0 5px 20px #80c34189;
+        // opacity: 0.8;
+      }
+    }
+    .priceRequestButton.cannotSend {
+      background-color: rgb(229, 90, 90);
+      box-shadow: 0 5px 20px #c3414189;
+      &:hover {
+        background-color: rgb(229, 90, 90);
+        box-shadow: 0 5px 20px #c3414189;
+        cursor: not-allowed !important;
+      }
+    }
+  }
+}

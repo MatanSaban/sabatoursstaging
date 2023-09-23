@@ -1,0 +1,286 @@
+@import "../../styles/variables.scss"; // Import the _variables.scss file
+
+.main {
+  padding: 15px;
+  width: auto;
+  height: fit-content;
+  max-height: 80vh;
+  overflow-y: auto;
+  .pdfWrapper {
+    height: 100%;
+    width: 100%;
+  }
+  .header {
+    padding-bottom: 10px;
+    border-bottom: 1px solid black;
+    display: flex;
+    justify-content: space-between;
+    .logo {
+      max-width: 200px;
+      img {
+        max-width: 100%;
+      }
+    }
+    .contact {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-end;
+
+      .contactIconWrapper {
+        display: flex;
+        align-items: center;
+        margin-bottom: 5px;
+        svg {
+          margin-right: 5px;
+        }
+        span {
+        }
+      }
+    }
+  }
+  .body {
+    position: relative;
+    margin: 20px 0 0 0;
+    text-align: center;
+    .psDates {
+      position: absolute;
+      top: 0;
+      left: 10px;
+      .psDate {
+        p {
+          margin: 0;
+        }
+      }
+    }
+    h2 {
+      font-size: 28px;
+      margin: 0;
+    }
+    h3 {
+      font-size: 20px;
+      margin: 0;
+    }
+    .clientAndTripInfoWrapper {
+      .clientAndTripInfo {
+        display: flex;
+        width: 100%;
+        justify-content: space-around;
+        text-align: right;
+        margin-top: 20px;
+        .info {
+          h4 {
+            margin: 0;
+            font-size: 20px;
+          }
+          p {
+            margin-right: 15px;
+            margin-top: 0;
+          }
+        }
+      }
+      .tripDetailedInfo {
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-start;
+        .boundInfo {
+          margin: 0 auto;
+          text-align: right;
+          h5 {
+            font-size: 18px;
+          }
+          ul.detailsList {
+            text-align: right;
+            list-style: none;
+            ul.stopList {
+              list-style: none;
+              padding: 0 15px 0 0;
+              margin: 0;
+              li {
+                svg {
+                }
+                span {
+                  margin-right: 5px;
+                  font-size: 14px;
+                }
+              }
+            }
+            li {
+              svg {
+                margin-right: -10px;
+              }
+              i {
+                margin-right: -10px;
+              }
+              span {
+              }
+              .boldTitle {
+                margin-right: 10px;
+              }
+              .value {
+              }
+            }
+            .startPointWrapper,
+            .endPointWrapper {
+              margin-right: -15px;
+            }
+          }
+        }
+      }
+    }
+    .priceOfferStripe {
+      background-color: $color-green;
+      display: flex;
+      justify-content: space-between;
+      padding: 20px;
+      align-items: center;
+      position: relative;
+      .carImage {
+        border: 1px solid black;
+        width: 150px;
+        height: 150px;
+        max-height: 100%;
+        max-width: 100%;
+      }
+      .offerDetails {
+        .line {
+          text-align: right;
+        }
+      }
+      .paymentOptions {
+        text-align: right;
+        .paymentOptionsList {
+          text-align: right;
+          padding: 0;
+          margin: 0 20px 0 0;
+          li {
+            text-align: right;
+          }
+        }
+      }
+      .buttonDiv {
+        display: flex;
+        align-items: flex-end;
+        height: 100%;
+        button {
+          color: white;
+          background-color: $color-pink;
+          border: none;
+          border-radius: 20px;
+          font-size: 18px;
+          padding: 5px 10px;
+          position: relative;
+          z-index: 1;
+          &:after,
+          &::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            border-radius: 20px;
+            left: 50%;
+            background-color: $color-pink;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            padding: 0px;
+            transform: translate(-50%, -50%);
+            z-index: -1;
+            transition: all 0.3s ease;
+          }
+          &:hover {
+            &:after {
+              opacity: 0.5;
+              padding: 5px;
+              animation-name: expandingBg1;
+              animation-duration: 0.9s;
+              animation-fill-mode: forwards ease;
+              animation-iteration-count: infinite;
+              animation-direction: normal ease;
+            }
+            &::before {
+              opacity: 0.2;
+              padding: 10px;
+              animation-name: expandingBg2;
+              animation-duration: 0.9s;
+              animation-fill-mode: forwards ease;
+              animation-iteration-count: infinite;
+              animation-direction: normal ease;
+            }
+          }
+        }
+      }
+    }
+    .importantToSay {
+      text-align: right;
+      margin-top: 20px;
+      h3 {
+      }
+      .importantThing {
+      }
+    }
+  }
+  .footer {
+    text-align: center;
+    h3 {
+    }
+    .logo {
+      max-width: 150px;
+      img {
+        width: 100%;
+        object-fit: contain;
+      }
+    }
+  }
+  .boldTitle {
+    font-weight: bold;
+    font-size: 14px;
+  }
+  .value {
+    font-size: 14px;
+  }
+}
+
+@keyframes expandingBg1 {
+  0% {
+    opacity: 0;
+    padding: 0px;
+  }
+  25% {
+    opacity: 0.2;
+    padding: 2px;
+  }
+  50% {
+    opacity: 0.5;
+    padding: 5px;
+  }
+  75% {
+    opacity: 0.2;
+    padding: 2px;
+  }
+  100% {
+    opacity: 0;
+    padding: 0px;
+  }
+}
+@keyframes expandingBg2 {
+  0% {
+    opacity: 0;
+    padding: 0px;
+  }
+  25% {
+    opacity: 0.1;
+    padding: 5px;
+  }
+  50% {
+    opacity: 0.2;
+    padding: 10px;
+  }
+  75% {
+    opacity: 0.1;
+    padding: 5px;
+  }
+  100% {
+    opacity: 0;
+    padding: 0px;
+  }
+}

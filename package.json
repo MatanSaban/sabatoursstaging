@@ -1,7 +1,6 @@
 {
   "name": "saban-tours",
   "version": "0.1.0",
-  "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -9,12 +8,29 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@react-google-maps/api": "^2.19.2",
+    "@react-pdf/renderer": "^3.1.12",
+    "axios": "^1.4.0",
+    "busboy": "^1.6.0",
+    "html2canvas": "^1.4.1",
+    "jspdf": "^2.5.1",
     "next": "13.4.11",
+    "nodemailer": "^6.9.4",
+    "pdf-lib": "^1.17.1",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-datepicker": "^4.16.0",
+    "react-dom": "18.2.0",
+    "react-icons": "^4.10.1",
+    "react-pdf": "^7.3.3",
+    "react-places-autocomplete": "^7.3.0",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
+    "css-loader": "^6.8.1",
     "eslint": "8.45.0",
-    "eslint-config-next": "13.4.11"
+    "eslint-config-next": "13.4.11",
+    "sass": "^1.64.1",
+    "sass-loader": "^13.3.2",
+    "style-loader": "^3.3.3"
   }
 }
