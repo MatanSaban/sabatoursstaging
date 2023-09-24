@@ -5,7 +5,7 @@ import Image from "next/image";
 import { FaMobileAlt } from "react-icons/fa";
 import { TfiWorld } from "react-icons/tfi";
 import { AiOutlineMail } from "react-icons/ai";
-import BoundInfo from "../../components/Popup/BoundInfo";
+import BoundInfo from "../../Components/Popup/BoundInfo";
 import { jsPDF } from "jspdf";
 import html2canvas from "html2canvas";
 
