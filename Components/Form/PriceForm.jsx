@@ -7,7 +7,7 @@ import Link from "next/link";
 import { AiOutlineQuestion } from "react-icons/ai";
 import { BsReverseListColumnsReverse } from "react-icons/bs";
 import { HiArrowNarrowLeft } from "react-icons/hi";
-import { SlPeople } from "react-icons/si";
+import { SlPeople } from "react-icons/sl";
 import { PiSuitcaseSimpleLight } from "react-icons/pi";
 import checkIcon from "../../public/media/checkIcon.svg";
 import Image from "next/image";
