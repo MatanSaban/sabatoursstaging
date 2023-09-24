@@ -7,7 +7,7 @@ import Link from "next/link";
 import { AiOutlineQuestion } from "react-icons/ai";
 import { BsReverseListColumnsReverse } from "react-icons/bs";
 import { HiArrowNarrowLeft } from "react-icons/hi";
-import { SlPeople } from "react-icons/Sl";
+import { SlPeople } from "react-icons/si";
 import { PiSuitcaseSimpleLight } from "react-icons/pi";
 import checkIcon from "../../public/media/checkIcon.svg";
 import Image from "next/image";
@@ -568,9 +568,8 @@ const PriceForm = (props) => {
             </span>
           </div>
           <button
-            className={`${styles.priceRequestButton} ${
-              !canProceed() && styles.cannotSend
-            }`}
+            className={`${styles.priceRequestButton} ${!canProceed() && styles.cannotSend
+              }`}
             disabled={canProceed() ? false : true}
             onClick={(e) => {
               const userRoute = props.userRoute;
