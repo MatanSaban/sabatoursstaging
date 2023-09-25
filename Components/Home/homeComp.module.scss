@@ -33,6 +33,10 @@ section.section.hero {
 }
 section.section.niceToMeet {
   position: relative;
+  min-height: 100dvh;
+  h2 {
+    margin-top: 20px;
+  }
   .transparentIcon {
     position: absolute;
     z-index: -1;
@@ -47,4 +51,183 @@ section.section.niceToMeet {
   .green_pink {
     left: -10px;
   }
+}
+section.section.whereAreWe {
+  background: url("../../public/media/saban_tours_van_image.png");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  min-height: 85dvh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding-top: 150px;
+  position: relative;
+  .areas {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    padding: 20px 100px;
+    margin-top: 50px;
+    .area {
+      background-color: #ffffff80;
+      padding: 20px;
+      border-radius: 10px;
+      backdrop-filter: blur(3px);
+      .areaTitle {
+        font-size: 24px;
+        text-align: right;
+      }
+      .cities {
+        text-align: center;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        position: relative;
+        width: 100%;
+        .cityButton {
+          margin: 5px;
+          border: 1px solid $color-blue;
+          padding: 2px 4px;
+          border-radius: 50px;
+          transition: all 0.3s ease;
+          .cityLink {
+            color: $color-black;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+          }
+          &:hover {
+            background-color: $color-blue;
+            .cityLink {
+              color: $color-white;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+section.section.whereWeGo {
+  width: 70dvw;
+  margin: 50px auto;
+  .services {
+    margin-top: 50px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    width: 100%;
+    .service {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+}
+section.section.contact {
+  width: 70dvw;
+  margin: 50px auto;
+  .markedText {
+    color: $color-green;
+    text-shadow: 0 0 10px rgba(61, 230, 49, 0.57);
+  }
+  .contactWays {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    .contactWay {
+      height: 100%;
+      width: 100%;
+      margin: 0 50px;
+      position: relative;
+      &:hover {
+        .iconArea {
+          transform: translateX(-50%);
+          svg {
+            opacity: 1;
+          }
+        }
+      }
+      .textArea {
+        background-color: #5e5e5e1d;
+        backdrop-filter: blur(5px);
+        border-radius: 20px;
+        padding: 20px;
+        .contactWayTitle {
+          font-size: 1.3rem;
+          margin: 0;
+          line-height: 40px;
+        }
+        .contactWayLink {
+          text-decoration: none;
+          margin: 0;
+          h4 {
+            margin: 0;
+            line-height: 40px;
+            font-size: 1.3rem;
+          }
+          .contactWayActionButton {
+            margin: 0;
+            color: $color-black;
+            font-weight: bolder;
+            line-height: 40px;
+          }
+        }
+      }
+      .iconArea {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        transform: translateX(0%);
+        transition: all 1s ease;
+        svg {
+          width: 100%;
+          height: 100%;
+          opacity: 0.02;
+          transition: all 2s ease;
+        }
+      }
+      .iconArea.phone {
+        svg {
+          fill: $color-pink;
+        }
+      }
+      .iconArea.whatsapp {
+        svg {
+          fill: $color-green;
+        }
+      }
+      .iconArea.form {
+        svg {
+          fill: $color-blue;
+        }
+      }
+    }
+  }
+}
+section.section {
+  .sectionTitle {
+    text-align: center;
+    font-size: 40px;
+    color: $color-black;
+  }
+}
+.sectionWhiteGradient {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    180deg,
+    #ffffff 5%,
+    transparent 15%,
+    transparent 85%,
+    #ffffff 95%
+  );
+
+  opacity: 1;
+  position: absolute;
+  left: 0;
+  top: 0;
 }

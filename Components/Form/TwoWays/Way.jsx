@@ -4,6 +4,7 @@ import { PiDotsThreeOutlineVertical } from "react-icons/pi";
 import stopIcon from "../../../public/media/stopIcon.svg";
 import { BiSolidTimeFive } from "react-icons/bi";
 import locationIcon from "../../../public/media/sabantoursLocationIcon.svg";
+import endPointIcon from "../../../public/media/saban_tours_favicon_pinkred_green.svg";
 import Image from "next/image";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -293,7 +294,7 @@ const Way = ({
         <div className={styles.endPointWrapper}>
           <i className={styles.locationIcon}>
             <Image
-              src={locationIcon}
+              src={endPointIcon}
               height={25}
               width={20}
               alt="endpoint location icon"
@@ -330,17 +331,16 @@ const Way = ({
             </Autocomplete>
           </div>
           <div
-            className={`${styles.addStopWrapper} ${
-              routeInfo?.[wayType]?.legs?.length > 1 &&
+            className={`${styles.addStopWrapper} ${routeInfo?.[wayType]?.legs?.length > 1 &&
               (!routeInfo?.[wayType]?.legs[
                 routeInfo?.[wayType]?.legs.length - 1
               ]?.duration ||
                 !routeInfo?.[wayType]?.legs[
                   routeInfo?.[wayType]?.legs.length - 1
                 ]?.distance)
-                ? styles.cannotAdd
-                : styles.canAdd
-            }`}
+              ? styles.cannotAdd
+              : styles.canAdd
+              }`}
             onClick={(e) => {
               if (
                 routeInfo?.[wayType]?.legs?.length <= 1 ||
@@ -362,13 +362,13 @@ const Way = ({
             </i>
             <span>
               {routeInfo?.[wayType]?.legs?.length <= 1 ||
-              (routeInfo?.[wayType]?.legs?.length > 1 &&
-                routeInfo?.[wayType]?.legs[
-                  routeInfo?.[wayType]?.legs.length - 1
-                ]?.duration &&
-                routeInfo?.[wayType]?.legs[
-                  routeInfo?.[wayType]?.legs.length - 1
-                ]?.distance)
+                (routeInfo?.[wayType]?.legs?.length > 1 &&
+                  routeInfo?.[wayType]?.legs[
+                    routeInfo?.[wayType]?.legs.length - 1
+                  ]?.duration &&
+                  routeInfo?.[wayType]?.legs[
+                    routeInfo?.[wayType]?.legs.length - 1
+                  ]?.distance)
                 ? addStopText
                 : "העצירה האחרונה אינה מלאה"}
             </span>
