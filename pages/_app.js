@@ -7,35 +7,49 @@ import Footer from "../Components/Footer/Footer.jsx";
 import { LoadScript } from "@react-google-maps/api";
 import Popup from "../Components/Popup/Popup";
 import { useState } from "react";
+import Head from "next/head";
 
 const libraries = ["places"]; // define the libraries needed
-
 
 function MyApp({ Component, pageProps }) {
   console.log("MyApp comp render");
 
-
   const [popup, setPopup] = useState(<Popup show={false} />);
 
   const handlePopup = (bool, content) => {
-    return setPopup(<Popup show={bool} content={content} setPopup={setPopup} />)
-  }
+    return setPopup(
+      <Popup show={bool} content={content} setPopup={setPopup} />
+    );
+  };
 
   const [userRoute, setUserRoute] = useState();
 
   const sendDataToApp = (a, b, c, d, e, f) => {
     setUserRoute({ ...a, ...b });
-  }
+  };
 
   return (
     <LoadScript
       googleMapsApiKey="AIzaSyDqXMWSWoY417DNKERQid8teEuoxBjMLLo"
       libraries={libraries}
     >
+      <Head>
+        <link
+          rel="icon"
+          type="image/svg+xml"
+          href="/media/saban_tours_favicon.svg"
+        />
+      </Head>
+
       <div className="appWrapper">
         <Header />
         {popup}
-        <Component {...pageProps} handlePopup={handlePopup} sendDataToApp={sendDataToApp} userRoute={userRoute} />
+        <Component
+          {...pageProps}
+          handlePopup={handlePopup}
+          sendDataToApp={sendDataToApp}
+          userRoute={userRoute}
+        />
         <Footer />
       </div>
     </LoadScript>
