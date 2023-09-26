@@ -14,141 +14,20 @@ import { BsEnvelopeAt } from 'react-icons/bs'
 
 const HomeComp = (props) => {
 
-  const locations = [
-    {
-      title: "המרכז",
-      cities: [
-        {
-          cityName: "בני ברק",
-          link: "/bneibrak"
-        },
-        {
-          cityName: "חולון",
-          link: "/holon"
-        },
-        {
-          cityName: "בת ים",
-          link: "/batyam"
-        },
-        {
-          cityName: "רמת גן",
-          link: "/ramatgan"
-        },
-        {
-          cityName: "ראשון לציון",
-          link: "/rishonlezion"
-        },
-      ]
-    },
-    {
-      title: "הדרום",
-      cities: [
-        {
-          cityName: "אילת",
-          link: "/eilat"
-        },
-        {
-          cityName: "באר שבע",
-          link: "/beersheva"
-        },
-        {
-          cityName: "ערד",
-          link: "/arad"
-        },
-        {
-          cityName: "דימונה",
-          link: "/dimona"
-        },
-        {
-          cityName: "ים המלח",
-          link: "/yamhamelach"
-        },
-      ]
-    },
-    {
-      title: "הצפון",
-      cities: [
-        {
-          cityName: "הר חרמון",
-          link: "/hermon"
-        },
-        {
-          cityName: "נהריה",
-          link: "/nahariya"
-        },
-        {
-          cityName: "עכו",
-          link: "/acco"
-        },
-        {
-          cityName: "חיפה",
-          link: "/haifa"
-        },
-        {
-          cityName: "חדרה",
-          link: "/hadera"
-        },
-      ]
-    },
-    {
-      title: "ירושלים והסביבה",
-      cities: [
-        {
-          cityName: "ירושלים",
-          link: "/jerusalem"
-        },
-        {
-          cityName: "מודיעין",
-          link: "/modi'in"
-        },
-        {
-          cityName: "הר זבבזיב",
-          link: "/zabzib"
-        },
-        {
-          cityName: "מעלה אדומים",
-          link: "/maaleadumim"
-        },
-        {
-          cityName: "בנימין",
-          link: "/binyamin"
-        },
-      ]
-    },
-  ]
+  let servicesToDisplay = props?.services;
 
-  const services = [
-    {
-      name: "הסעות חתונה",
-      link: "/services/weddingTransfer",
-      imageName: "weddingTransferImage"
-    },
-    {
-      name: "הסעות עובדים",
-      link: "/services/workersTransfer",
-      imageName: "workersTransferImage"
-    },
-    {
-      name: "הסעות לנתב''ג",
-      link: "/services/airportTransfer",
-      imageName: "airportTransferImage"
-    },
-    {
-      name: "הסעות חתונה",
-      link: "/services/weddingTransfer",
-      imageName: "weddingTransferImage"
-    },
-    {
-      name: "הסעות עובדים",
-      link: "/services/workersTransfer",
-      imageName: "workersTransferImage"
-    },
-    {
-      name: "הסעות לנתב''ג",
-      link: "/services/airportTransfer",
-      imageName: "airportTransferImage"
-    },
-  ]
+  if (props?.windowWidth >= 768) {
+    // Assuming 768px as the breakpoint for desktop
+    servicesToDisplay = servicesToDisplay?.slice(
+      0,
+      Math.floor(servicesToDisplay?.length / 3) * 3
+    );
+  } else {
+    servicesToDisplay = servicesToDisplay?.slice(
+      0,
+      Math.floor(servicesToDisplay?.length / 2) * 2
+    );
+  }
 
   return (
     <div className={styles.homeWrapper}>
@@ -208,7 +87,7 @@ const HomeComp = (props) => {
           userRoute={props?.userRoute}
         />
       </section>
-      <section className={`${styles.whereAreWe} ${styles.section}`}>
+      {props?.regions && <section className={`${styles.whereAreWe} ${styles.section}`}>
         <div className={styles.sectionWhiteGradient}>
 
         </div>
@@ -219,40 +98,42 @@ const HomeComp = (props) => {
         </h2>
         <div className={styles.areas}>
           {
-            locations && locations.map((area, areaIndex) => {
-              return (
+            props?.regions?.map((area) => {
+              if (area.cities.length) {
+                return (
 
-                <div key={areaIndex} className={styles.area}>
-                  <h3 className={styles.areaTitle}>
-                    {area.title}
-                  </h3>
-                  <div className={styles.cities}>
-                    {area?.cities?.map((city, cityIndex) => {
-                      return (
-                        <button className={styles.cityButton} key={cityIndex}>
-                          <Link className={styles.cityLink} href={city.link}>
-                            <span>
-                              הסעה ל{city.cityName}
-                            </span>
-                          </Link>
-                        </button>
-                      )
-                    })}
+                  <div key={area.id} className={styles.area}>
+                    <h3 className={styles.areaTitle}>
+                      {area.name}
+                    </h3>
+                    <div className={styles.cities}>
+                      {area?.cities?.map((city) => {
+                        return (
+                          <button className={styles.cityButton} key={city.id}>
+                            <Link className={styles.cityLink} href={city.link}>
+                              <span>
+                                הסעה ל{city.title.rendered}
+                              </span>
+                            </Link>
+                          </button>
+                        )
+                      })}
+                    </div>
                   </div>
-                </div>
-              )
+                )
+              }
             })
           }
         </div>
-      </section>
-      <section className={`${styles.whereWeGo} ${styles.section}`}>
-        <h2 className={styles.sectionTitle}>
-          לאן אפשר לנסוע עם חברת ההסעות סבן טורס?
-        </h2>
-        <div className={styles.services}>
-          {services?.map((service, serviceIndex) => {
-            return (
-              <Link href={service.link} className={styles.service} key={serviceIndex}>
+      </section>}
+      {servicesToDisplay?.length &&
+        <section className={`${styles.whereWeGo} ${styles.section}`}>
+          <h2 className={styles.sectionTitle}>
+            לאן אפשר לנסוע עם חברת ההסעות סבן טורס?
+          </h2>
+          <div className={styles.services}>
+            {servicesToDisplay?.map((service) => (
+              <Link href={service.slug} className={styles.service} key={service.id}>
                 {/* <Image src={`/${service.imageName}`}/> */}
                 service image here
                 <button className={styles.serviceButton}>
@@ -261,14 +142,15 @@ const HomeComp = (props) => {
                     service icon here
                   </i>
                   <span className={styles.serviceName}>
-                    {service.name}
+                    {service.title.rendered}
                   </span>
                 </button>
               </Link>
-            )
-          })}
-        </div>
-      </section>
+            ))}
+          </div>
+        </section>
+      }
+
       {/* <section className={`${styles.gallery} ${styles.section}`}></section> */}
       {/* this will be filled later when i'll create some photos of vehicles Saban Tours can give to customers. */}
       <section className={`${styles.contact} ${styles.section}`}>

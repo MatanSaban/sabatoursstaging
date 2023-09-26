@@ -6,15 +6,19 @@ import Header from "../Components/Header/Header.jsx";
 import Footer from "../Components/Footer/Footer.jsx";
 import { LoadScript } from "@react-google-maps/api";
 import Popup from "../Components/Popup/Popup";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Head from "next/head";
+import axios from "axios";
 
 const libraries = ["places"]; // define the libraries needed
 
 function MyApp({ Component, pageProps }) {
-  console.log("MyApp comp render");
-
+  const [userRoute, setUserRoute] = useState();
   const [popup, setPopup] = useState(<Popup show={false} />);
+  const [regions, setRegions] = useState([]);
+  const [services, setServices] = useState([]);
+  const [windowWidth, setWindowWidth] = useState();
+  console.log("MyApp comp render");
 
   const handlePopup = (bool, content) => {
     return setPopup(
@@ -22,15 +26,56 @@ function MyApp({ Component, pageProps }) {
     );
   };
 
-  const [userRoute, setUserRoute] = useState();
-
   const sendDataToApp = (a, b, c, d, e, f) => {
     setUserRoute({ ...a, ...b });
   };
 
+  useEffect(() => {
+    setWindowWidth(window.innerWidth);
+    // load post types relevant for home page + when user enters the website.
+    const fetchData = async () => {
+      try {
+        // Fetch regions
+        const regionRes = await axios.get(
+          `${process.env.DATA_SOURCE}/region?per_page=100`
+        );
+        let fetchedRegions = regionRes.data;
+
+        // Fetch cities
+        const citiesRes = await axios.get(
+          `${process.env.DATA_SOURCE}/service_areas?per_page=100`
+        );
+        const fetchedCities = citiesRes.data;
+
+        const services = await axios.get(
+          `${process.env.DATA_SOURCE}/transportation_types?per_page=100`
+        );
+        let fetchedServices = services.data;
+        setServices(fetchedServices);
+
+        // Associate cities with their respective regions
+        fetchedRegions = fetchedRegions.map((region) => {
+          const cities = fetchedCities.filter(
+            (city) => city.region[0] === region.id
+          );
+          return {
+            ...region,
+            cities,
+          };
+        });
+
+        setRegions(fetchedRegions);
+      } catch (error) {
+        console.error("An error occurred while fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <LoadScript
-      googleMapsApiKey="AIzaSyDqXMWSWoY417DNKERQid8teEuoxBjMLLo"
+      googleMapsApiKey={process.env.GOOGLE_MAPS_API_KEY}
       libraries={libraries}
     >
       <Head>
@@ -42,15 +87,26 @@ function MyApp({ Component, pageProps }) {
       </Head>
 
       <div className="appWrapper">
-        <Header />
+        <Header
+          regions={regions}
+          services={services}
+          windowWidth={windowWidth}
+        />
         {popup}
         <Component
           {...pageProps}
           handlePopup={handlePopup}
           sendDataToApp={sendDataToApp}
           userRoute={userRoute}
+          regions={regions}
+          services={services}
+          windowWidth={windowWidth}
         />
-        <Footer />
+        <Footer
+          regions={regions}
+          services={services}
+          windowWidth={windowWidth}
+        />
       </div>
     </LoadScript>
   );
