@@ -84,6 +84,7 @@ function MyApp({ Component, pageProps }) {
           type="image/svg+xml"
           href="/media/saban_tours_favicon.svg"
         />
+        <title>סבן טורס - חברת ההסעות שלך</title>
       </Head>
 
       <div className="appWrapper">
