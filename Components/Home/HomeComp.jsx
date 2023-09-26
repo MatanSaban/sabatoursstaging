@@ -11,6 +11,7 @@ import PriceForm from "../Form/PriceForm";
 import { BsTelephone } from 'react-icons/bs'
 import { BsWhatsapp } from 'react-icons/bs'
 import { BsEnvelopeAt } from 'react-icons/bs'
+import { decodeHTMLEntities } from "../../utils/functions";
 
 const HomeComp = (props) => {
 
@@ -134,15 +135,11 @@ const HomeComp = (props) => {
           <div className={styles.services}>
             {servicesToDisplay?.map((service) => (
               <Link href={service.slug} className={styles.service} key={service.id}>
-                {/* <Image src={`/${service.imageName}`}/> */}
-                service image here
+                {service?.mainImage && <Image src={service?.mainImage} width={300} height={200} alt="service image" />}
                 <button className={styles.serviceButton}>
-                  <i className={styles.serviceIcon}>
-                    {/* <Image src={`/${service.iconName}`}/> */}
-                    service icon here
-                  </i>
+                  {/* <i className={styles.serviceIcon}><Image src={`/${service.iconName}`}/>service icon here</i> */}
                   <span className={styles.serviceName}>
-                    {service.title.rendered}
+                    {decodeHTMLEntities(service.title.rendered)}
                   </span>
                 </button>
               </Link>

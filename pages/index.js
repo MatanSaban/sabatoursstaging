@@ -10,6 +10,7 @@ const Home = (props) => {
         handlePopup={props.handlePopup}
         sendDataToApp={props?.sendDataToApp}
         userRoute={props?.userRoute}
+        media={props?.media}
       />
     </div>
   );

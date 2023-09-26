@@ -17,6 +17,7 @@ function MyApp({ Component, pageProps }) {
   const [popup, setPopup] = useState(<Popup show={false} />);
   const [regions, setRegions] = useState([]);
   const [services, setServices] = useState([]);
+  const [media, setMedia] = useState([]);
   const [windowWidth, setWindowWidth] = useState();
   console.log("MyApp comp render");
 
@@ -45,12 +46,31 @@ function MyApp({ Component, pageProps }) {
         const citiesRes = await axios.get(
           `${process.env.DATA_SOURCE}/service_areas?per_page=100`
         );
-        const fetchedCities = citiesRes.data;
+        let fetchedCities = citiesRes.data;
 
         const services = await axios.get(
           `${process.env.DATA_SOURCE}/transportation_types?per_page=100`
         );
         let fetchedServices = services.data;
+
+        const mediaPromises = fetchedServices.map((service) => {
+          console.log("service");
+          console.log(service);
+          const mainImageId = service?.acf?.main_image;
+          if (mainImageId != null) {
+            return axios.get(`${process.env.DATA_SOURCE}/media/${mainImageId}`);
+          }
+        });
+
+        const mediaResponses = await Promise.all(mediaPromises);
+
+        fetchedServices = fetchedServices.map((service, index) => {
+          return {
+            ...service,
+            mainImage: mediaResponses[index]?.data?.source_url || null,
+          };
+        });
+
         setServices(fetchedServices);
 
         // Associate cities with their respective regions
@@ -63,7 +83,6 @@ function MyApp({ Component, pageProps }) {
             cities,
           };
         });
-
         setRegions(fetchedRegions);
       } catch (error) {
         console.error("An error occurred while fetching data:", error);
@@ -92,6 +111,7 @@ function MyApp({ Component, pageProps }) {
           regions={regions}
           services={services}
           windowWidth={windowWidth}
+          media={media}
         />
         {popup}
         <Component
@@ -102,11 +122,13 @@ function MyApp({ Component, pageProps }) {
           regions={regions}
           services={services}
           windowWidth={windowWidth}
+          media={media}
         />
         <Footer
           regions={regions}
           services={services}
           windowWidth={windowWidth}
+          media={media}
         />
       </div>
     </LoadScript>
