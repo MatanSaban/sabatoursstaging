@@ -22,7 +22,7 @@ const PriceForm = (props) => {
 
   const today = new Date();
 
-  const [selectedOption, setSelectedOption] = useState("TwoWays");
+  const [selectedOption, setSelectedOption] = useState("OneWay");
   const eventTypes = [
     { label: "אירוע פרטי", value: "private event" },
     { label: "אירוע", value: "event" },
@@ -305,6 +305,29 @@ const PriceForm = (props) => {
             <input
               type="radio"
               name="routeType"
+              id="OneWay"
+              value="OneWay"
+              checked={selectedOption === "OneWay"}
+              onChange={handleOptionChange}
+            />
+            <label htmlFor="OneWay">
+              <div className={styles.customInputIcon}>
+                {selectedOption === "OneWay" && (
+                  <Image
+                    src={checkIcon}
+                    width={20}
+                    height={20}
+                    alt="check icon"
+                  />
+                )}
+              </div>
+              <span>כיוון אחד</span>
+            </label>
+          </div>
+          <div className={`${styles.radioWrapper} radioWrapper`}>
+            <input
+              type="radio"
+              name="routeType"
               id="TwoWays"
               value="TwoWays"
               checked={selectedOption === "TwoWays"}
@@ -325,29 +348,7 @@ const PriceForm = (props) => {
               <span>הלוך ושוב</span>
             </label>
           </div>
-          <div className={`${styles.radioWrapper} radioWrapper`}>
-            <input
-              type="radio"
-              name="routeType"
-              id="OneWay"
-              value="OneWay"
-              checked={selectedOption === "OneWay"}
-              onChange={handleOptionChange}
-            />
-            <label htmlFor="OneWay">
-              <div className={styles.customInputIcon}>
-                {selectedOption === "OneWay" && (
-                  <Image
-                    src={checkIcon}
-                    width={20}
-                    height={20}
-                    alt="check icon"
-                  />
-                )}
-              </div>
-              <span>כיוון אחד</span>
-            </label>
-          </div>
+
           {/* <div className={`${styles.radioWrapper} radioWrapper`}>
             <input
               type="radio"
