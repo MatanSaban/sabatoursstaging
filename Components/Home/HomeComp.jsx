@@ -134,7 +134,7 @@ const HomeComp = (props) => {
           </h2>
           <div className={styles.services}>
             {servicesToDisplay?.map((service) => (
-              <Link href={service.slug} className={styles.service} key={service.id}>
+              <Link href={`/drive-types/${service.slug}`} className={styles.service} key={service.id}>
                 {service?.mainImage && <Image src={service?.mainImage} width={300} height={200} alt="service image" />}
                 <button className={styles.serviceButton}>
                   {/* <i className={styles.serviceIcon}><Image src={`/${service.iconName}`}/>service icon here</i> */}
