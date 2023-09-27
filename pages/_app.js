@@ -18,6 +18,7 @@ function MyApp({ Component, pageProps }) {
   const [regions, setRegions] = useState([]);
   const [services, setServices] = useState([]);
   const [media, setMedia] = useState([]);
+  const [homepageData, setHomepageData] = useState();
   const [windowWidth, setWindowWidth] = useState();
   console.log("MyApp comp render");
 
@@ -56,7 +57,7 @@ function MyApp({ Component, pageProps }) {
         const mediaPromises = fetchedServices.map((service) => {
           console.log("service");
           console.log(service);
-          const mainImageId = service?.acf?.main_image;
+          const mainImageId = service?.acf?.feat_image;
           if (mainImageId != null) {
             return axios.get(`${process.env.DATA_SOURCE}/media/${mainImageId}`);
           }
@@ -84,6 +85,13 @@ function MyApp({ Component, pageProps }) {
           };
         });
         setRegions(fetchedRegions);
+
+        const homepageRes = await axios.get(
+          `${process.env.DATA_SOURCE}/pages?slug=home&acf_format=standard`
+        );
+        const fetchHomepage = homepageRes.data[0];
+        setHomepageData(fetchHomepage);
+
       } catch (error) {
         console.error("An error occurred while fetching data:", error);
       }
@@ -123,6 +131,7 @@ function MyApp({ Component, pageProps }) {
           services={services}
           windowWidth={windowWidth}
           media={media}
+          homepageData={homepageData}
         />
         <Footer
           regions={regions}

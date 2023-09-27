@@ -11,6 +11,7 @@ const Home = (props) => {
         sendDataToApp={props?.sendDataToApp}
         userRoute={props?.userRoute}
         media={props?.media}
+        homepageData={props?.homepageData}
       />
     </div>
   );

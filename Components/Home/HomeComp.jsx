@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./homeComp.module.scss";
 import { FaRoute } from "react-icons/fa";
 import Logo from "../../public/media/SabanToursLogo.svg";
@@ -13,7 +13,17 @@ import { BsWhatsapp } from 'react-icons/bs'
 import { BsEnvelopeAt } from 'react-icons/bs'
 import { decodeHTMLEntities } from "../../utils/functions";
 
+
 const HomeComp = (props) => {
+
+  const [pageData, setPageData] = useState();
+
+  useEffect(() => {
+    if (props?.homepageData) {
+      console.log(props.homepageData);
+      setPageData(props?.homepageData);
+    }
+  }, [props])
 
   let servicesToDisplay = props?.services;
 
@@ -30,9 +40,10 @@ const HomeComp = (props) => {
     );
   }
 
+
   return (
     <div className={styles.homeWrapper}>
-      <section className={`${styles.section} ${styles.hero}`}>
+      <section className={`${styles.section} ${styles.hero}`} style={{ backgroundImage: `url(${props?.homepageData?.acf?.section_hero?.hero_image_desktop})` }}>
         <Image
           className={styles.logo}
           src={Logo}
@@ -40,13 +51,9 @@ const HomeComp = (props) => {
           width={350}
           alt="לוגו של סבן טורס"
         />
-        <h1>
-          שירות הסעות מקצועי
-          <br />
-          בפריסה ארצית
-        </h1>
+        <h1 dangerouslySetInnerHTML={{ __html: props?.homepageData?.acf?.section_hero?.h1_title }} />
         <button className={`${styles.actionButton} ${styles.pinkButton}`}>
-          <span>תכנון נסיעה</span>
+          <span>{props?.homepageData?.acf?.section_hero?.CTA_button}</span>
           <FaRoute />
         </button>
       </section>
@@ -72,31 +79,22 @@ const HomeComp = (props) => {
           width={150}
           alt={"saban tours logo in brand colors - green and pink"}
         />
-        <h2>נעים מאוד, אנחנו סבן טורס.</h2>
-        <h5>הגעתם אלינו, אתם כבר בדרך הנכונה!</h5>
-        <p className={styles.centeredText}>
-          אנחנו נספק לכם שירות הסעות מקצועי, מהיר ובמחירים ללא תחרות בכל רחבי
-          הארץ. בכל שעה וכל יום (למעט יום כיפור).
-          <br />
-          על מנת לספק את השירות ברמה הגבוהה ביותר, אספנו את נהגי ההסעות המצועיים
-          והותיקים היותר בתחום עבורכם!
-        </p>
-        <h3>אז... לאן נוסעים?</h3>
+        <h2 dangerouslySetInnerHTML={{ __html: props?.homepageData?.acf?.section_nicetomeet?.title }} />
+        <h5>{props?.homepageData?.acf?.section_nicetomeet?.sub_title}</h5>
+        <p className={styles.centeredText} dangerouslySetInnerHTML={{ __html: props?.homepageData?.acf?.section_nicetomeet?.text }} />
+        <h3>{props?.homepageData?.acf?.section_nicetomeet?.form_start_title}</h3>
         <PriceForm
           handlePopup={props.handlePopup}
           sendDataToApp={props?.sendDataToApp}
           userRoute={props?.userRoute}
         />
       </section>
-      {props?.regions && <section className={`${styles.whereAreWe} ${styles.section}`}>
+      {props?.regions && <section className={`${styles.whereAreWe} ${styles.section}`} style={{ backgroundImage: `url(${props?.homepageData?.acf?.section_service_areas?.desktop_bg_image})` }}>
         <div className={styles.sectionWhiteGradient}>
 
         </div>
-        <h2 className={styles.sectionTitle}>
-          איפה אנחנו נותנים שירות?
-          <br />
-          בכל הארץ!
-        </h2>
+        <h2 className={styles.sectionTitle} dangerouslySetInnerHTML={{ __html: props?.homepageData?.acf?.section_service_areas?.title }} />
+
         <div className={styles.areas}>
           {
             props?.regions?.map((area) => {

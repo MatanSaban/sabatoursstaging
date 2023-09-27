@@ -50,3 +50,7 @@ export const decodeHTMLEntities = (text) => {
   var doc = parser.parseFromString(text, "text/html");
   return doc.documentElement.textContent;
 };
+
+export const renderPlainText = (htmlText) => {
+  return { __html: htmlText };
+};
