@@ -1,9 +1,24 @@
-import React from "react";
-import styles from "./priceform.module.scss";
-import Way from "./Way";
-const OneWay = (props) => {
-  return <div className={styles.twoWays}>
-    <Way         
+import React, { useState } from 'react';
+import Way from './Way';
+import styles from './priceform.module.scss';
+
+const MultiTargets = (props) => {
+  const [routeCount, setRouteCount] = useState(1);
+
+  const addRoute = () => {
+    setRouteCount(routeCount + 1);
+  };
+
+  const removeRoute = () => {
+    if (routeCount > 1) {
+      setRouteCount(routeCount - 1);
+    }
+  };
+
+  return (
+    <div className={`${styles.multiTargets} ${styles.twoWays}`}>
+      {Array.from({ length: routeCount }, (_, index) => (
+        <Way wayTitle={`מסלול ${index + 1}`} key={index}
         outboundAutocompleteRef={props?.outboundAutocompleteRef}
         outboundEndPointAutocompleteRef={props?.outboundEndPointAutocompleteRef}
         outboundTotalDistance={props?.outboundTotalDistance}
@@ -24,9 +39,12 @@ const OneWay = (props) => {
         calculateRouteInformation={props?.calculateRouteInformation}
         calculateMinTime={props?.calculateMinTime}
         isToday={props?.isToday}
-        wayTitle={"דרך הלוך"}
-/>
-  </div>;
+        />
+      ))}
+      <button onClick={addRoute}>Add Route</button>
+      <button onClick={removeRoute}>Remove Route</button>
+    </div>
+  );
 };
 
-export default OneWay;
+export default MultiTargets;

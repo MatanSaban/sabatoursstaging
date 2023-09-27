@@ -1,20 +1,20 @@
 import React, { useEffect } from "react";
+import { BiSolidTimeFive } from "react-icons/bi";
 import { AiOutlinePlus, AiOutlineClose } from "react-icons/ai";
 import { PiDotsThreeOutlineVertical } from "react-icons/pi";
-import stopIcon from "../../../public/media/stopIcon.svg";
-import { BiSolidTimeFive } from "react-icons/bi";
-import locationIcon from "../../../public/media/sabantoursLocationIcon.svg";
-import endPointIcon from "../../../public/media/saban_tours_favicon_pinkred_green.svg";
-import Image from "next/image";
 import DatePicker from "react-datepicker";
+import Image from "next/image";
 import "react-datepicker/dist/react-datepicker.css";
 import he from "date-fns/locale/he";
 import { registerLocale } from "react-datepicker";
 import { format } from "date-fns";
 import { Autocomplete } from "@react-google-maps/api";
-import styles from "../priceform.module.scss";
+import stopIcon from "../../public/media/stopIcon.svg";
+import locationIcon from "../../public/media/sabantoursLocationIcon.svg";
+import endPointIcon from "../../public/media/saban_tours_favicon_pinkred_green.svg";
+import styles from "./priceform.module.scss";
 
-registerLocale("he", he);
+registerLocale("he", he); 
 
 const Way = ({
   wayType,
@@ -24,6 +24,7 @@ const Way = ({
   calculateRouteInformation,
   minTime,
   inboundMinTime,
+  wayTitle,
   ...props
 }) => {
   const totalDistance = // formatDuration
@@ -42,7 +43,6 @@ const Way = ({
     wayType == "outbound"
       ? props?.outboundStopsAutocompleteRefs
       : props?.inboundStopsAutocompleteRefs;
-  const wayTitle = wayType === "outbound" ? "מסלול הלוך" : "מסלול חזור";
   const addStopText =
     wayType === "outbound" ? "הוספת תחנה בדרך הלוך" : "הוספת תחנה בדרך חזור";
 
