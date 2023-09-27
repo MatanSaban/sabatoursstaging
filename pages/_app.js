@@ -112,7 +112,7 @@ function MyApp({ Component, pageProps }) {
           href="/media/saban_tours_favicon.svg"
         />
         <title>סבן טורס - חברת ההסעות שלך</title>
-        <meta name="theme-color" content="#000000" />
+        <meta name="theme-color" content="#000000" /> 
       </Head>
 
       <div className="appWrapper">
