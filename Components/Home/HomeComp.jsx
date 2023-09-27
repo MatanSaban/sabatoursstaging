@@ -149,7 +149,6 @@ const HomeComp = (props) => {
       {/* <section className={`${styles.gallery} ${styles.section}`}></section> */}
       {/* this will be filled later when i'll create some photos of vehicles Saban Tours can give to customers. */}
       <section className={`${styles.contact} ${styles.section}`}>
-        {/* should be a component */}
         <h2 className={styles.sectionTitle}>
           לא בטוחים איזו הסעה אתם צריכים, מה האפשרויות שלכם או כל דבר אחר?
           <br />
@@ -200,7 +199,6 @@ const HomeComp = (props) => {
           </div>
         </div>
 
-        {/* should be a component */}
       </section>
     </div>
   );
