@@ -759,7 +759,7 @@ const PriceForm = (props) => {
             </label>
           </div>
 
-          <div className={`${styles.radioWrapper} radioWrapper`}>
+          {/* <div className={`${styles.radioWrapper} radioWrapper`}>
             <input
               type="radio"
               name="routeType"
@@ -782,7 +782,7 @@ const PriceForm = (props) => {
               </div>
               <span>רב יעדים</span>
             </label>
-          </div>
+          </div> */}
         </div>
         <hr />
         {selectedOption == "TwoWays" || selectedOption == "OneWay" && ( // change TwoWays to WayController
