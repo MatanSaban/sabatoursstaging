@@ -109,7 +109,7 @@ const Footer = () => {
       </div>
       <div className={styles.creditStripe}>
         <span>כל הזכויות שמורות ל-סבן טורס 2023</span>
-        <span>Built With ♡ By EasyDigital</span>
+        <Link target="_blank" href={'https://ezd.co.il'}>Built With ♡ By EasyDigital</Link>
       </div>
     </footer>
   );

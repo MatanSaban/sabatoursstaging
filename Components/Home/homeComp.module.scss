@@ -340,4 +340,37 @@ section.section {
       }
     }
   }
+  section.section.whereWeGo {
+    width: 100dvw;
+    .services {
+      grid-template-columns: repeat(1, 1fr);
+      .service {
+        .serviceButton {
+          font-size: 2rem;
+        }
+      }
+    }
+  }
+  section.section.contact {
+    width: 100dvw;
+    .contactWays {
+      flex-direction: column;
+      .contactWay {
+        margin: 0 auto 20px auto;
+        width: 60dvw;
+          .iconArea {
+            transform: translateX(-50%) !important;
+            svg {
+              opacity: 1 !important;
+              width: 70%;
+            }
+          }
+      }
+    }
+  }
+  section.section .sectionTitle {
+    font-size: 32px;
+    line-height: 40px;
+
+  }
 }
