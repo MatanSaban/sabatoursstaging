@@ -341,12 +341,12 @@ section.section {
     }
   }
   section.section.whereWeGo {
-    width: 100dvw;
+    width: 90dvw;
     .services {
       grid-template-columns: repeat(1, 1fr);
       .service {
         .serviceButton {
-          font-size: 2rem;
+          font-size: 1.8rem;
         }
       }
     }
