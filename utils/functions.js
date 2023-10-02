@@ -54,3 +54,14 @@ export const decodeHTMLEntities = (text) => {
 export const renderPlainText = (htmlText) => {
   return { __html: htmlText };
 };
+
+export const customRound = (num) => {
+  const lastDigit = num % 10;
+  const roundedDownToTen = Math.floor(num / 10) * 10;
+
+  if (lastDigit >= 5) {
+    return roundedDownToTen + 10;
+  } else {
+    return roundedDownToTen;
+  }
+}

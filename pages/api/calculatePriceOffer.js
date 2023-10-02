@@ -46,7 +46,7 @@ const VEHICLES = {
     },
     minibus19: {
         fuelConsumption: 24,
-        fullDayPrice: 24500,
+        fullDayPrice: 2450,
         maxPassengers: 19,
         maxSuitcases: 10,
         minPrice: 200,
@@ -83,7 +83,7 @@ const VEHICLES = {
 // Calculate the pricePerKilometer for each vehicle
 for (const vehicleType in VEHICLES) {
     const fuelConsumption = VEHICLES[vehicleType].fuelConsumption;
-    VEHICLES[vehicleType].pricePerKilometer = (fuelConsumption / 100) * DIESEL_PRICE * 2;
+    VEHICLES[vehicleType].pricePerKilometer = (fuelConsumption / 100) * DIESEL_PRICE ;
 }
 
 export default async (req, res) => {
@@ -169,7 +169,7 @@ function calculateTripCost(route) {
         let totalCostForOption = 0;
         for (let vehicle of vehicles) {
             const fuelCost = calculateFuelCost(totalDistance, vehicle);
-            totalCostForOption += fuelCost * 3.5;
+            totalCostForOption += fuelCost * 3.7;
         }
         vehicleCosts[option] = totalCostForOption;
     }
@@ -198,14 +198,14 @@ function calculateExtraFees(route, holidays, result) {
     switch (dayOfWeek) {
         case 0: // Sunday
             if (startTime < 4) {
-                applyHigherCharge(0.5, 150, "Sunday early morning adjustment (0-4 AM)");
-            } else if (startTime < 8) {
-                applyHigherCharge(0.25, 100, "Sunday early morning adjustment (4-8 AM)");
+                applyHigherCharge(0.25, 150, "Sunday early morning adjustment (0-4 AM)");
+            } else if (startTime < 8 && startTime > 4) {
+                applyHigherCharge(0.15, 100, "Sunday early morning adjustment (4-8 AM)");
             }
             break;
         case 4: // Thursday
             if (startTime >= 18) {
-                applyHigherCharge(0.5, 150, "Thursday evening adjustment (6 PM - midnight)");
+                applyHigherCharge(0.15, 150, "Thursday evening adjustment (6 PM - midnight)");
             }
             break;
         case 5: // Friday
@@ -229,19 +229,19 @@ function calculateExtraFees(route, holidays, result) {
     }
 
     // Time of the day check
-    if (startTime < 8) {
-        extraCharge += basePrice * 0.2;
-        result.priceDetails.push({ amount: basePrice * 0.2, reason: "Early morning adjustment (0-8 AM)" });
-    } else if (startTime >= 14 && startTime < 17) {
-        extraCharge += basePrice * 0.1;
-        result.priceDetails.push({ amount: basePrice * 0.1, reason: "Mid-afternoon adjustment (2 PM - 5 PM)" });
-    } else if (startTime >= 17 && startTime < 20) {
-        extraCharge += basePrice * 0.05;
-        result.priceDetails.push({ amount: basePrice * 0.05, reason: "Late afternoon adjustment (5 PM - 8 PM)" });
-    } else if (startTime >= 20) {
-        extraCharge += basePrice * 0.15;
-        result.priceDetails.push({ amount: basePrice * 0.15, reason: "Evening adjustment (8 PM - midnight)" });
-    }
+    // if (startTime < 8) {
+    //     extraCharge += basePrice * 0.2;
+    //     result.priceDetails.push({ amount: basePrice * 0.2, reason: "Early morning adjustment (0-8 AM)" });
+    // } else if (startTime >= 14 && startTime < 17) {
+    //     extraCharge += basePrice * 0.1;
+    //     result.priceDetails.push({ amount: basePrice * 0.1, reason: "Mid-afternoon adjustment (2 PM - 5 PM)" });
+    // } else if (startTime >= 17 && startTime < 20) {
+    //     extraCharge += basePrice * 0.05;
+    //     result.priceDetails.push({ amount: basePrice * 0.05, reason: "Late afternoon adjustment (5 PM - 8 PM)" });
+    // } else if (startTime >= 20) {
+    //     extraCharge += basePrice * 0.15;
+    //     result.priceDetails.push({ amount: basePrice * 0.15, reason: "Evening adjustment (8 PM - midnight)" });
+    // }
 
     // Holiday check
     extraCharge += holidayPriceAdjustment(route, holidays, basePrice, result.priceDetails);

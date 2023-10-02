@@ -1,0 +1,43 @@
+.LogoAnimationWrapper {
+    z-index: 999999;
+    background-color: #ffffff;
+    width: 100dvw;
+    height: 100dvh;
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    opacity: 1;
+    transition: all 0.5s ease;
+    .LoaderPercentage {
+        font-weight: bold;
+        font-size: 20px;
+        width: 75px;
+        height: 75px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+        transition: all 0.5s ease;
+    }
+    .LogoAnimation {
+        width: 50dvw;
+        height: 40dvh;
+        object-fit: contain;
+    }
+    .LoaderTitle {
+        font-size: 32px;
+        font-weight: 900;
+    }
+}
+.LogoAnimationWrapper.dontShow {
+    opacity: 0;
+}
+@media only screen and (max-width: 768px) {
+      .LogoAnimationWrapper {
+        .LogoAnimation {
+            width: 100dvw;
+        }
+      }  
+}

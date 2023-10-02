@@ -19,7 +19,7 @@ const carImage = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAKAAAABnCAYAAACH
 const lineImage = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAoCAYAAAAyqOAwAAAACXBIWXMAAC4jAAAuIwF4pT92AAAAOUlEQVQ4je3UsQ0AMAgDwSeKxMDMwcBUpIuUgkxglz65tQHNkA0QEbj7LauKzGRNK0AoFAqfGJ+rOWqlCE/6h6khAAAAAElFTkSuQmCC";
 import jsPDF from 'jspdf';
 import { format } from "date-fns";
-import { formatDate, importantThing } from './functions.js';
+import { customRound, formatDate, importantThing } from './functions.js';
 const generatePDF = (userDetails, route, calculatedPrice, callback) => {
     console.log('route');
     console.log(route);
@@ -350,7 +350,7 @@ const generatePDF = (userDetails, route, calculatedPrice, callback) => {
 
     const carType = reverseString("מיניבוס 19 מקומות");
     const carsAmount = "1";
-    const price = reverseString(`${calculatedPrice} ש"ח כולל מע"מ`);
+    const price = reverseString(`${customRound(calculatedPrice * 1.17)} ש"ח כולל מע"מ`);
     const paymentOptions = [
         '* מקדמה באשראי + מזומן לנהג',
         '* תשלום מאובטח באשראי',

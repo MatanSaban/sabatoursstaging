@@ -6,6 +6,8 @@
   min-height: 500px;
   position: relative;
   width: 80%;
+  background-color: #ffffff00;
+  backdrop-filter: blur(10px);
   form {
     display: flex;
     flex-direction: column;
@@ -423,4 +425,42 @@
       }
     }
   }
+}
+
+@media only screen and (max-width: 768px) {
+  // .formWrapper {
+  //   box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1882352941);
+  //   border-radius: 20px;
+  //   padding: 20px 10px;
+  //   background-color: white;
+  //   min-height: 500px;
+  //   position: relative;
+  //   width: 100%;
+  //   background-color: rgba(255, 255, 255, 0);
+  //   -webkit-backdrop-filter: blur(10px);
+  //   backdrop-filter: blur(10px);
+  //   .routeType {
+  //     h5, label, span {
+  //       font-size: 20px;
+  //     }
+  //     .radioWrapper {
+  //       margin: 0;
+  //     }
+  //     h5 {
+  //       margin-left: 20px;
+  //     }
+  //   }
+  //   .twoWays {
+  //     margin-right: 0;
+  //     margin-left: 0;
+  //     .wayStyle {
+  //       margin: 0;
+  //       .fields {
+  //         .startPointWrapper {
+  //           grid-template-columns: 4% 30% 30% 25%;
+  //         }
+  //       }
+  //     }
+  //   }
+  // }
 }

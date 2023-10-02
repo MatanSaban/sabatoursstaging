@@ -7,6 +7,7 @@ import Link from "next/link";
 
 const Header = () => {
   const [scrolling, setScrolling] = useState(false);
+  const [mobileMenu, setMobileMenu] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -28,6 +29,12 @@ const Header = () => {
     };
   }, []);
 
+  const closeMobileMenuDelay = () => {
+    setTimeout(() => {
+      setMobileMenu(false);
+    }, 500);
+  }
+
   return (
     <header
       className={`${styles.Header} ${
@@ -45,39 +52,39 @@ const Header = () => {
           />
         </Link>
       </div>
-      <div className={styles.MenuWrapper}>
+      <div className={styles.DesktopMenuWrapper}>
         <ul className={styles.menu}>
-          <li className={styles.menuItem}>
+          <li className={styles.menuItem} >
             <Link className={styles.menuItemLink} href="/">
               עמוד הבית
             </Link>
           </li>
-          <li className={styles.menuItem}>
+          <li className={styles.menuItem} >
             <Link className={styles.menuItemLink} href="/">
               סוגי הסעות
             </Link>
           </li>
-          <li className={styles.menuItem}>
+          <li className={styles.menuItem} >
             <Link className={styles.menuItemLink} href="/">
               סוגי רכבים
             </Link>
           </li>
-          <li className={styles.menuItem}>
+          <li className={styles.menuItem} >
             <Link className={styles.menuItemLink} href="/">
               מידע כללי
             </Link>
           </li>
-          <li className={styles.menuItem}>
+          <li className={styles.menuItem} >
             <Link className={styles.menuItemLink} href="/">
               מאמרים
             </Link>
           </li>
-          <li className={styles.menuItem}>
+          <li className={styles.menuItem} >
             <Link className={styles.menuItemLink} href="/">
               אודותינו
             </Link>
           </li>
-          <li className={styles.menuItem}>
+          <li className={styles.menuItem} >
             <Link className={styles.menuItemLink} href="/">
               יצירת קשר
             </Link>
@@ -90,6 +97,60 @@ const Header = () => {
           <MdOutlineThumbUpOffAlt />
         </button>
       </div>
+      <div
+        className={`${styles.MobileMenu} ${mobileMenu && styles.active}`}
+        onClick={() => {
+          setMobileMenu(!mobileMenu);
+        }}
+      >
+        <div className={`${styles.line} ${styles.top}`}></div>
+        <div className={`${styles.line} ${styles.center}`}></div>
+        <div className={`${styles.line} ${styles.bottom}`}></div>
+      </div>
+      {
+        <div
+          className={`${styles.mobilePopupMenu} ${mobileMenu && styles.active}`}
+        >
+          <h3 className={styles.menuTitle}>תפריט ראשי</h3>
+          <ul className={styles.menu}>
+            <li className={styles.menuItem} onClick={() => closeMobileMenuDelay()}>
+              <Link className={styles.menuItemLink} href="/">
+                עמוד הבית
+              </Link>
+            </li>
+            <li className={styles.menuItem} onClick={() => closeMobileMenuDelay()}>
+              <Link className={styles.menuItemLink} href="/">
+                סוגי הסעות
+              </Link>
+            </li>
+            <li className={styles.menuItem} onClick={() => closeMobileMenuDelay()}>
+              <Link className={styles.menuItemLink} href="/">
+                סוגי רכבים
+              </Link>
+            </li>
+            <li className={styles.menuItem} onClick={() => closeMobileMenuDelay()}>
+              <Link className={styles.menuItemLink} href="/">
+                מידע כללי
+              </Link>
+            </li>
+            <li className={styles.menuItem} onClick={() => closeMobileMenuDelay()}>
+              <Link className={styles.menuItemLink} href="/">
+                מאמרים
+              </Link>
+            </li>
+            <li className={styles.menuItem} onClick={() => closeMobileMenuDelay()}>
+              <Link className={styles.menuItemLink} href="/">
+                אודותינו
+              </Link>
+            </li>
+            <li className={styles.menuItem} onClick={() => closeMobileMenuDelay()}>
+              <Link className={styles.menuItemLink} href="/">
+                יצירת קשר
+              </Link>
+            </li>
+          </ul>
+        </div>
+      }
     </header>
   );
 };

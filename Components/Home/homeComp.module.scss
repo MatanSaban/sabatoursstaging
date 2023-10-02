@@ -34,6 +34,7 @@ section.section.hero {
 section.section.niceToMeet {
   position: relative;
   min-height: 100dvh;
+  z-index: 99;
   h2 {
     margin-top: 20px;
   }
@@ -42,14 +43,47 @@ section.section.niceToMeet {
     z-index: -1;
   }
   .blue_green {
-    right: 250px;
+    right: 80px;
+    top: 35%;
+    animation-name: rotateAnim;
+    animation-duration: 3s;
+    animation-direction: alternate;
+    animation-iteration-count: infinite;
+    animation-fill-mode: both;
+    animation-play-state: running;
+    // transition: all 1s ease;
   }
   .pink_blue {
-    left: 25px;
-    bottom: 20px;
+    left: 10%;
+    top: 15%;
+    animation-name: rotateAnim;
+    animation-duration: 3s;
+    animation-direction: alternate;
+    animation-iteration-count: infinite;
+    animation-fill-mode: both;
+    animation-play-state: running;
+    // transition: all 1s ease;
   }
   .green_pink {
-    left: -10px;
+    left: 25px;
+    bottom: -10%;
+    width: 250px;
+    height: auto;
+    animation-name: rotateAnim;
+    animation-duration: 3s;
+    animation-direction: alternate;
+    animation-iteration-count: infinite;
+    animation-fill-mode: both;
+    animation-play-state: running;
+    // transition: all 1s ease;
+  }
+}
+@keyframes rotateAnim {
+  0% {
+    transform: rotate(-25deg);
+  }
+  100% {
+    transform: rotate(20deg);
   }
 }
 section.section.whereAreWe {
@@ -267,4 +301,43 @@ section.section {
   position: absolute;
   left: 0;
   top: 0;
+}
+
+@media only screen and (max-width: 768px) {
+  section.section.hero {
+    height: 100dvh;
+    background-position: unset;
+    justify-content: center;
+    padding: 0;
+    h1 {
+      font-size: 42px;
+      line-height: 40px;
+    }
+  }
+  section.section {
+    h2 {
+      font-size: 32px;
+      font-weight: 900;
+    }
+    h3 {
+      font-size: 28px;
+    }
+    h5 {
+      line-height: 20px;
+    }
+  }
+  .transparentIcon {
+    max-width: 100px;
+  }
+  section.section.whereAreWe {
+    .areas {
+      flex-direction: column;
+      .area {
+  
+        .cities {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+    }
+  }
 }

@@ -106,7 +106,7 @@ const Way = ({
     <div className={`${styles[wayType]} ${styles.wayStyle} way`} id={wayType}>
       <h3>{wayTitle}</h3>
       <p>
-        <span>{totalDistance}</span>
+        <span>{totalDistance}</span> 
         <br />
         <span>{totalDuration}</span>
       </p>

@@ -8,7 +8,7 @@ import { AiOutlineMail } from "react-icons/ai";
 import BoundInfo from "./BoundInfo";
 import generatePDF from "../../utils/generatePDF.js";
 import axios from "axios";
-import { formatDate } from "../../utils/functions";
+import { customRound, formatDate } from "../../utils/functions";
 import { importantThing } from "../../utils/functions";
 const PriceSuggestion = (props) => {
   const ImportantThingsToSay = (importantThing) => {
@@ -226,7 +226,7 @@ const PriceSuggestion = (props) => {
             <div className={styles.line}>
               <span className={styles.boldTitle}>מחיר: </span>
               <span className={styles.value}>
-                {props?.price * 1.17} ש&quot;ח כולל מע&quot;מ
+                {customRound(props?.price * 1.17)} ש&quot;ח כולל מע&quot;מ
               </span>
             </div>
           </div>
