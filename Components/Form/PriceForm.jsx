@@ -452,7 +452,7 @@ const PriceForm = (props) => {
         }));
       } else {
         // Find the correct stop index and update the address
-        const updatedStops = [...props?.route[direction].stops];
+        const updatedStops = [...route[direction].stops];
         updatedStops[indexOfStop] = {
           ...updatedStops[indexOfStop],
           address: address,
@@ -704,7 +704,9 @@ const PriceForm = (props) => {
   
     useEffect(() => { }, [route?.routeType]);
 
-
+    useEffect(() => {
+      console.log("comp PRICEFORMWAY");
+    },[])
 
   return (
     <div className={styles.formWrapper}>

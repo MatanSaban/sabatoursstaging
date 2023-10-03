@@ -16,6 +16,20 @@ import styles from "./priceform.module.scss";
 
 registerLocale("he", he);
 
+const ConditionalWrapper = ({ condition, children }) =>
+    condition ? (
+      <div className={styles.mobileConditionalPointInpWrapper}>{children}</div>
+    ) : (
+      children
+    );
+  const ConditionalDateTimeWrapper = ({ condition, children }) =>
+    condition ? (
+      <div className={styles.mobileConditionalDateTimeWrapper}>{children}</div>
+    ) : (
+      children
+    ); 
+
+
 const Way = ({
   wayType,
   routeInfo,
@@ -102,19 +116,7 @@ const Way = ({
   // console.log("route?.startPoint?.date: ", route?.startPoint?.date);
   // console.log("route?.outbound?.duration: ", route?.outbound?.duration);
 
-  const ConditionalWrapper = ({ condition, children }) =>
-    condition ? (
-      <div className={styles.mobileConditionalPointInpWrapper}>{children}</div>
-    ) : (
-      children
-    );
-  const ConditionalDateTimeWrapper = ({ condition, children }) =>
-    condition ? (
-      <div className={styles.mobileConditionalDateTimeWrapper}>{children}</div>
-    ) : (
-      children
-    ); 
-
+  
     const isMobile = (windowWidth) => {
       if (windowWidth < 769) {
         return true 
@@ -122,6 +124,9 @@ const Way = ({
         return false
       }
     }
+
+
+    
 
   return (
     <div className={`${styles[wayType]} ${styles.wayStyle} way`} id={wayType}>
