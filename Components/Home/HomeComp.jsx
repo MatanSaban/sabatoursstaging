@@ -13,7 +13,6 @@ import { BsWhatsapp } from 'react-icons/bs'
 import { BsEnvelopeAt } from 'react-icons/bs'
 import { decodeHTMLEntities } from "../../utils/functions";
 
-
 const HomeComp = (props) => {
 
   const [pageData, setPageData] = useState();
@@ -87,6 +86,7 @@ const HomeComp = (props) => {
           handlePopup={props.handlePopup}
           sendDataToApp={props?.sendDataToApp}
           userRoute={props?.userRoute}
+          windowWidth={props?.windowWidth}
         />
       </section>
       {props?.regions && <section className={`${styles.whereAreWe} ${styles.section}`} style={{ backgroundImage: `url(${props?.homepageData?.acf?.section_service_areas?.desktop_bg_image})` }}>
@@ -150,7 +150,7 @@ const HomeComp = (props) => {
       {/* this will be filled later when i'll create some photos of vehicles Saban Tours can give to customers. */}
       <section className={`${styles.contact} ${styles.section}`}>
         <h2 className={styles.sectionTitle}>
-          לא בטוחים איזו הסעה אתם צריכים, מה האפשרויות שלכם או כל דבר אחר?
+          צריכים עזרה בבחירת רכב?
           <br />
           <span className={styles.markedText}>דברו איתנו!</span>
         </h2>

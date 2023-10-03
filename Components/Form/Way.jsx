@@ -14,7 +14,7 @@ import locationIcon from "../../public/media/sabantoursLocationIcon.svg";
 import endPointIcon from "../../public/media/saban_tours_favicon_pinkred_green.svg";
 import styles from "./priceform.module.scss";
 
-registerLocale("he", he); 
+registerLocale("he", he);
 
 const Way = ({
   wayType,
@@ -102,56 +102,81 @@ const Way = ({
   // console.log("route?.startPoint?.date: ", route?.startPoint?.date);
   // console.log("route?.outbound?.duration: ", route?.outbound?.duration);
 
+  const ConditionalWrapper = ({ condition, children }) =>
+    condition ? (
+      <div className={styles.mobileConditionalPointInpWrapper}>{children}</div>
+    ) : (
+      children
+    );
+  const ConditionalDateTimeWrapper = ({ condition, children }) =>
+    condition ? (
+      <div className={styles.mobileConditionalDateTimeWrapper}>{children}</div>
+    ) : (
+      children
+    ); 
+
+    const isMobile = (windowWidth) => {
+      if (windowWidth < 769) {
+        return true 
+      } else {
+        return false
+      }
+    }
+
   return (
     <div className={`${styles[wayType]} ${styles.wayStyle} way`} id={wayType}>
       <h3>{wayTitle}</h3>
       <p>
-        <span>{totalDistance}</span> 
+        <span>{totalDistance}</span>
         <br />
         <span>{totalDuration}</span>
       </p>
       <div className={styles.fields}>
         <div className={styles.startPointWrapper}>
-          <i className={styles.locationIcon}>
-            <Image
-              src={locationIcon}
-              height={25}
-              width={20}
-              alt="location icon"
-            />
-          </i>
-          <div
-            className={`${styles.startPoint} ${styles.labelAndInputWrapper}`}
-          >
-            <label htmlFor="address">נקודת התחלה:</label>
-            <Autocomplete
-              onLoad={(autocomplete) =>
-                (startPointAutocompleteRef.current = autocomplete)
-              }
-              onPlaceChanged={(e) =>
-                handlePointSelect(
-                  startPointAutocompleteRef.current.getPlace(),
-                  wayType,
-                  "startPoint"
-                )
-              }
-              options={{
-                componentRestrictions: { country: "IL" },
-              }}
-            >
-              <input
-                type="text"
-                name="address"
-                parent="startPoint"
-                id="address"
-                required
-                value={props?.route?.[wayType]?.startPoint?.address}
-                lat={props?.route?.[wayType]?.startPoint?.lat}
-                lng={props?.route?.[wayType]?.startPoint?.lng}
-                onChange={(e) => props.handleFields(e)}
+          <ConditionalWrapper condition={isMobile(props?.windowWidth)}>
+            <i className={styles.locationIcon}>
+              <Image
+                src={locationIcon}
+                height={25}
+                width={20}
+                alt="location icon"
               />
-            </Autocomplete>
-          </div>
+            </i>
+            <div
+              className={`${styles.startPoint} ${styles.labelAndInputWrapper}`}
+            >
+              <label htmlFor="address">נקודת התחלה:</label>
+              <Autocomplete
+                onLoad={(autocomplete) =>
+                  (startPointAutocompleteRef.current = autocomplete)
+                }
+                onPlaceChanged={(e) =>
+                  handlePointSelect(
+                    startPointAutocompleteRef.current.getPlace(),
+                    wayType,
+                    "startPoint"
+                  )
+                }
+                options={{
+                  componentRestrictions: { country: "IL" },
+                }}
+              >
+                <input
+                  type="text"
+                  name="address"
+                  parent="startPoint"
+                  id="address"
+                  required
+                  value={props?.route?.[wayType]?.startPoint?.address}
+                  lat={props?.route?.[wayType]?.startPoint?.lat}
+                  lng={props?.route?.[wayType]?.startPoint?.lng}
+                  onChange={(e) => props.handleFields(e)}
+                />
+              </Autocomplete>
+            </div>
+          </ConditionalWrapper>
+          <ConditionalDateTimeWrapper condition={isMobile(props?.windowWidth)}>
+
           <div className={`${styles.labelAndInputWrapper}`}>
             <label htmlFor="date">תאריך יציאה:</label>
             <div
@@ -218,6 +243,7 @@ const Way = ({
               />
             </div>
           </div>
+          </ConditionalDateTimeWrapper>
         </div>
         {route?.stops?.length > 0 && (
           <div className={styles.hasStops}>
@@ -292,6 +318,8 @@ const Way = ({
           );
         })}
         <div className={styles.endPointWrapper}>
+        <ConditionalWrapper condition={isMobile(props?.windowWidth)}>
+
           <i className={styles.locationIcon}>
             <Image
               src={endPointIcon}
@@ -330,17 +358,19 @@ const Way = ({
               />
             </Autocomplete>
           </div>
+        </ConditionalWrapper>
           <div
-            className={`${styles.addStopWrapper} ${routeInfo?.[wayType]?.legs?.length > 1 &&
+            className={`${styles.addStopWrapper} ${
+              routeInfo?.[wayType]?.legs?.length > 1 &&
               (!routeInfo?.[wayType]?.legs[
                 routeInfo?.[wayType]?.legs.length - 1
               ]?.duration ||
                 !routeInfo?.[wayType]?.legs[
                   routeInfo?.[wayType]?.legs.length - 1
                 ]?.distance)
-              ? styles.cannotAdd
-              : styles.canAdd
-              }`}
+                ? styles.cannotAdd
+                : styles.canAdd
+            }`}
             onClick={(e) => {
               if (
                 routeInfo?.[wayType]?.legs?.length <= 1 ||
@@ -362,13 +392,13 @@ const Way = ({
             </i>
             <span>
               {routeInfo?.[wayType]?.legs?.length <= 1 ||
-                (routeInfo?.[wayType]?.legs?.length > 1 &&
-                  routeInfo?.[wayType]?.legs[
-                    routeInfo?.[wayType]?.legs.length - 1
-                  ]?.duration &&
-                  routeInfo?.[wayType]?.legs[
-                    routeInfo?.[wayType]?.legs.length - 1
-                  ]?.distance)
+              (routeInfo?.[wayType]?.legs?.length > 1 &&
+                routeInfo?.[wayType]?.legs[
+                  routeInfo?.[wayType]?.legs.length - 1
+                ]?.duration &&
+                routeInfo?.[wayType]?.legs[
+                  routeInfo?.[wayType]?.legs.length - 1
+                ]?.distance)
                 ? addStopText
                 : "העצירה האחרונה אינה מלאה"}
             </span>

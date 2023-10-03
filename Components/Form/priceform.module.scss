@@ -428,6 +428,64 @@
 }
 
 @media only screen and (max-width: 768px) {
+  .formWrapper {
+    width: calc(100dvw - 20px);
+    margin: 0 auto;
+    padding: 10px;
+    overflow-x: clip;
+    .twoWays {
+      margin-right: 0;
+      margin-left: 0;
+      width: 200dvw;
+      transition: all 0.5s ease;
+      transform: translateX(0dvw);
+      .wayStyle {
+        margin: 0;
+        width: 100dvw;
+        min-width: 100dvw;
+        max-width: 100dvw;
+        .fields {
+          width: 90%;
+          max-width: 90%;
+          .startPointWrapper , .endPointWrapper {
+            display: flex;
+            flex-direction: column-reverse;
+            align-items: flex-start;
+            margin: 20px 0;
+            .mobileConditionalPointInpWrapper {
+              display: grid;
+              grid-template-columns: 10% 90%;
+              align-items: center;
+              justify-content: space-around;
+              width: 86%;
+              // gap: 10px;
+              margin-right: 10px;
+            }
+            .mobileConditionalDateTimeWrapper {
+              display: flex;
+              justify-content: flex-start;
+              margin-bottom: 20px;
+              .labelAndInputWrapper {
+                width: 40%;
+                margin: 0 10px;
+              }
+            }
+            .addStopWrapper {
+              margin-top: 20px;
+            }
+          }
+          .endPointWrapper {
+            flex-direction: column;
+          }
+          // .endPointWrapper {
+          //   display: flex;
+          //   flex-direction: column-reverse;
+          //   align-items: flex-start;
+          // }
+        }
+      }
+    }
+  }
   // .formWrapper {
   //   box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1882352941);
   //   border-radius: 20px;

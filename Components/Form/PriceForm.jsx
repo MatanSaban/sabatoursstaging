@@ -452,7 +452,7 @@ const PriceForm = (props) => {
         }));
       } else {
         // Find the correct stop index and update the address
-        const updatedStops = [...props.route[direction].stops];
+        const updatedStops = [...props?.route[direction].stops];
         updatedStops[indexOfStop] = {
           ...updatedStops[indexOfStop],
           address: address,
@@ -787,6 +787,7 @@ const PriceForm = (props) => {
         <hr />
         {selectedOption == "TwoWays" || selectedOption == "OneWay" && ( // change TwoWays to WayController
           <OneWay
+          windowWidth={props?.windowWidth}
             route={route}
             setRoute={setRoute} // Pass the setRoute function as a prop
             addNewStop={addNewStop}
@@ -819,6 +820,7 @@ const PriceForm = (props) => {
         )}
         {selectedOption == "TwoWays" && ( // change TwoWays to WayController
           <TwoWays
+          windowWidth={props?.windowWidth}
             route={route}
             setRoute={setRoute} // Pass the setRoute function as a prop
             addNewStop={addNewStop}

@@ -11,7 +11,8 @@ const TwoWays = (props) => {
   // console.log("TwoWays.jsx render");
   return (
     <div className={styles.twoWays}>
-      <Way
+      <Way 
+      windowWidth={props?.windowWidth}
         outboundAutocompleteRef={props.outboundAutocompleteRef}
         outboundEndPointAutocompleteRef={props?.outboundEndPointAutocompleteRef}
         outboundTotalDistance={props?.outboundTotalDistance}
@@ -36,7 +37,8 @@ const TwoWays = (props) => {
         isToday={props?.isToday}
         wayTitle={"דרך הלוך"}
       />
-      <Way
+      <Way 
+      windowWidth={props?.windowWidth}
         inboundAutocompleteRef={props?.inboundAutocompleteRef}
         inboundEndPointAutocompleteRef={props?.inboundEndPointAutocompleteRef}
         inboundTotalDistance={props?.inboundTotalDistance}
