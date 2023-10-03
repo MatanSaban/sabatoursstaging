@@ -25,6 +25,8 @@ const OneWay = (props) => {
         calculateMinTime={props?.calculateMinTime}
         isToday={props?.isToday}
         wayTitle={"דרך הלוך"}
+        handleStages={props?.handleStages}
+        stage={props?.stage}
 />
   </div>;
 };

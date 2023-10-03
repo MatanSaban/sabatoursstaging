@@ -708,6 +708,13 @@ const PriceForm = (props) => {
       console.log("comp PRICEFORMWAY");
     },[])
 
+    const [stage, setStage] = useState(1);
+
+    const handleStages = () => {
+      setStage(stage + 1);
+    }
+
+
   return (
     <div className={styles.formWrapper}>
       <form>
@@ -817,7 +824,8 @@ const PriceForm = (props) => {
             wayType={"outbound"} 
             calculateRouteInformation={calculateRouteInformation}
             calculateMinTime={calculateMinTime}
-    
+            handleStages={handleStages}
+            stage={stage}
           />
         )}
         {selectedOption == "TwoWays" && ( // change TwoWays to WayController
@@ -853,6 +861,9 @@ const PriceForm = (props) => {
             calculateRouteInformation={calculateRouteInformation}
             calculateMinTime={calculateMinTime}
             inboundMinTime={inboundMinTime}
+            handleStages={handleStages}
+            stage={stage}
+
           />
         )}
         {/* {selectedOption == "MultiTargets" && 

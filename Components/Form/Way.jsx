@@ -39,6 +39,8 @@ const Way = ({
   minTime,
   inboundMinTime,
   wayTitle,
+  handleStages, 
+  stage,
   ...props
 }) => {
   const totalDistance = // formatDuration
@@ -125,10 +127,10 @@ const Way = ({
       }
     }
 
-
     
 
   return (
+    <>
     <div className={`${styles[wayType]} ${styles.wayStyle} way`} id={wayType}>
       <h3>{wayTitle}</h3>
       <p>
@@ -406,11 +408,13 @@ const Way = ({
                 ]?.distance)
                 ? addStopText
                 : "העצירה האחרונה אינה מלאה"}
-            </span>
+            </span> 
           </div>
         </div>
       </div>
+      <button onClick={() => handleStages()}>שלב הבא</button>
     </div>
+      </>
   );
 };
 

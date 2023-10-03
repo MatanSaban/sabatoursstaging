@@ -10,7 +10,7 @@ const TwoWays = (props) => {
   // formatDuration showDistance
   // console.log("TwoWays.jsx render");
   return (
-    <div className={styles.twoWays}>
+    <div className={styles.twoWays} style={props?.stage == 1 ? {transform: "translateX(0dvw)"} : props?.stage == 2 ? {transform: "translateX(100dvw)"} : {transform: "translateX(200dvw)"}}>
       <Way 
       windowWidth={props?.windowWidth}
         outboundAutocompleteRef={props.outboundAutocompleteRef}
@@ -36,6 +36,7 @@ const TwoWays = (props) => {
         calculateMinTime={props?.calculateMinTime}
         isToday={props?.isToday}
         wayTitle={"דרך הלוך"}
+        handleStages={props?.handleStages}
       />
       <Way 
       windowWidth={props?.windowWidth}
@@ -63,6 +64,8 @@ const TwoWays = (props) => {
         isToday={props?.isToday}
         minTimeInbound={props?.inboundMinTime}
         wayTitle={"דרך חזור"}
+        handleStages={props?.handleStages}
+        stage={props?.stage} 
       />
     </div>
   );
