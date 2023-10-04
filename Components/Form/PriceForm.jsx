@@ -3,21 +3,12 @@ import styles from "./priceform.module.scss";
 import OneWay from "./OneWay";
 import TwoWays from "./TwoWays";
 import MultiTargets from "./MultiTargets";
-import Link from "next/link";
-import { AiOutlineQuestion } from "react-icons/ai";
-import { BsReverseListColumnsReverse } from "react-icons/bs";
-import { HiArrowNarrowLeft } from "react-icons/hi";
-import { SlPeople } from "react-icons/sl";
-import { PiSuitcaseSimpleLight } from "react-icons/pi";
 import checkIcon from "../../public/media/checkIcon.svg";
 import Image from "next/image";
 const { v4: uuidv4 } = require("uuid");
 import { format } from "date-fns";
-import RouteAndDetails from "../Popup/RouteAndDetails";
-import calculatePriceOffer from "../../pages/api/calculatePriceOffer";
-import axios from "axios";
 import { BsCalendar2Event } from "react-icons/bs";
-
+import FormFooter from "./FormFooter";
 
 const PriceForm = (props) => {
   //   console.log("PriceForm comp render");
@@ -42,8 +33,6 @@ const PriceForm = (props) => {
   const [routeInfo, setRouteInfo] = useState({
     legs: [], // Store calculated route information
   });
-
-
 
   const [selectedOption, setSelectedOption] = useState("OneWay");
   const eventTypes = [
@@ -319,401 +308,390 @@ const PriceForm = (props) => {
     return "";
   };
 
-    // Function to calculate distances and durations between consecutive addresses
-    const calculateRouteInformation = async (addresses, direction, datetime) => {
-      const service = new google.maps.DistanceMatrixService();
-  
-      const legsWithDurationAndDistance = [];
-      const departureTime = new Date(datetime); // Convert selected datetime to a Date object
-  
-      for (let i = 0; i < addresses.length - 1; i++) {
-        const origin = String(addresses[i]);
-        const destination = String(addresses[i + 1]);
-  
-        const response = await new Promise((resolve) => {
-          service.getDistanceMatrix(
-            {
-              origins: [origin],
-              destinations: [destination],
-              travelMode: google.maps.TravelMode.DRIVING,
-              drivingOptions: {
-                departureTime: departureTime, // Use the provided departure time
-              },
+  // Function to calculate distances and durations between consecutive addresses
+  const calculateRouteInformation = async (addresses, direction, datetime) => {
+    const service = new google.maps.DistanceMatrixService();
+
+    const legsWithDurationAndDistance = [];
+    const departureTime = new Date(datetime); // Convert selected datetime to a Date object
+
+    for (let i = 0; i < addresses.length - 1; i++) {
+      const origin = String(addresses[i]);
+      const destination = String(addresses[i + 1]);
+
+      const response = await new Promise((resolve) => {
+        service.getDistanceMatrix(
+          {
+            origins: [origin],
+            destinations: [destination],
+            travelMode: google.maps.TravelMode.DRIVING,
+            drivingOptions: {
+              departureTime: departureTime, // Use the provided departure time
             },
-            (response, status) => {
-              if (status === "OK") {
-                resolve(response);
-              } else {
-                console.error("Distance matrix request failed:", status);
-                resolve(null);
-              }
+          },
+          (response, status) => {
+            if (status === "OK") {
+              resolve(response);
+            } else {
+              console.error("Distance matrix request failed:", status);
+              resolve(null);
             }
-          );
-        });
-  
-        if (response) {
-          const distance = response?.rows[0]?.elements[0]?.distance?.text || "";
-          const duration = response?.rows[0]?.elements[0]?.duration?.text || "";
-  
-          legsWithDurationAndDistance.push({
-            distance,
-            duration,
-          });
-        }
-      }
-  
-      const updatedRouteInfo = {
-        legs: legsWithDurationAndDistance.map((leg) => ({
-          distance: leg.distance,
-          duration: leg.duration,
-        })),
-      };
-  
-      setRouteInfo((prevRouteInfo) => ({
-        ...prevRouteInfo,
-        [direction]: updatedRouteInfo,
-      }));
-  
-      const totalDistance = legsWithDurationAndDistance.reduce((acc, leg) => {
-        const distanceValue = leg.distance.replace(/[^\d.]/g, ""); // Remove all non-numeric and non-dot characters
-        return acc + parseFloat(distanceValue);
-      }, 0);
-  
-      const totalDurationMinutes = legsWithDurationAndDistance.reduce(
-        (acc, leg) => {
-          const durationParts = leg.duration.split(" ");
-          if (durationParts.length === 4) {
-            // means its hours and mins - example: "2 hours 25 minutes"
-            return (
-              acc + parseInt(durationParts[0]) * 60 + parseInt(durationParts[2])
-            );
-          } else if (
-            (durationParts.length === 2 && durationParts[1] == "mins") ||
-            (durationParts.length === 2 && durationParts[1] == "דקות")
-          ) {
-            return acc + parseInt(durationParts[0]);
-          } else if (
-            (durationParts.length === 2 && durationParts[1] == "hours") ||
-            (durationParts.length === 2 && durationParts[1] == "שעות")
-          ) {
-            return acc + parseInt(durationParts[0]) * 60;
           }
-          return acc;
-        },
-        0
-      );
-  
-      if (direction === "outbound") {
-        setOutboundTotalDistance(totalDistance);
-        setOutboundTotalDuration(totalDurationMinutes);
-      } else if (direction === "inbound") {
-        setInboundTotalDistance(totalDistance);
-        setInboundTotalDuration(totalDurationMinutes);
-      }
-    };
-
-
-    const CustomDateInput = React.forwardRef(({ value, onClick }, ref) => (
-      <div className={styles.custom_date_input} onClick={onClick} ref={ref}>
-        <BsCalendar2Event size={15} />
-        <input value={value} readOnly />
-      </div>
-    ));
-    CustomDateInput.displayName = 'CustomDateInput';
-
-    const handlePointSelect = (place, direction, point, indexOfStop) => {
-      console.log("place");
-      console.log(place);
-      console.log("direction");
-      console.log(direction);
-      console.log("point");
-      console.log(point);
-      console.log("indexOfStop");
-      console.log(indexOfStop);
-      const address = place?.formatted_address;
-      const latitude = place?.geometry?.location?.lat();
-      const longitude = place?.geometry?.location?.lng();
-      const city = extractCity(place?.address_components);
-  
-      // Update the route state with the selected address for the appropriate direction (outbound or inbound)
-      if (point != "stop") {
-        setRoute((prevRoute) => ({
-          ...prevRoute,
-          [direction]: {
-            ...prevRoute[direction],
-            [point]: {
-              ...prevRoute[direction][point],
-              address: address,
-              city: city, // added city here
-              lat: latitude,
-              lng: longitude,
-            },
-          },
-        }));
-      } else {
-        // Find the correct stop index and update the address
-        const updatedStops = [...route[direction].stops];
-        updatedStops[indexOfStop] = {
-          ...updatedStops[indexOfStop],
-          address: address,
-          city: city, // added city here
-          lat: latitude,
-          lng: longitude,
-        };
-  
-        setRoute((prevRoute) => ({
-          ...prevRoute,
-          [direction]: {
-            ...prevRoute[direction],
-            stops: updatedStops,
-          },
-        }));
-      }
-    };
-
-    const calculateMinTime = () => {
-      if (route?.outbound?.startPoint?.date) {
-        const hoursToAdd = Math.floor(outboundTotalDuration / 60);
-        const minutesToAdd = outboundTotalDuration % 60;
-  
-        const outboundDate = new Date(route?.outbound?.startPoint?.date);
-  
-        outboundDate.setHours(outboundDate.getHours() + hoursToAdd);
-        outboundDate.setMinutes(outboundDate.getMinutes() + minutesToAdd);
-  
-        if (outboundDate.getMinutes() >= 60) {
-          outboundDate.setHours(outboundDate.getHours() + 1);
-          outboundDate.setMinutes(outboundDate.getMinutes() - 60);
-        }
-        return outboundDate;
-      } else {
-        const currentDate = new Date();
-        currentDate.setHours(currentDate.getHours() + 1);
-        return currentDate;
-      }
-    };
-  
-
-    const extractCity = (addressComponents) => {
-      if (!addressComponents) return null; // Return null if addressComponents is undefined
-  
-      const cityComponent = addressComponents.find(
-        (component) =>
-          component.types.includes("locality") ||
-          component.types.includes("administrative_area_level_1")
-      );
-      return cityComponent ? cityComponent.long_name : null;
-    };
-
-
-    useEffect(() => {
-      let timeValue;
-      let inboundDate = new Date(route?.outbound?.startPoint?.date);
-  
-      // Calculate the appropriate time value
-      if (route?.outbound?.startPoint?.time) {
-        const originalDate = new Date(route?.outbound?.startPoint?.date);
-        const outboundDate = new Date(originalDate.getTime()); // Clone the original date to prevent modifications
-  
-        let totalMinutes = outboundDate.getMinutes() + outboundTotalDuration;
-        totalMinutes = Math.ceil(totalMinutes / 30) * 30;
-  
-        outboundDate.setHours(
-          outboundDate.getHours() + Math.floor(totalMinutes / 60)
         );
-        outboundDate.setMinutes(totalMinutes % 60);
-        timeValue = outboundDate;
-  
-        // Handle date overflow
-        if (
-          outboundDate.getHours() < originalDate.getHours() ||
-          (outboundDate.getHours() === originalDate.getHours() &&
-            outboundDate.getMinutes() < originalDate.getMinutes())
-        ) {
-          inboundDate.setDate(inboundDate.getDate());
-        }
-  
-        // Add the duration + 1 hour to the inboundDate
-        let durationInMinutes = outboundTotalDuration + 60; // adding 1 hour
-        inboundDate.setMinutes(inboundDate.getMinutes() + durationInMinutes);
-  
-        // Round to the nearest half-hour
-        let minutes = inboundDate.getMinutes();
-        if (minutes > 30) {
-          inboundDate.setHours(inboundDate.getHours() + 1, 0); // Move to the next hour and set minutes to 00
-        } else if (minutes <= 30 && minutes > 0) {
-          inboundDate.setMinutes(30); // Set minutes to 30
-        }
-  
-        timeValue = new Date(inboundDate);
-      } else {
-        const currentDate = new Date();
-        currentDate.setHours(currentDate.getHours() + 1);
-        timeValue = currentDate; // Again, a Date object
-      }
-  
-      setInboundMinTime(inboundDate); // right after the time rounding logic
-  
-      // Initialize inBoundStartPoint with the calculated time
-      const inBoundStartPoint = {
-        address: route?.outbound?.endPoint?.address,
-        city: route?.outbound?.endPoint?.city,
-        date: inboundDate,
-        time: timeValue,
-        lat: route?.outbound?.endPoint?.lat,
-        lng: route?.outbound?.endPoint?.lng,
-      };
-  
-      const inboundAddresses = [
-        inBoundStartPoint,
-        ...(Array.isArray(route?.outbound?.stops)
-          ? route?.outbound?.stops?.map((stop) => stop?.address).reverse()
-          : []),
-        route?.outbound?.startPoint,
-      ];
-  
-      if (route?.sameWayBack) {
-        calculateRouteInformation(inboundAddresses, "inbound");
-        setRoute((prevRoute) => ({
-          ...prevRoute,
-          inbound: {
-            ...prevRoute.inbound,
-            startPoint: inBoundStartPoint,
-            stops: route?.outbound?.stops
-              ? route?.outbound?.stops
-                .map((stop) => stop) // Create a new array to prevent modifying the original array
-                .reverse()
-              : [],
-            endPoint: route?.outbound?.startPoint,
-          },
-        }));
-      } else {
-        setRoute({
-          ...route,
-          inbound: {
-            startPoint: {
-              address: "",
-              city: "",
-              date: "",
-              time: "",
-              lat: "",
-              lng: "",
-            },
-            stops: [],
-            endPoint: {
-              address: "",
-              city: "",
-              lat: "",
-              lng: "",
-            },
-          },
+      });
+
+      if (response) {
+        const distance = response?.rows[0]?.elements[0]?.distance?.text || "";
+        const duration = response?.rows[0]?.elements[0]?.duration?.text || "";
+
+        legsWithDurationAndDistance.push({
+          distance,
+          duration,
         });
-        setTimeout(() => {
-          calculateRouteInformation({}, "inbound");
-        }, 400);
       }
-    }, [
-      route?.sameWayBack,
-      route?.outbound?.startPoint,
-      route?.outbound?.endPoint,
-    ]);
-
-
-    useEffect(() => {
-      // Extract addresses from the outbound route for calculation
-      const outboundAddresses = [
-        route?.outbound?.startPoint?.address,
-        ...route?.outbound?.stops?.map((stop) => stop?.address),
-        route?.outbound?.endPoint?.address,
-      ];
-  
-      // Calculate distances and durations for outbound route
-      calculateRouteInformation(
-        outboundAddresses,
-        "outbound",
-        route?.outbound?.startPoint?.date
-      );
-    }, [route.outbound]);
-  
-    useEffect(() => {
-      // Extract addresses from the inbound route for calculation
-      const inboundAddresses = [
-        route?.inbound?.startPoint?.address,
-        ...route?.inbound?.stops?.map((stop) => stop?.address),
-        route?.inbound?.endPoint?.address,
-      ];
-  
-      // Calculate distances and durations for inbound route
-      calculateRouteInformation(
-        inboundAddresses,
-        "inbound",
-        route?.inbound?.startPoint?.date
-      );
-    }, [route.inbound]);
-  
-    
-  
-  
-    
-  
-    
-  
-    useEffect(() => {
-      let updatedRoute = { ...route }; // Clone the route to prevent direct mutations
-  
-      // Check for outboundTotalDistance change and update it
-      if (outboundTotalDistance && updatedRoute?.outbound) {
-        updatedRoute.outbound = {
-          ...updatedRoute.outbound,
-          distance: outboundTotalDistance,
-        };
-      }
-  
-      // Check for outboundTotalDuration change and update it
-      if (outboundTotalDuration && updatedRoute?.outbound) {
-        updatedRoute.outbound = {
-          ...updatedRoute.outbound,
-          duration: outboundTotalDuration,
-        };
-      }
-  
-      // Check for inboundTotalDistance change and update it
-      if (inboundTotalDistance && updatedRoute?.inbound) {
-        updatedRoute.inbound = {
-          ...updatedRoute.inbound,
-          distance: inboundTotalDistance,
-        };
-      }
-  
-      // Check for inboundTotalDuration change and update it
-      if (inboundTotalDuration && updatedRoute?.inbound) {
-        updatedRoute.inbound = {
-          ...updatedRoute.inbound,
-          duration: inboundTotalDuration,
-        };
-      }
-  
-      // Update the route using setRoute
-      setRoute(updatedRoute);
-    }, [
-      outboundTotalDistance,
-      outboundTotalDuration,
-      inboundTotalDistance,
-      inboundTotalDuration,
-    ]);
-  
-    useEffect(() => { }, [route?.routeType]);
-
-    useEffect(() => {
-      console.log("comp PRICEFORMWAY");
-    },[])
-
-    const [stage, setStage] = useState(1);
-
-    const handleStages = () => {
-      setStage(stage + 1);
     }
 
+    const updatedRouteInfo = {
+      legs: legsWithDurationAndDistance.map((leg) => ({
+        distance: leg.distance,
+        duration: leg.duration,
+      })),
+    };
+
+    setRouteInfo((prevRouteInfo) => ({
+      ...prevRouteInfo,
+      [direction]: updatedRouteInfo,
+    }));
+
+    const totalDistance = legsWithDurationAndDistance.reduce((acc, leg) => {
+      const distanceValue = leg.distance.replace(/[^\d.]/g, ""); // Remove all non-numeric and non-dot characters
+      return acc + parseFloat(distanceValue);
+    }, 0);
+
+    const totalDurationMinutes = legsWithDurationAndDistance.reduce(
+      (acc, leg) => {
+        const durationParts = leg.duration.split(" ");
+        if (durationParts.length === 4) {
+          // means its hours and mins - example: "2 hours 25 minutes"
+          return (
+            acc + parseInt(durationParts[0]) * 60 + parseInt(durationParts[2])
+          );
+        } else if (
+          (durationParts.length === 2 && durationParts[1] == "mins") ||
+          (durationParts.length === 2 && durationParts[1] == "דקות")
+        ) {
+          return acc + parseInt(durationParts[0]);
+        } else if (
+          (durationParts.length === 2 && durationParts[1] == "hours") ||
+          (durationParts.length === 2 && durationParts[1] == "שעות")
+        ) {
+          return acc + parseInt(durationParts[0]) * 60;
+        }
+        return acc;
+      },
+      0
+    );
+
+    if (direction === "outbound") {
+      setOutboundTotalDistance(totalDistance);
+      setOutboundTotalDuration(totalDurationMinutes);
+    } else if (direction === "inbound") {
+      setInboundTotalDistance(totalDistance);
+      setInboundTotalDuration(totalDurationMinutes);
+    }
+  };
+
+  const CustomDateInput = React.forwardRef(({ value, onClick }, ref) => (
+    <div className={styles.custom_date_input} onClick={onClick} ref={ref}>
+      <BsCalendar2Event size={15} />
+      <input value={value} readOnly />
+    </div>
+  ));
+  CustomDateInput.displayName = "CustomDateInput";
+
+  const handlePointSelect = (place, direction, point, indexOfStop) => {
+    console.log("place");
+    console.log(place);
+    console.log("direction");
+    console.log(direction);
+    console.log("point");
+    console.log(point);
+    console.log("indexOfStop");
+    console.log(indexOfStop);
+    const address = place?.formatted_address;
+    const latitude = place?.geometry?.location?.lat();
+    const longitude = place?.geometry?.location?.lng();
+    const city = extractCity(place?.address_components);
+
+    // Update the route state with the selected address for the appropriate direction (outbound or inbound)
+    if (point != "stop") {
+      setRoute((prevRoute) => ({
+        ...prevRoute,
+        [direction]: {
+          ...prevRoute[direction],
+          [point]: {
+            ...prevRoute[direction][point],
+            address: address,
+            city: city, // added city here
+            lat: latitude,
+            lng: longitude,
+          },
+        },
+      }));
+    } else {
+      // Find the correct stop index and update the address
+      const updatedStops = [...route[direction].stops];
+      updatedStops[indexOfStop] = {
+        ...updatedStops[indexOfStop],
+        address: address,
+        city: city, // added city here
+        lat: latitude,
+        lng: longitude,
+      };
+
+      setRoute((prevRoute) => ({
+        ...prevRoute,
+        [direction]: {
+          ...prevRoute[direction],
+          stops: updatedStops,
+        },
+      }));
+    }
+  };
+
+  const calculateMinTime = () => {
+    if (route?.outbound?.startPoint?.date) {
+      const hoursToAdd = Math.floor(outboundTotalDuration / 60);
+      const minutesToAdd = outboundTotalDuration % 60;
+
+      const outboundDate = new Date(route?.outbound?.startPoint?.date);
+
+      outboundDate.setHours(outboundDate.getHours() + hoursToAdd);
+      outboundDate.setMinutes(outboundDate.getMinutes() + minutesToAdd);
+
+      if (outboundDate.getMinutes() >= 60) {
+        outboundDate.setHours(outboundDate.getHours() + 1);
+        outboundDate.setMinutes(outboundDate.getMinutes() - 60);
+      }
+      return outboundDate;
+    } else {
+      const currentDate = new Date();
+      currentDate.setHours(currentDate.getHours() + 1);
+      return currentDate;
+    }
+  };
+
+  const extractCity = (addressComponents) => {
+    if (!addressComponents) return null; // Return null if addressComponents is undefined
+
+    const cityComponent = addressComponents.find(
+      (component) =>
+        component.types.includes("locality") ||
+        component.types.includes("administrative_area_level_1")
+    );
+    return cityComponent ? cityComponent.long_name : null;
+  };
+
+  useEffect(() => {
+    let timeValue;
+    let inboundDate = new Date(route?.outbound?.startPoint?.date);
+
+    // Calculate the appropriate time value
+    if (route?.outbound?.startPoint?.time) {
+      const originalDate = new Date(route?.outbound?.startPoint?.date);
+      const outboundDate = new Date(originalDate.getTime()); // Clone the original date to prevent modifications
+
+      let totalMinutes = outboundDate.getMinutes() + outboundTotalDuration;
+      totalMinutes = Math.ceil(totalMinutes / 30) * 30;
+
+      outboundDate.setHours(
+        outboundDate.getHours() + Math.floor(totalMinutes / 60)
+      );
+      outboundDate.setMinutes(totalMinutes % 60);
+      timeValue = outboundDate;
+
+      // Handle date overflow
+      if (
+        outboundDate.getHours() < originalDate.getHours() ||
+        (outboundDate.getHours() === originalDate.getHours() &&
+          outboundDate.getMinutes() < originalDate.getMinutes())
+      ) {
+        inboundDate.setDate(inboundDate.getDate());
+      }
+
+      // Add the duration + 1 hour to the inboundDate
+      let durationInMinutes = outboundTotalDuration + 60; // adding 1 hour
+      inboundDate.setMinutes(inboundDate.getMinutes() + durationInMinutes);
+
+      // Round to the nearest half-hour
+      let minutes = inboundDate.getMinutes();
+      if (minutes > 30) {
+        inboundDate.setHours(inboundDate.getHours() + 1, 0); // Move to the next hour and set minutes to 00
+      } else if (minutes <= 30 && minutes > 0) {
+        inboundDate.setMinutes(30); // Set minutes to 30
+      }
+
+      timeValue = new Date(inboundDate);
+    } else {
+      const currentDate = new Date();
+      currentDate.setHours(currentDate.getHours() + 1);
+      timeValue = currentDate; // Again, a Date object
+    }
+
+    setInboundMinTime(inboundDate); // right after the time rounding logic
+
+    // Initialize inBoundStartPoint with the calculated time
+    const inBoundStartPoint = {
+      address: route?.outbound?.endPoint?.address,
+      city: route?.outbound?.endPoint?.city,
+      date: inboundDate,
+      time: timeValue,
+      lat: route?.outbound?.endPoint?.lat,
+      lng: route?.outbound?.endPoint?.lng,
+    };
+
+    const inboundAddresses = [
+      inBoundStartPoint,
+      ...(Array.isArray(route?.outbound?.stops)
+        ? route?.outbound?.stops?.map((stop) => stop?.address).reverse()
+        : []),
+      route?.outbound?.startPoint,
+    ];
+
+    if (route?.sameWayBack) {
+      calculateRouteInformation(inboundAddresses, "inbound");
+      setRoute((prevRoute) => ({
+        ...prevRoute,
+        inbound: {
+          ...prevRoute.inbound,
+          startPoint: inBoundStartPoint,
+          stops: route?.outbound?.stops
+            ? route?.outbound?.stops
+                .map((stop) => stop) // Create a new array to prevent modifying the original array
+                .reverse()
+            : [],
+          endPoint: route?.outbound?.startPoint,
+        },
+      }));
+    } else {
+      setRoute({
+        ...route,
+        inbound: {
+          startPoint: {
+            address: "",
+            city: "",
+            date: "",
+            time: "",
+            lat: "",
+            lng: "",
+          },
+          stops: [],
+          endPoint: {
+            address: "",
+            city: "",
+            lat: "",
+            lng: "",
+          },
+        },
+      });
+      setTimeout(() => {
+        calculateRouteInformation({}, "inbound");
+      }, 400);
+    }
+  }, [
+    route?.sameWayBack,
+    route?.outbound?.startPoint,
+    route?.outbound?.endPoint,
+  ]);
+
+  useEffect(() => {
+    // Extract addresses from the outbound route for calculation
+    const outboundAddresses = [
+      route?.outbound?.startPoint?.address,
+      ...route?.outbound?.stops?.map((stop) => stop?.address),
+      route?.outbound?.endPoint?.address,
+    ];
+
+    // Calculate distances and durations for outbound route
+    calculateRouteInformation(
+      outboundAddresses,
+      "outbound",
+      route?.outbound?.startPoint?.date
+    );
+  }, [route.outbound]);
+
+  useEffect(() => {
+    // Extract addresses from the inbound route for calculation
+    const inboundAddresses = [
+      route?.inbound?.startPoint?.address,
+      ...route?.inbound?.stops?.map((stop) => stop?.address),
+      route?.inbound?.endPoint?.address,
+    ];
+
+    // Calculate distances and durations for inbound route
+    calculateRouteInformation(
+      inboundAddresses,
+      "inbound",
+      route?.inbound?.startPoint?.date
+    );
+  }, [route.inbound]);
+
+  useEffect(() => {
+    let updatedRoute = { ...route }; // Clone the route to prevent direct mutations
+
+    // Check for outboundTotalDistance change and update it
+    if (outboundTotalDistance && updatedRoute?.outbound) {
+      updatedRoute.outbound = {
+        ...updatedRoute.outbound,
+        distance: outboundTotalDistance,
+      };
+    }
+
+    // Check for outboundTotalDuration change and update it
+    if (outboundTotalDuration && updatedRoute?.outbound) {
+      updatedRoute.outbound = {
+        ...updatedRoute.outbound,
+        duration: outboundTotalDuration,
+      };
+    }
+
+    // Check for inboundTotalDistance change and update it
+    if (inboundTotalDistance && updatedRoute?.inbound) {
+      updatedRoute.inbound = {
+        ...updatedRoute.inbound,
+        distance: inboundTotalDistance,
+      };
+    }
+
+    // Check for inboundTotalDuration change and update it
+    if (inboundTotalDuration && updatedRoute?.inbound) {
+      updatedRoute.inbound = {
+        ...updatedRoute.inbound,
+        duration: inboundTotalDuration,
+      };
+    }
+
+    // Update the route using setRoute
+    setRoute(updatedRoute);
+  }, [
+    outboundTotalDistance,
+    outboundTotalDuration,
+    inboundTotalDistance,
+    inboundTotalDuration,
+  ]);
+
+  useEffect(() => {}, [route?.routeType]);
+
+  useEffect(() => {
+    console.log("comp PRICEFORMWAY");
+  }, []);
+
+  const [stage, setStage] = useState(1);
+
+  const handleStages = (e, action) => {
+    e.preventDefault();
+    setStage(action);
+  };
 
   return (
     <div className={styles.formWrapper}>
@@ -794,43 +772,48 @@ const PriceForm = (props) => {
           </div> */}
         </div>
         <hr />
-        {selectedOption == "TwoWays" || selectedOption == "OneWay" && ( // change TwoWays to WayController
-          <OneWay
-          windowWidth={props?.windowWidth}
-            route={route}
-            setRoute={setRoute} // Pass the setRoute function as a prop
-            addNewStop={addNewStop}
-            removeStop={removeStop}
-            handleFields={handleFields}
-            handleDateChange={handleDateChange}
-            handleStops={handleStops}
-            setShowPopup={props.setShowPopup}
-            today={today}
-            isToday={isToday}
-            formatDuration={formatDuration}
-            showDistance={showDistance}
-            sendDataToApp={props?.sendDataToApp}
-            userRoute={props?.userRoute}
-            outboundAutocompleteRef={outboundAutocompleteRef}
-            outboundEndPointAutocompleteRef={outboundEndPointAutocompleteRef}
-            outboundTotalDistance={outboundTotalDistance}
-            outboundTotalDuration={outboundTotalDuration}
-            outboundStopsAutocompleteRefs={outboundStopsAutocompleteRefs}
-            inboundTotalDistance={inboundTotalDistance}
-            inboundTotalDuration={inboundTotalDuration}
-            CustomDateInput={CustomDateInput}
-            handlePointSelect={handlePointSelect}
-            routeInfo={routeInfo}
-            wayType={"outbound"} 
-            calculateRouteInformation={calculateRouteInformation}
-            calculateMinTime={calculateMinTime}
-            handleStages={handleStages}
-            stage={stage}
-          />
-        )}
+        {selectedOption == "TwoWays" ||
+          (selectedOption == "OneWay" && ( // change TwoWays to WayController
+            <OneWay
+              windowWidth={props?.windowWidth}
+              route={route}
+              setRoute={setRoute} // Pass the setRoute function as a prop
+              addNewStop={addNewStop}
+              removeStop={removeStop}
+              handleFields={handleFields}
+              handleDateChange={handleDateChange}
+              handleStops={handleStops}
+              setShowPopup={props.setShowPopup}
+              today={today}
+              isToday={isToday}
+              formatDuration={formatDuration}
+              showDistance={showDistance}
+              sendDataToApp={props?.sendDataToApp}
+              userRoute={props?.userRoute}
+              outboundAutocompleteRef={outboundAutocompleteRef}
+              outboundEndPointAutocompleteRef={outboundEndPointAutocompleteRef}
+              outboundTotalDistance={outboundTotalDistance}
+              outboundTotalDuration={outboundTotalDuration}
+              outboundStopsAutocompleteRefs={outboundStopsAutocompleteRefs}
+              inboundTotalDistance={inboundTotalDistance}
+              inboundTotalDuration={inboundTotalDuration}
+              CustomDateInput={CustomDateInput}
+              handlePointSelect={handlePointSelect}
+              routeInfo={routeInfo}
+              wayType={"outbound"}
+              calculateRouteInformation={calculateRouteInformation}
+              calculateMinTime={calculateMinTime}
+              handleStages={handleStages}
+              stage={stage}
+              handlePopup={props?.handlePopup}
+              eventTypes={eventTypes}
+              canProceed={canProceed}  
+              formatDateToString={formatDateToString}
+            />
+          ))}
         {selectedOption == "TwoWays" && ( // change TwoWays to WayController
           <TwoWays
-          windowWidth={props?.windowWidth}
+            windowWidth={props?.windowWidth}
             route={route}
             setRoute={setRoute} // Pass the setRoute function as a prop
             addNewStop={addNewStop}
@@ -863,7 +846,10 @@ const PriceForm = (props) => {
             inboundMinTime={inboundMinTime}
             handleStages={handleStages}
             stage={stage}
-
+            handlePopup={props?.handlePopup}
+            eventTypes={eventTypes}
+            canProceed={canProceed} 
+            formatDateToString={formatDateToString}
           />
         )}
         {/* {selectedOption == "MultiTargets" && 
@@ -896,225 +882,18 @@ const PriceForm = (props) => {
             calculateRouteInformation={calculateRouteInformation}
             calculateMinTime={calculateMinTime}
           />}  */}
+        { props?.windowWidth > 768 &&
+        <>
         <hr />
-        <div className={styles.formFooter}>
-          <div
-            className={`${styles.sameWayCheckboxWrapper} ${styles.checkboxWrapper}`}
-          >
-            {route?.routeType == "TwoWays" && (
-              <>
-                <input type="checkbox" name="sameWay" id="sameWay" />
-                <div
-                  className={styles.customInputIcon}
-                  onClick={() => {
-                    if (
-                      route.outbound.startPoint.date &&
-                      route.outbound.startPoint.time &&
-                      route.outbound.startPoint.address &&
-                      route.outbound.endPoint.address
-                    ) {
-                      setRoute({ ...route, sameWayBack: !route.sameWayBack });
-                    } else {
-                      props?.handlePopup(
-                        true,
-                        <h3 style={{ textAlign: "center" }}>
-                          נא למלא את כל השדות במסלול ההלוך
-                        </h3>
-                      );
-                      setTimeout(() => {
-                        props?.handlePopup(
-                          false,
-                          <h3 style={{ textAlign: "center" }}>
-                            נא למלא את כל השדות במסלול ההלוך
-                          </h3>
-                        );
-                      }, 1000);
-                    }
-                  }}
-                >
-                  {route.sameWayBack === true && (
-                    <Image
-                      src={checkIcon}
-                      width={20}
-                      height={20}
-                      alt="check Icon"
-                    />
-                  )}
-                </div>
-                <span>מסלול חזור תואם להלוך</span>
-              </>
-            )}
-          </div>
-          <div className={styles.passengersCountWrapper}>
-            <div className={styles.tooltipWrapper}>
-              <i>
-                <AiOutlineQuestion />
-              </i>
-            </div>
-            <span>מספר נוסעים מקסימלי: </span>
-            <div className={styles.inputWithIconWrapper}>
-              <i>
-                <SlPeople />
-              </i>
-              <input
-                type="number"
-                name="passengersCount"
-                id="passengersCount"
-                value={route.passengers ? route.passengers : 1}
-                min={1}
-                max={60}
-                onChange={(e) => {
-                  if (e.target.value < 1) {
-                    e.target.value = 1;
-                    setRoute({ ...route, passengers: parseInt(1) });
-                  } else if (e.target.value > 60) {
-                    e.target.value = 60;
-                    setRoute({ ...route, passengers: parseInt(60) });
-                  } else {
-                    setRoute({
-                      ...route,
-                      passengers: parseInt(e.target.value),
-                    });
-                  }
-                }}
-              />
-            </div>
-          </div>
-          <div className={styles.suitcasesCountWrapper}>
-            <span>מספר מזוודות: </span>
-            <div className={styles.inputWithIconWrapper}>
-              <i>
-                <PiSuitcaseSimpleLight />
-              </i>
-              <input
-                type="number"
-                name="suitcasesCount"
-                id="suitcasesCount"
-                defaultValue={0}
-                min={0}
-                max={60}
-                onChange={(e) => {
-                  setRoute({
-                    ...route,
-                    suitcases: parseInt(e.target.value),
-                  });
-                }}
-              />
-            </div>
-          </div>
-          <div className={styles.eventTypeWrapper}>
-            <div className={styles.tooltipWrapper}>
-              <i>
-                <AiOutlineQuestion />
-              </i>
-            </div>
-            <span>בחירת סוג הסעה: </span>
-            <div className={styles.inputWithIconWrapper}>
-              <i>
-                <BsReverseListColumnsReverse />
-              </i>
-              <select
-                onChange={(e) => {
-                  setRoute({
-                    ...route,
-                    eventType: e.target.value,
-                  });
-                }}
-                name="eventType"
-                id="eventType"
-              >
-                {eventTypes.map((eventType, index) => {
-                  return (
-                    <option value={eventType.value} key={index}>
-                      {eventType.label}
-                    </option>
-                  );
-                })}
-              </select>
-            </div>
-          </div>
-          <div
-            className={`${styles.acceptanceWrapper} ${styles.checkboxWrapper}`}
-          >
-            <input
-              type="checkbox"
-              name="acceptance"
-              id="acceptance"
-              onChange={(e) =>
-                setRoute({
-                  ...route,
-                  acceptance: e.target.checked,
-                })
-              }
-            />
-            <div
-              className={styles.customInputIcon}
-              onClick={() =>
-                setRoute({ ...route, acceptance: !route.acceptance })
-              }
-            >
-              {route.acceptance === true && (
-                <Image
-                  src={checkIcon}
-                  width={20}
-                  height={20}
-                  alt="check icon"
-                />
-              )}
-            </div>
-            <span>
-              בלחיצה על כפתור קבלת הצעת מחיר, <br />
-              אני מאשר את{" "}
-              <Link href={"#"} target="_blank">
-                תנאי השימוש ומדיניות הפרטיות באתר.
-              </Link>
-            </span>
-          </div>
-          <button
-            className={`${styles.priceRequestButton} ${!canProceed() && styles.cannotSend
-              }`}
-            disabled={canProceed() ? false : true}
-            onClick={(e) => {
-              const userRoute = props.userRoute;
-              e.preventDefault();
-              canProceed() &&
-                axios
-                  .post(`/api/calculatePriceOffer`, {
-                    properties: {
-                      route,
-                      userRoute,
-                      eventTypes,
-                    },
-                  })
-                  .then((res) => {
-                    console.log("res");
-                    console.log("res");
-                    console.log(res);
-                    if (res.status === 200) {
-                      props.handlePopup(
-                        true,
-                        <RouteAndDetails
-                          handlePopup={props.handlePopup}
-                          route={route}
-                          eventTypes={eventTypes}
-                          formatDateToString={formatDateToString}
-                          showDistance={showDistance}
-                          formatDuration={formatDuration}
-                          sendDataToApp={props?.sendDataToApp}
-                          userRoute={props?.userRoute}
-                          price={res?.data?.price}
-                        />
-                      );
-                    }
-                  });
-            }}
-          >
-            <span>הצעת מחיר אונליין</span>
-            <i>
-              <HiArrowNarrowLeft />
-            </i>
-          </button>
-        </div>
+          <FormFooter
+          handlePopup={props?.handlePopup}
+          setRoute={setRoute}
+          route={route}
+          eventTypes={eventTypes}
+          canProceed={canProceed}
+          />
+        </>
+        }
       </form>
     </div>
   );

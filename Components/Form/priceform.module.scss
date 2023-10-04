@@ -289,142 +289,6 @@
       }
     }
   }
-  .formFooter {
-    display: flex;
-    justify-content: flex-start;
-    select,
-    input {
-      background-color: #ececec;
-      border-radius: 20px;
-      border: none;
-      font-size: 16px;
-      padding-right: 10px;
-      height: 30px;
-      padding-right: 30px;
-      &:focus {
-        outline: 1px solid #c6c6c6;
-      }
-    }
-    .inputWithIconWrapper {
-      position: relative;
-      i {
-        position: absolute;
-        top: 50%;
-        right: 0%;
-        transform: translate(-50%, -50%);
-        height: 15px;
-        width: 15px;
-        z-index: 2;
-        svg {
-          width: 100%;
-          height: 100%;
-        }
-      }
-    }
-    .checkboxWrapper,
-    .passengersCountWrapper,
-    .eventTypeWrapper,
-    .suitcasesCountWrapper {
-      display: flex;
-      align-items: center;
-      margin-left: 15px;
-      font-size: 14px;
-      span {
-        margin-left: 5px;
-      }
-      .tooltipWrapper {
-        i {
-          background-color: #686868;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          border-radius: 50%;
-          color: white;
-          font-size: 14px;
-          padding: 3px;
-          margin-left: 5px;
-          cursor: pointer;
-          &:hover {
-            background-color: #4a4a4a;
-          }
-        }
-      }
-    }
-    .passengersCountWrapper,
-    .suitcasesCountWrapper {
-      input {
-        max-width: 75px;
-      }
-    }
-    .suitcasesCountWrapper {
-      i {
-        svg {
-          width: 16px;
-          height: 16px;
-        }
-      }
-    }
-    .acceptanceWrapper,
-    .sameWayCheckboxWrapper {
-      display: flex;
-      input {
-        display: none;
-      }
-      .customInputIcon {
-        cursor: pointer;
-        background-color: #c6c6c6;
-        border-radius: 5px;
-        width: 15px;
-        height: 15px;
-        display: flex;
-        align-items: flex-end;
-        justify-content: flex-end;
-        img {
-          width: 20px;
-          height: 20px;
-        }
-      }
-      span {
-        margin-right: 10px;
-        font-size: 14px;
-      }
-    }
-    .priceRequestButton {
-      margin-right: auto;
-      font-weight: 800;
-      color: white;
-      background-color: #80c341;
-      box-shadow: 0 5px 20px #80c34189;
-      text-shadow: 0 3px 6px #00000030;
-      border: none;
-      border-radius: 50px;
-      font-size: 22px;
-      display: flex;
-      align-items: center;
-      padding: 10px 15px;
-      transition: all 0.3s ease;
-      i {
-        height: 20px;
-      }
-      span {
-        margin-left: 10px;
-      }
-      &:hover {
-        background-color: #4e8c15;
-        box-shadow: 0 5px 20px #80c34189;
-        // opacity: 0.8;
-      }
-    }
-    .priceRequestButton.cannotSend {
-      background-color: rgb(229, 90, 90);
-      box-shadow: 0 5px 20px #c3414189;
-      &:hover {
-        background-color: rgb(229, 90, 90);
-        box-shadow: 0 5px 20px #c3414189;
-        cursor: not-allowed !important;
-      }
-    }
-  }
 }
 
 @media only screen and (max-width: 768px) {
@@ -433,6 +297,57 @@
     margin: 0 auto;
     padding: 10px;
     overflow-x: clip;
+    .directionButtons {
+      display: flex;
+      justify-content: center;
+      width: 90dvw;
+    }
+    .directionButton {
+      background-color: gray;
+      color: white;
+      font-weight: 700;
+      font-size: 16px;
+      border-radius: 20px;
+      box-shadow: none;
+      border: none;
+      padding: 5px 10px;
+      width: 40%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0 5px;
+      svg {
+        transform: rotate(180deg);
+        margin-left: 10px;
+      }
+    }
+    .cannotProcceed {
+      background-color: gray !important;
+      opacity: 0.5;
+      color: black;
+    }
+    .directionButtonForward {
+      background-color: #80c341;
+      text-shadow: 0 0 10px black;
+    }
+    .directionButtonBackward {
+      background-color: #c7c7c7;
+      color: black;
+    }
+    .routeType {
+      h5 {
+        font-size: 20px;
+        width: max-content;
+        margin-left: 10px;
+      }
+      .radioWrapper {
+        margin: 0;
+        label {
+          font-size: 16px;
+          width: max-content;
+        }
+      }
+    }
     .twoWays {
       margin-right: 0;
       margin-left: 0;
@@ -447,6 +362,15 @@
         .fields {
           width: 90%;
           max-width: 90%;
+          .hasStops {
+            margin-right: 10px;
+          }
+          .stopWrapper {
+            margin-right: 10px; 
+            .stop {
+              width: 78%;
+            }
+          }
           .startPointWrapper , .endPointWrapper {
             display: flex;
             flex-direction: column-reverse;
@@ -477,11 +401,10 @@
           .endPointWrapper {
             flex-direction: column;
           }
-          // .endPointWrapper {
-          //   display: flex;
-          //   flex-direction: column-reverse;
-          //   align-items: flex-start;
-          // }
+          .startPointWrapper.hasStops , .endPointWrapper.hasStops {
+            margin: 0;
+          }
+
         }
       }
     }

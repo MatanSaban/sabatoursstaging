@@ -59,3 +59,17 @@
 .content {
   padding: 20px;
 }
+
+
+@media only screen and (max-width: 768px) {
+  .popupWrapper {
+    margin-top: 20px;
+    .popup {
+      width: 98%;
+      max-height: 95%;
+      overflow-y: auto;
+      margin-top: auto;
+      margin-bottom: 0;
+    }
+  }
+}

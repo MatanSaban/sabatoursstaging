@@ -334,6 +334,9 @@ section.section {
   .transparentIcon {
     max-width: 100px;
   }
+  .homeWrapper {
+    overflow-x: hidden;
+  }
   section.section.whereAreWe {
     .areas {
       flex-direction: column;

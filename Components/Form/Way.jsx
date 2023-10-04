@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { BiSolidTimeFive } from "react-icons/bi";
 import { AiOutlinePlus, AiOutlineClose } from "react-icons/ai";
 import { PiDotsThreeOutlineVertical } from "react-icons/pi";
@@ -17,18 +17,17 @@ import styles from "./priceform.module.scss";
 registerLocale("he", he);
 
 const ConditionalWrapper = ({ condition, children }) =>
-    condition ? (
-      <div className={styles.mobileConditionalPointInpWrapper}>{children}</div>
-    ) : (
-      children
-    );
-  const ConditionalDateTimeWrapper = ({ condition, children }) =>
-    condition ? (
-      <div className={styles.mobileConditionalDateTimeWrapper}>{children}</div>
-    ) : (
-      children
-    ); 
-
+  condition ? (
+    <div className={styles.mobileConditionalPointInpWrapper}>{children}</div>
+  ) : (
+    children
+  );
+const ConditionalDateTimeWrapper = ({ condition, children }) =>
+  condition ? (
+    <div className={styles.mobileConditionalDateTimeWrapper}>{children}</div>
+  ) : (
+    children
+  );
 
 const Way = ({
   wayType,
@@ -39,8 +38,7 @@ const Way = ({
   minTime,
   inboundMinTime,
   wayTitle,
-  handleStages, 
-  stage,
+  handleStages,
   ...props
 }) => {
   const totalDistance = // formatDuration
@@ -118,180 +116,111 @@ const Way = ({
   // console.log("route?.startPoint?.date: ", route?.startPoint?.date);
   // console.log("route?.outbound?.duration: ", route?.outbound?.duration);
 
-  
-    const isMobile = (windowWidth) => {
-      if (windowWidth < 769) {
-        return true 
+  const isMobile = (windowWidth) => {
+    if (windowWidth < 769) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  const [buttonTextByRouteType, setButtonTextByRouteType] = useState(
+    props?.stage
+  );
+
+  useEffect(() => {
+    console.log("useeffect in way blat");
+    console.log("props.route.routeType");
+    console.log(props.route.routeType);
+    switch (props.route.routeType) {
+      case "OneWay":
+        console.log("here 1");
+        console.log(props);
+        if (props.stage === 1) {
+          console.log("here 2");
+          setButtonTextByRouteType("פרטי נסיעה אחרונים");
+        }
+        break;
+      case "TwoWays":
+        console.log("here 3");
+        console.log(props);
+        if (props.stage == 1) {
+          setButtonTextByRouteType("פרטי דרך חזור");
+        } else if (props.stage == 2) {
+          setButtonTextByRouteType("פרטי נסיעה אחרונים");
+        }
+        break;
+    }
+  }, [props.stage, props.route.routeType]);
+
+  const canProceedStep = (props) => {
+    const routeType = props?.route?.routeType;
+
+    const checkPointDetails = (point) => {
+      return !!(point?.date && point?.time && point?.address);
+    };
+
+    if (routeType === "OneWay") {
+      const startPointValid = checkPointDetails(
+        props?.route?.outbound?.startPoint
+      );
+      const endPointValid =
+        props?.route?.outbound?.endPoint?.address?.length > 0;
+      return startPointValid && endPointValid;
+    } else if (routeType === "TwoWays") {
+      if (props?.stage == 1) {
+        return (
+          checkPointDetails(props?.route?.outbound?.startPoint) &&
+          props?.route?.outbound?.endPoint?.address
+        );
       } else {
-        return false
+        return (
+          checkPointDetails(props?.route?.outbound?.startPoint) &&
+          props?.route?.outbound?.endPoint?.address &&
+          checkPointDetails(props?.route?.inbound?.startPoint) &&
+          props?.route?.inbound?.endPoint?.address
+        );
       }
     }
 
-    
+    return false;
+  };
+
+  console.log(`can proceedstepspspsp ${canProceedStep(props)}`);
 
   return (
     <>
-    <div className={`${styles[wayType]} ${styles.wayStyle} way`} id={wayType}>
-      <h3>{wayTitle}</h3>
-      <p>
-        <span>{totalDistance}</span>
-        <br />
-        <span>{totalDuration}</span>
-      </p>
-      <div className={styles.fields}>
-        <div className={styles.startPointWrapper}>
-          <ConditionalWrapper condition={isMobile(props?.windowWidth)}>
-            <i className={styles.locationIcon}>
-              <Image
-                src={locationIcon}
-                height={25}
-                width={20}
-                alt="location icon"
-              />
-            </i>
-            <div
-              className={`${styles.startPoint} ${styles.labelAndInputWrapper}`}
-            >
-              <label htmlFor="address">נקודת התחלה:</label>
-              <Autocomplete
-                onLoad={(autocomplete) =>
-                  (startPointAutocompleteRef.current = autocomplete)
-                }
-                onPlaceChanged={(e) =>
-                  handlePointSelect(
-                    startPointAutocompleteRef.current.getPlace(),
-                    wayType,
-                    "startPoint"
-                  )
-                }
-                options={{
-                  componentRestrictions: { country: "IL" },
-                }}
-              >
-                <input
-                  type="text"
-                  name="address"
-                  parent="startPoint"
-                  id="address"
-                  required
-                  value={props?.route?.[wayType]?.startPoint?.address}
-                  lat={props?.route?.[wayType]?.startPoint?.lat}
-                  lng={props?.route?.[wayType]?.startPoint?.lng}
-                  onChange={(e) => props.handleFields(e)}
+      <div className={`${styles[wayType]} ${styles.wayStyle} way`} id={wayType}>
+        <h3>{wayTitle}</h3>
+        <p>
+          <span>{totalDistance}</span>
+          <br />
+          <span>{totalDuration}</span>
+        </p>
+        <div className={styles.fields}>
+          <div className={`${styles.startPointWrapper} ${props?.route[wayType]?.stops?.length && styles.hasStops}`}>
+            <ConditionalWrapper condition={isMobile(props?.windowWidth)}>
+              <i className={styles.locationIcon}>
+                <Image
+                  src={locationIcon}
+                  height={25}
+                  width={20}
+                  alt="location icon"
                 />
-              </Autocomplete>
-            </div>
-          </ConditionalWrapper>
-          <ConditionalDateTimeWrapper condition={isMobile(props?.windowWidth)}>
-
-          <div className={`${styles.labelAndInputWrapper}`}>
-            <label htmlFor="date">תאריך יציאה:</label>
-            <div
-              className={`${styles.inputWrapper} ${styles.datePickerWrapper}`}
-            >
-              <DatePicker
-                locale={he}
-                name="date"
-                showTimeSelect
-                timeCaption="שעה"
-                parent="startPoint"
-                minDate={
-                  wayType == "outbound" ? new Date() : props?.minTimeInbound
-                }
-                id="date"
-                customInput={<CustomDateInput />}
-                selected={route?.startPoint?.date}
-                dateFormat="dd/MM/yyyy"
-                minTime={resolvedMinTimeValue}
-                maxTime={
-                  new Date(
-                    props.today.getFullYear(),
-                    props.today.getMonth(),
-                    props.today.getDate(),
-                    23,
-                    30
-                  )
-                }
-                onChange={(date) =>
-                  props.handleDateChange(date, {
-                    target: {
-                      name: "date",
-                      closest: () => document.getElementById(wayType),
-                      attributes: {
-                        parent: {
-                          value: "startPoint",
-                        },
-                      },
-                    },
-                  })
-                }
-              />
-            </div>
-          </div>
-          <div className={`${styles.labelAndInputWrapper}`}>
-            <label htmlFor="time">שעת יציאה:</label>
-            <div
-              className={`${styles.inputWrapper} ${styles.timeInputWrapper}`}
-            >
-              <i className={styles.timePickerIcon}>
-                <BiSolidTimeFive />
               </i>
-              <input
-                type="text"
-                name="time"
-                id="time"
-                parent="startPoint"
-                required
-                disabled
-                value={
-                  route?.startPoint?.date &&
-                  format(route?.startPoint?.date, "HH:mm")
-                }
-              />
-            </div>
-          </div>
-          </ConditionalDateTimeWrapper>
-        </div>
-        {route?.stops?.length > 0 && (
-          <div className={styles.hasStops}>
-            <i className={styles.stepsIcon}>
-              <PiDotsThreeOutlineVertical />
-            </i>
-          </div>
-        )}
-        {route?.stops?.map((stop, index) => {
-          return (
-            <div
-              className={`${styles.stopWrapper} stopWrapper`}
-              key={stop.id}
-              index={index}
-              id={stop.id}
-            >
-              <div className={styles.stopIconWrapper}>
-                <i className={styles.stopIcon}>
-                  <Image
-                    src={stopIcon}
-                    height={20}
-                    width={20}
-                    alt="circle location icon as a stop"
-                  />
-                </i>
-                <i className={styles.stepsIcon}>
-                  <PiDotsThreeOutlineVertical />
-                </i>
-              </div>
-              <div className={`${styles.stop} ${styles.labelAndInputWrapper}`}>
-                <label htmlFor={`stop_${index}`}>תחנה {index + 1}</label>
+              <div
+                className={`${styles.startPoint} ${styles.labelAndInputWrapper}`}
+              >
+                <label htmlFor="address">נקודת התחלה:</label>
                 <Autocomplete
                   onLoad={(autocomplete) =>
-                    (stopsAutocompleteRefs.current = autocomplete)
+                    (startPointAutocompleteRef.current = autocomplete)
                   }
                   onPlaceChanged={(e) =>
                     handlePointSelect(
-                      stopsAutocompleteRefs.current.getPlace(),
+                      startPointAutocompleteRef.current.getPlace(),
                       wayType,
-                      "stop",
-                      index
+                      "startPoint"
                     )
                   }
                   options={{
@@ -300,87 +229,239 @@ const Way = ({
                 >
                   <input
                     type="text"
-                    name={`stop_${index}`}
-                    parent={"stops"}
-                    index={index}
-                    id={`stop_${index}`}
+                    name="address"
+                    parent="startPoint"
+                    id="address"
                     required
-                    className={styles.stopInput}
-                    defaultValue={
-                      props?.route?.[wayType]?.stops[index]?.address
-                    }
-                    lat={props?.route?.[wayType]?.stops[index]?.lat}
-                    lng={props?.route?.[wayType]?.stops[index]?.lng}
+                    value={props?.route?.[wayType]?.startPoint?.address}
+                    lat={props?.route?.[wayType]?.startPoint?.lat}
+                    lng={props?.route?.[wayType]?.startPoint?.lng}
                     onChange={(e) => props.handleFields(e)}
                   />
                 </Autocomplete>
+              </div>
+            </ConditionalWrapper>
+            <ConditionalDateTimeWrapper
+              condition={isMobile(props?.windowWidth)}
+            >
+              <div className={`${styles.labelAndInputWrapper}`}>
+                <label htmlFor="date">תאריך יציאה:</label>
                 <div
-                  className={styles.removeRow}
-                  onClick={(e) => props.removeStop(e, index)}
+                  className={`${styles.inputWrapper} ${styles.datePickerWrapper}`}
                 >
-                  <AiOutlineClose />
+                  <DatePicker
+                    locale={he}
+                    name="date"
+                    showTimeSelect
+                    timeCaption="שעה"
+                    parent="startPoint"
+                    minDate={
+                      wayType == "outbound" ? new Date() : props?.minTimeInbound
+                    }
+                    id="date"
+                    customInput={<CustomDateInput />}
+                    selected={route?.startPoint?.date}
+                    dateFormat="dd/MM/yyyy"
+                    minTime={resolvedMinTimeValue}
+                    maxTime={
+                      new Date(
+                        props.today.getFullYear(),
+                        props.today.getMonth(),
+                        props.today.getDate(),
+                        23,
+                        30
+                      )
+                    }
+                    onChange={(date) =>
+                      props.handleDateChange(date, {
+                        target: {
+                          name: "date",
+                          closest: () => document.getElementById(wayType),
+                          attributes: {
+                            parent: {
+                              value: "startPoint",
+                            },
+                          },
+                        },
+                      })
+                    }
+                  />
                 </div>
               </div>
+              <div className={`${styles.labelAndInputWrapper}`}>
+                <label htmlFor="time">שעת יציאה:</label>
+                <div
+                  className={`${styles.inputWrapper} ${styles.timeInputWrapper}`}
+                >
+                  <i className={styles.timePickerIcon}>
+                    <BiSolidTimeFive />
+                  </i>
+                  <input
+                    type="text"
+                    name="time"
+                    id="time"
+                    parent="startPoint"
+                    required
+                    disabled
+                    value={
+                      route?.startPoint?.date &&
+                      format(route?.startPoint?.date, "HH:mm")
+                    }
+                  />
+                </div>
+              </div>
+            </ConditionalDateTimeWrapper>
+          </div>
+          {route?.stops?.length > 0 && (
+            <div className={styles.hasStops}>
+              <i className={styles.stepsIcon}>
+                <PiDotsThreeOutlineVertical />
+              </i>
             </div>
-          );
-        })}
-        <div className={styles.endPointWrapper}>
-        <ConditionalWrapper condition={isMobile(props?.windowWidth)}>
-
-          <i className={styles.locationIcon}>
-            <Image
-              src={endPointIcon}
-              height={25}
-              width={20}
-              alt="endpoint location icon"
-            />
-          </i>
-          <div className={`${styles.endPoint} ${styles.labelAndInputWrapper}`}>
-            <label htmlFor="address">נקודת יעד:</label>
-            <Autocomplete
-              onLoad={(autocomplete) =>
-                (endPointAutocompleteRef.current = autocomplete)
-              }
-              onPlaceChanged={(e) =>
-                handlePointSelect(
-                  endPointAutocompleteRef.current.getPlace(),
-                  wayType,
-                  "endPoint"
-                )
-              }
-              options={{
-                componentRestrictions: { country: "IL" },
+          )}
+          {route?.stops?.map((stop, index) => {
+            return (
+              <div
+                className={`${styles.stopWrapper} stopWrapper`}
+                key={stop.id}
+                index={index}
+                id={stop.id}
+              >
+                <div className={styles.stopIconWrapper}>
+                  <i className={styles.stopIcon}>
+                    <Image
+                      src={stopIcon}
+                      height={20}
+                      width={20}
+                      alt="circle location icon as a stop"
+                    />
+                  </i>
+                  <i className={styles.stepsIcon}>
+                    <PiDotsThreeOutlineVertical />
+                  </i>
+                </div>
+                <div
+                  className={`${styles.stop} ${styles.labelAndInputWrapper}`}
+                >
+                  <label htmlFor={`stop_${index}`}>תחנה {index + 1}</label>
+                  <Autocomplete
+                    onLoad={(autocomplete) =>
+                      (stopsAutocompleteRefs.current = autocomplete)
+                    }
+                    onPlaceChanged={(e) =>
+                      handlePointSelect(
+                        stopsAutocompleteRefs.current.getPlace(),
+                        wayType,
+                        "stop",
+                        index
+                      )
+                    }
+                    options={{
+                      componentRestrictions: { country: "IL" },
+                    }}
+                  >
+                    <input
+                      type="text"
+                      name={`stop_${index}`}
+                      parent={"stops"}
+                      index={index}
+                      id={`stop_${index}`}
+                      required
+                      className={styles.stopInput}
+                      defaultValue={
+                        props?.route?.[wayType]?.stops[index]?.address
+                      }
+                      lat={props?.route?.[wayType]?.stops[index]?.lat}
+                      lng={props?.route?.[wayType]?.stops[index]?.lng}
+                      onChange={(e) => props.handleFields(e)}
+                    />
+                  </Autocomplete>
+                  <div
+                    className={styles.removeRow}
+                    onClick={(e) => props.removeStop(e, index)}
+                  >
+                    <AiOutlineClose />
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+          <div className={`${styles.endPointWrapper} ${props?.route[wayType]?.stops?.length && styles.hasStops}`}>
+            <ConditionalWrapper condition={isMobile(props?.windowWidth)}>
+              <i className={styles.locationIcon}>
+                <Image
+                  src={endPointIcon}
+                  height={25}
+                  width={20}
+                  alt="endpoint location icon"
+                />
+              </i>
+              <div
+                className={`${styles.endPoint} ${styles.labelAndInputWrapper}`}
+              >
+                <label htmlFor="address">נקודת יעד:</label>
+                <Autocomplete
+                  onLoad={(autocomplete) =>
+                    (endPointAutocompleteRef.current = autocomplete)
+                  }
+                  onPlaceChanged={(e) =>
+                    handlePointSelect(
+                      endPointAutocompleteRef.current.getPlace(),
+                      wayType,
+                      "endPoint"
+                    )
+                  }
+                  options={{
+                    componentRestrictions: { country: "IL" },
+                  }}
+                >
+                  <input
+                    type="text"
+                    name="address"
+                    id="address"
+                    required
+                    parent="endPoint"
+                    defaultValue={props?.route?.[wayType]?.endPoint?.address}
+                    lat={props?.route?.[wayType]?.endPoint?.lat}
+                    lng={props?.route?.[wayType]?.endPoint?.lng}
+                    onChange={(e) => props.handleFields(e)}
+                  />
+                </Autocomplete>
+              </div>
+            </ConditionalWrapper>
+            <div
+              className={`${styles.addStopWrapper} ${
+                routeInfo?.[wayType]?.legs?.length > 1 &&
+                (!routeInfo?.[wayType]?.legs[
+                  routeInfo?.[wayType]?.legs.length - 1
+                ]?.duration ||
+                  !routeInfo?.[wayType]?.legs[
+                    routeInfo?.[wayType]?.legs.length - 1
+                  ]?.distance)
+                  ? styles.cannotAdd
+                  : styles.canAdd
+              }`}
+              onClick={(e) => {
+                if (
+                  routeInfo?.[wayType]?.legs?.length <= 1 ||
+                  (routeInfo?.[wayType]?.legs?.length > 1 &&
+                    routeInfo?.[wayType]?.legs[
+                      routeInfo?.[wayType]?.legs.length - 1
+                    ]?.duration &&
+                    routeInfo?.[wayType]?.legs[
+                      routeInfo?.[wayType]?.legs.length - 1
+                    ]?.distance)
+                ) {
+                  props.addNewStop(e);
+                } else {
+                }
               }}
             >
-              <input
-                type="text"
-                name="address"
-                id="address"
-                required
-                parent="endPoint"
-                defaultValue={props?.route?.[wayType]?.endPoint?.address}
-                lat={props?.route?.[wayType]?.endPoint?.lat}
-                lng={props?.route?.[wayType]?.endPoint?.lng}
-                onChange={(e) => props.handleFields(e)}
-              />
-            </Autocomplete>
-          </div>
-        </ConditionalWrapper>
-          <div
-            className={`${styles.addStopWrapper} ${
-              routeInfo?.[wayType]?.legs?.length > 1 &&
-              (!routeInfo?.[wayType]?.legs[
-                routeInfo?.[wayType]?.legs.length - 1
-              ]?.duration ||
-                !routeInfo?.[wayType]?.legs[
-                  routeInfo?.[wayType]?.legs.length - 1
-                ]?.distance)
-                ? styles.cannotAdd
-                : styles.canAdd
-            }`}
-            onClick={(e) => {
-              if (
-                routeInfo?.[wayType]?.legs?.length <= 1 ||
+              <i className={styles.addStopIcon}>
+                <AiOutlinePlus />
+              </i>
+              <span>
+                {routeInfo?.[wayType]?.legs?.length <= 1 ||
                 (routeInfo?.[wayType]?.legs?.length > 1 &&
                   routeInfo?.[wayType]?.legs[
                     routeInfo?.[wayType]?.legs.length - 1
@@ -388,33 +469,52 @@ const Way = ({
                   routeInfo?.[wayType]?.legs[
                     routeInfo?.[wayType]?.legs.length - 1
                   ]?.distance)
-              ) {
-                props.addNewStop(e);
+                  ? addStopText
+                  : "העצירה האחרונה אינה מלאה"}
+              </span>
+            </div>
+          </div>
+        </div>
+        {props?.windowWidth < 769 && <div className={styles.directionButtons}>
+          {props?.stage > 1 && (
+            <button
+              className={`${styles.directionButton} ${styles.directionButtonBackward}`}
+              onClick={(e) => handleStages(e, props?.stage - 1)}
+            >
+              אחורה
+            </button>
+          )}
+          <button
+            className={`${styles.directionButton} ${
+              styles.directionButtonForward
+            } ${canProceedStep(props) ? "" : styles.cannotProcceed}`} 
+            onClick={(e) => {
+              if (canProceedStep(props)) {
+                handleStages(e, props?.stage + 1);
               } else {
+                e.preventDefault();
+                props?.handlePopup(
+                  true,
+                  <h3 style={{ textAlign: "center" }}>
+                    נא למלא את כל השדות ב{wayTitle}
+                  </h3>
+                );
+                setTimeout(() => {
+                  props?.handlePopup(
+                    false,
+                    <h3 style={{ textAlign: "center" }}>
+                      נא למלא את כל השדות ב{wayTitle}
+                    </h3>
+                  );
+                }, 1000);
               }
             }}
           >
-            <i className={styles.addStopIcon}>
-              <AiOutlinePlus />
-            </i>
-            <span>
-              {routeInfo?.[wayType]?.legs?.length <= 1 ||
-              (routeInfo?.[wayType]?.legs?.length > 1 &&
-                routeInfo?.[wayType]?.legs[
-                  routeInfo?.[wayType]?.legs.length - 1
-                ]?.duration &&
-                routeInfo?.[wayType]?.legs[
-                  routeInfo?.[wayType]?.legs.length - 1
-                ]?.distance)
-                ? addStopText
-                : "העצירה האחרונה אינה מלאה"}
-            </span> 
-          </div>
-        </div>
+            {buttonTextByRouteType}
+          </button>
+        </div>}
       </div>
-      <button onClick={() => handleStages()}>שלב הבא</button>
-    </div>
-      </>
+    </>
   );
 };
 

@@ -1,18 +1,23 @@
-import React, { useEffect, useRef, useState } from "react";
+import FormFooter from "./FormFooter";
 import styles from "./priceform.module.scss";
-import "react-datepicker/dist/react-datepicker.css";
-import he from "date-fns/locale/he";
-import { registerLocale } from "react-datepicker";
-registerLocale("he", he);
 import Way from "./Way";
 
 const TwoWays = (props) => {
   // formatDuration showDistance
   // console.log("TwoWays.jsx render");
   return (
-    <div className={styles.twoWays} style={props?.stage == 1 ? {transform: "translateX(0dvw)"} : props?.stage == 2 ? {transform: "translateX(100dvw)"} : {transform: "translateX(200dvw)"}}>
-      <Way 
-      windowWidth={props?.windowWidth}
+    <div
+      className={styles.twoWays}
+      style={
+        props?.stage == 1
+          ? { transform: "translateX(0dvw)" }
+          : props?.stage == 2
+          ? { transform: "translateX(100dvw)" }
+          : { transform: "translateX(200dvw)" }
+      }
+    >
+      <Way
+        windowWidth={props?.windowWidth}
         outboundAutocompleteRef={props.outboundAutocompleteRef}
         outboundEndPointAutocompleteRef={props?.outboundEndPointAutocompleteRef}
         outboundTotalDistance={props?.outboundTotalDistance}
@@ -37,9 +42,12 @@ const TwoWays = (props) => {
         isToday={props?.isToday}
         wayTitle={"דרך הלוך"}
         handleStages={props?.handleStages}
+        stage={props?.stage}
+        canProceed={props?.canProceed}
+        handlePopup={props?.handlePopup}
       />
-      <Way 
-      windowWidth={props?.windowWidth}
+      <Way
+        windowWidth={props?.windowWidth}
         inboundAutocompleteRef={props?.inboundAutocompleteRef}
         inboundEndPointAutocompleteRef={props?.inboundEndPointAutocompleteRef}
         inboundTotalDistance={props?.inboundTotalDistance}
@@ -65,8 +73,26 @@ const TwoWays = (props) => {
         minTimeInbound={props?.inboundMinTime}
         wayTitle={"דרך חזור"}
         handleStages={props?.handleStages}
-        stage={props?.stage} 
+        stage={props?.stage}
+        canProceed={props?.canProceed}
+        handlePopup={props?.handlePopup}
       />
+      {props?.windowWidth < 769 && (
+        <FormFooter
+          handlePopup={props?.handlePopup}
+          setRoute={props?.setRoute}
+          route={props?.route}
+          eventTypes={props?.eventTypes}
+          canProceed={props?.canProceed}
+          handleStages={props?.handleStages}
+          stage={props?.stage}
+          windowWidth={props?.windowWidth}
+          formatDateToString={props?.formatDateToString}
+          formatDuration={props?.formatDuration}
+          showDistance={props?.showDistance}
+          sendDataToApp={props?.sendDataToApp}
+        />
+      )}
     </div>
   );
 };
