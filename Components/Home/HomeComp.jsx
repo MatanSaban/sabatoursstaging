@@ -42,6 +42,7 @@ const HomeComp = (props) => {
 
   return (
     <div className={styles.homeWrapper}>
+      
       <section className={`${styles.section} ${styles.hero}`} style={{ backgroundImage: `url(${props?.homepageData?.acf?.section_hero?.hero_image_desktop})` }}>
         <Image
           className={styles.logo}

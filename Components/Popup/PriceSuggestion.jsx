@@ -141,8 +141,8 @@ const PriceSuggestion = (props) => {
             <p>תוקף ההצעה: {formatDate(props?.route?.expDate)}</p>
           </div>
         </div>
-        <h2>הצעת מחיר מס&apos; { }</h2>
-        <h3>היי {props?.userDetails?.firstname}, הנה הצעת המחיר שביקשת:</h3>
+        <h2 className={styles.suggestionTitle}>הצעת מחיר מס&apos; { }</h2>
+        <h3 className={styles.suggestionGreeting}>היי {props?.userDetails?.firstname}, הנה הצעת המחיר שביקשת:</h3>
         <div className={styles.clientAndTripInfoWrapper}>
           <div className={styles.clientAndTripInfo}>
             <div className={`${styles.info} ${styles.clientInfo}`}>

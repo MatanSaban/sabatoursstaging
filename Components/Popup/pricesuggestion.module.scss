@@ -284,3 +284,70 @@
     padding: 0px;
   }
 }
+
+@media only screen and (max-width: 768px) { 
+  .main {
+    padding: 5px;
+    .header {
+      .logo {
+        img {
+          max-width: 80%;
+        }
+      }
+    }
+    .body {
+      .suggestionTitle {
+        position: absolute;
+        top: 0;
+        font-size: 16px;
+      }
+      .suggestionGreeting {
+        padding-top: 70px;
+      }
+      .psDates { 
+        margin-top: 0;
+      }
+      .clientAndTripInfoWrapper {
+        .clientAndTripInfo {
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          .info {
+            width: 100%;
+            text-align: right;
+          }
+        }
+        .tripDetailedInfo {
+          flex-direction: column;
+          .boundInfo {
+            h5 {
+              margin-top: 0;
+              margin-bottom: 0;
+            }
+            .detailsList {
+              padding: 0;
+          }
+          .detailsList li:first-of-type, .detailsList li:last-of-type {
+              list-style: none;
+              padding: 0 0px 0 0; 
+              margin-left: 10px;
+          }
+          .detailsList li {
+              list-style: disc;
+              padding: 0 5px 0 0;
+              margin-right: 5px;
+          }
+          }
+        }
+      }
+      .priceOfferStripe {
+        flex-direction: column;
+        justify-content: space-between;
+        border-radius: 15px;
+        > div {
+          margin-bottom: 10px;
+        }
+      }
+    }
+  }
+}
