@@ -50,20 +50,35 @@ function MyApp({ Component, pageProps }) {
       try {
         // Fetch regions
         const regionRes = await axios.get(
-          `${process.env.DATA_SOURCE}/region?per_page=100`
+          `${process.env.DATA_SOURCE}/region?per_page=100`,
+          {
+            headers: {
+              'Authorization': `${process.env.WORDPRESSTOKEN}`,
+            }
+          }
         );
         let fetchedRegions = regionRes.data;
         setLoadingPercentage(25);
         
         // Fetch cities
         const citiesRes = await axios.get(
-          `${process.env.DATA_SOURCE}/service_areas?per_page=100`
+          `${process.env.DATA_SOURCE}/service_areas?per_page=100`,
+          {
+            headers: {
+              'Authorization': `${process.env.WORDPRESSTOKEN}`,
+            }
+          }
           );
           let fetchedCities = citiesRes.data;
           setLoadingPercentage(50);
           
           const services = await axios.get(
-            `${process.env.DATA_SOURCE}/transportation_types?per_page=100`
+            `${process.env.DATA_SOURCE}/transportation_types?per_page=100`,
+            {
+              headers: {
+                'Authorization': `${process.env.WORDPRESSTOKEN}`,
+              }
+            }
             );
             let fetchedServices = services.data;
             setLoadingPercentage(75);
@@ -73,7 +88,12 @@ function MyApp({ Component, pageProps }) {
               console.log(service);
               const mainImageId = service?.acf?.feat_image;
               if (mainImageId != null) {
-                return axios.get(`${process.env.DATA_SOURCE}/media/${mainImageId}`);
+                return axios.get(`${process.env.DATA_SOURCE}/media/${mainImageId}`,
+                {
+                  headers: {
+                    'Authorization': `${process.env.WORDPRESSTOKEN}`,
+                  }
+                });
               }
             });
             
@@ -101,7 +121,12 @@ function MyApp({ Component, pageProps }) {
         setRegions(fetchedRegions);
         
         const homepageRes = await axios.get(
-          `${process.env.DATA_SOURCE}/pages?slug=home&acf_format=standard`
+          `${process.env.DATA_SOURCE}/pages?slug=home&acf_format=standard`,
+          {
+            headers: {
+              'Authorization': `${process.env.WORDPRESSTOKEN}`,
+            }
+          }
           );
           const fetchHomepage = homepageRes.data[0];
           setHomepageData(fetchHomepage);

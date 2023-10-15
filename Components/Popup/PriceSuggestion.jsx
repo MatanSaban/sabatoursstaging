@@ -42,34 +42,6 @@ const PriceSuggestion = (props) => {
       </div>
     );
   };
-  //   generatePDF(props.userDetails, props.route, (pdfBlob) => {
-  //     const reader = new FileReader();
-  //     reader.readAsDataURL(pdfBlob);
-  //     reader.onloadend = function () {
-  //       const base64data = reader.result;
-
-  //       // Sending userDetails and PDF to the server
-  //       axios
-  //         .post(`/api/sendPriceSuggestion`, {
-  //           userDetails: props.userDetails,
-  //           route: props.route,
-  //           pdfBlob: base64data,
-  //         })
-  //         .then((res) => {
-  //           console.log("Server response:", res);
-
-  //           // Triggering download for the user
-  //           const blobURL = window.URL.createObjectURL(pdfBlob);
-  //           const tempLink = document.createElement("a");
-  //           tempLink.href = blobURL;
-  //           tempLink.setAttribute("download", "userDetails.pdf");
-  //           document.body.appendChild(tempLink);
-  //           tempLink.click();
-  //           document.body.removeChild(tempLink);
-  //           window.URL.revokeObjectURL(blobURL);
-  //         });
-  //     };
-  //   });
 
   const handleEventType = (eventType) => {
     let label;
@@ -141,7 +113,7 @@ const PriceSuggestion = (props) => {
             <p>תוקף ההצעה: {formatDate(props?.route?.expDate)}</p>
           </div>
         </div>
-        <h2 className={styles.suggestionTitle}>הצעת מחיר מס&apos; { }</h2>
+        <h2 className={styles.suggestionTitle}>הצעת מחיר מס&apos; {props?.offerId}</h2>
         <h3 className={styles.suggestionGreeting}>היי {props?.userDetails?.firstname}, הנה הצעת המחיר שביקשת:</h3>
         <div className={styles.clientAndTripInfoWrapper}>
           <div className={styles.clientAndTripInfo}>

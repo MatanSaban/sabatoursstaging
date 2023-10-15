@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styles from "./header.module.scss";
 import { MdOutlineThumbUpOffAlt } from "react-icons/md";
 import { AiOutlinePhone } from "react-icons/ai";
@@ -12,22 +12,29 @@ import Lottie from 'lottie-react';
 const Header = () => {
   const [scrolling, setScrolling] = useState(false);
   const [mobileMenu, setMobileMenu] = useState(false);
-  const [playLottie, setPlayLottie] = useState(false);
+  const lottieRef = useRef();
 
-  useEffect(() => {
-    const lottieInterval = setInterval(() => {
-      setPlayLottie(true);
+  // useEffect(() => {
+  //   const playLottie = () => {
+  //     lottieRef.current.play();
+  //   };
 
-      setTimeout(() => {
-        setPlayLottie(false);
-      }, 5000); // 5 seconds
-    }, 60000); // 1 minute
+  //   const stopLottie = () => {
+  //     lottieRef.current.pause();
+  //   };
 
-    return () => {
-      clearInterval(lottieInterval);
-    };
-  }, []);
+  //   const lottieInterval = setInterval(() => {
+  //     playLottie();
 
+  //     setTimeout(() => {
+  //       stopLottie();
+  //     }, 5000); // 5 seconds
+  //   }, 5000); // 1 minute
+
+  //   return () => {
+  //     clearInterval(lottieInterval);
+  //   };
+  // }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -70,7 +77,15 @@ const Header = () => {
       </div>
       <div className={styles.LogoWrapper}>
         <Link href="/">
-          <Image className={styles.logo} src={Logo} alt='סבן טורס, העמוד בטעינה' />
+          {/* <Image className={styles.logo} src={Logo} alt='סבן טורס, העמוד בטעינה' />
+           */}
+          <Lottie onLoopComplete={() => {
+            lottieRef.current.goToAndStop(120, true); 
+            setTimeout(() => {
+              lottieRef.current.goToAndPlay(0, true); 
+            }, 30000);
+            
+          }} animationData={LottieLogoAnim} loop={true} lottieRef={lottieRef} />
         </Link>
       </div>
       <div className={styles.DesktopMenuWrapper}>
@@ -126,7 +141,7 @@ const Header = () => {
         </div>
       </div>
 
-      {
+      { 
         <div
           className={`${styles.mobilePopupMenu} ${mobileMenu && styles.active}`}
         >

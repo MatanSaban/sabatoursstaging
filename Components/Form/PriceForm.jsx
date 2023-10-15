@@ -891,6 +891,10 @@ const PriceForm = (props) => {
           route={route}
           eventTypes={eventTypes}
           canProceed={canProceed}
+          formatDuration={formatDuration}
+          showDistance={showDistance}
+          formatDateToString={formatDateToString}
+          sendDataToApp={props?.sendDataToApp}
           />
         </>
         }

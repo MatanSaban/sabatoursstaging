@@ -20,7 +20,7 @@ const lineImage = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAoCAYAAAA
 import jsPDF from 'jspdf';
 import { format } from "date-fns";
 import { customRound, formatDate, importantThing } from './functions.js';
-const generatePDF = (userDetails, route, calculatedPrice, callback) => {
+const generatePDF = (userDetails, route, calculatedPrice, offerId, callback) => {
     console.log('route');
     console.log(route);
     const doc = new jsPDF();
@@ -100,7 +100,7 @@ const generatePDF = (userDetails, route, calculatedPrice, callback) => {
     // start of body //
     doc.setFontSize(20);
     doc.setFont('ploni-bold-aaa');
-    const centeredTitle = reverseString("הצעת מחיר מספר: 123");
+    const centeredTitle = reverseString(`הצעת מחיר מספר: ${offerId}`);
     doc.text(centeredTitle, getCenteredX(doc, centeredTitle), 50);
     doc.setFontSize(20);
 

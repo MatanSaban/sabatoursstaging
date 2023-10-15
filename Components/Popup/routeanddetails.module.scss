@@ -1,11 +1,12 @@
 .verificationPopup {
-  position: absolute;
+  position: fixed;
   top: 50%;
   left: 50%;
-  width: fit-content;
-  height: fit-content;
-  padding: 20px;
-  background-color: black;
+  width: max-content;
+  height: max-content;
+  max-width: 70%;
+  padding: 20px; 
+  background-color: rgb(52, 154, 223);
   color: white;
   transform: translate(-50%, -50%);
   border-radius: 20px;
@@ -16,11 +17,51 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  font-weight: bold;
+  font-size: 24px;
+  .closeButton {
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    svg {
+      width: 25px;
+      height: 25px;
+    }
+  }
   p {
   }
-  input {
-  }
-  button {
+  .inpAndBtn {
+    // padding: 10px;
+    // background-color: white;
+    // border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    input {
+      border-radius: 0 20px 20px 0;
+      border: none;
+      height: 100%;
+      width: 80%;
+      padding: 10px;
+      font-size: 20px;
+      outline: none;
+    }
+    button {
+      border-radius: 20px 0 0 20px;
+      font-size: 20px;
+      border: none;
+      height: 100%;
+      width: 40%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 10px;
+    }
   }
 }
 .blur {
@@ -160,4 +201,24 @@
 }
 .matan {
   background-color: red;
+}
+
+
+@media only screen and (max-width: 768px) {
+  .routeAndDetails {
+    .outbound_inbound_mapsWrapper {
+      flex-direction: column;
+      .mapContainer {
+        max-width: 90%;
+        margin: 0 auto;
+      }
+    }
+  }
+  .verificationPopup {
+    // top: 50%;
+    // left: 50%;
+    // transform: translate(-50%, -50%);
+    // margin-top: auto;
+    position: fixed;
+  }
 }
