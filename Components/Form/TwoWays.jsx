@@ -1,3 +1,4 @@
+import { formatDateToString } from "../../utils/functions";
 import FormFooter from "./FormFooter";
 import styles from "./priceform.module.scss";
 import Way from "./Way";
@@ -87,7 +88,7 @@ const TwoWays = (props) => {
           handleStages={props?.handleStages}
           stage={props?.stage}
           windowWidth={props?.windowWidth}
-          formatDateToString={props?.formatDateToString}
+          formatDateToString={formatDateToString}
           formatDuration={props?.formatDuration}
           showDistance={props?.showDistance}
           sendDataToApp={props?.sendDataToApp}

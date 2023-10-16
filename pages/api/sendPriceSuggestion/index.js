@@ -46,7 +46,7 @@ export default async function handler(req, res) {
                 cid: logoDataCid
             },
             {
-                filename: 'SabanTours-Price-Offer-X.pdf', 
+                filename: `SabanTours-Price-Offer-${body.offerId}.pdf`, 
                 content: pdfBuffer,
                 contentType: 'application/pdf',
             }

@@ -4,8 +4,8 @@
   padding: 15px;
   width: auto;
   height: fit-content;
-  max-height: 80vh;
-  overflow-y: auto;
+  // max-height: 80vh;
+  // overflow-y: auto;
   .pdfWrapper {
     height: 100%;
     width: 100%;
@@ -91,7 +91,7 @@
           }
           ul.detailsList {
             text-align: right;
-            list-style: none;
+            list-style: none !important;
             ul.stopList {
               list-style: none;
               padding: 0 15px 0 0;

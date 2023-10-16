@@ -1,0 +1,118 @@
+.checkoutPage {
+  height: 100%;
+  .pageHero {
+    min-height: 40vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url("../../public/media/heroBg.png");
+    background-position: bottom -150px right;
+    h1 {
+      font-size: 3rem;
+      color: white;
+      text-shadow: 0 0 10px black;
+    }
+  }
+  .checkoutContent {
+    display: flex;
+    width: 80%;
+    align-items: flex-start;
+    margin: 100px auto;
+    height: 100%;
+    .routeDetails {
+      margin: 0 20px;
+      width: 70%;
+      text-align: center;
+      box-shadow: 0 0 10px black;
+      border-radius: 20px;
+      h3 {
+        font-size: 1.4rem;
+      }
+      .theRoute {
+        .sectionWrapper {
+          .detailsHeading {
+            font-size: 1.15rem;
+            font-weight: 600;
+            margin: 0;
+          }
+          .section {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+            .column {
+              width: max-content;
+              display: flex;
+              flex-direction: column;
+              justify-content: center;
+              align-items: center;
+              margin-left: 20px;
+
+              .dataHeading {
+                margin-left: 10px;
+                font-size: 1rem;
+                font-weight: 400;
+                margin-top: 0;
+                margin-bottom: 10px;
+              }
+              span {
+                font-size: 1rem;
+                font-weight: bold;
+              }
+            }
+            .wayWrapper {
+              display: flex;
+              flex-direction: column;
+              justify-content: space-between;
+              .wayTitle {
+                font-size: 1.2rem;
+                text-align: right;
+              }
+            }
+            .row {
+              display: grid;
+              grid-template-columns: repeat(2, 1fr);
+              text-align: right;
+              grid-gap: 0;
+              gap: 0;
+              justify-content: center;
+              align-items: center;
+              justify-items: start;
+              .wayRowDataTitle {
+                margin: 0;
+                font-size: 0.9rem;
+                max-width: fit-content;
+              }
+              .wayRowData {
+                font-size: 0.9rem;
+                margin: 0;
+              }
+            }
+          }
+        }
+      }
+    }
+        .checkoutBar {
+            margin: 0 20px;
+            text-align: center;
+            width: 30%;
+            height: 100%;
+            position: sticky;
+            box-shadow: 0 0 10px black;
+            border-radius: 20px;
+            padding: 20px;
+            .mainTitle{ 
+
+            }
+            .section {
+                .sectionTitle {
+                    text-align: right;
+                }
+                .paymentOptions {
+                    display: flex;
+                    flex-direction: column;
+                    text-align: right;
+                }
+            }
+        }
+  }
+}

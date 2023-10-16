@@ -8,9 +8,11 @@ import { AiOutlineMail } from "react-icons/ai";
 import BoundInfo from "./BoundInfo";
 import generatePDF from "../../utils/generatePDF.js";
 import axios from "axios";
-import { customRound, formatDate } from "../../utils/functions";
+import { customRound, formatDate, formatDateToString, handleRouteTypeLabel } from "../../utils/functions";
 import { importantThing } from "../../utils/functions";
+import { useRouter } from "next/navigation";
 const PriceSuggestion = (props) => {
+  const router = useRouter();
   const ImportantThingsToSay = (importantThing) => {
     return (
       <div className={styles.importantToSay}>
@@ -61,15 +63,7 @@ const PriceSuggestion = (props) => {
     return label;
   };
 
-  const handleTouteTypeLabel = (routeType) => {
-    if (routeType === "OneWay") {
-      return "כיוון אחד";
-    } else if (routeType === "TwoWays") {
-      return "הלוך וחזור";
-    } else if (routeType === "MultiWay") {
-      return "רב יעדים";
-    }
-  };
+  
 
   return (
     <div className={styles.main}>
@@ -143,12 +137,12 @@ const PriceSuggestion = (props) => {
                   <span className={styles.value}>כיוון הנסיעה:</span>
                 </span>{" "}
                 <span className={styles.value}>
-                  {handleTouteTypeLabel(props?.route?.routeType)}
+                  {handleRouteTypeLabel(props?.route?.routeType)}
                 </span>
                 <br />
                 <span className={styles.boldTitle}>תאריך ההסעה:</span>{" "}
                 <span className={styles.value}>
-                  {props?.formatDateToString(
+                  {formatDateToString(
                     props?.route?.outbound?.startPoint?.date,
                     "date"
                   )}
@@ -165,8 +159,8 @@ const PriceSuggestion = (props) => {
             <BoundInfo
               bound={"outbound"}
               handleEventType={handleEventType}
-              handleTouteTypeLabel={handleTouteTypeLabel}
-              formatDateToString={props?.formatDateToString}
+              handleRouteTypeLabel={handleRouteTypeLabel}
+              formatDateToString={formatDateToString}
               userDetails={props?.userDetails}
               route={props?.route}
               formatDuration={props?.formatDuration}
@@ -175,8 +169,8 @@ const PriceSuggestion = (props) => {
               <BoundInfo
                 bound={"inbound"}
                 handleEventType={handleEventType}
-                handleTouteTypeLabel={handleTouteTypeLabel}
-                formatDateToString={props?.formatDateToString}
+                handleRouteTypeLabel={handleRouteTypeLabel}
+                formatDateToString={formatDateToString}
                 userDetails={props?.userDetails}
                 route={props?.route}
                 formatDuration={props?.formatDuration}
@@ -210,7 +204,14 @@ const PriceSuggestion = (props) => {
             </ul>
           </div>
           <div className={styles.buttonDiv}>
-            <button>הזמנת ההסעה</button>
+            <button onClick={() => {
+              props.handlePopup(
+                false
+              );
+              router.push('/checkout');
+            }}>
+            הזמנת ההסעה 
+            </button>
           </div>
         </div>
         {ImportantThingsToSay(importantThing)}

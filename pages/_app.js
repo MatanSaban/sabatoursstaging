@@ -25,6 +25,10 @@ function MyApp({ Component, pageProps }) {
   const [minLoadingTimeElapsed, setMinLoadingTimeElapsed] = useState(false);
   const [loadingPercentage, setLoadingPercentage] = useState(0);
   const [loaderShow, setLoaderShow] = useState(true);
+  
+
+  const [headerHeight, setHeaderHeight] = useState();
+  
 
   console.log("MyApp comp render");
 
@@ -35,7 +39,12 @@ function MyApp({ Component, pageProps }) {
   };
 
   const sendDataToApp = (a, b, c, d, e, f) => {
-    setUserRoute({ ...a, ...b });
+    console.log("sendDataToApp run");
+    console.log(a);
+    console.log(b);
+    console.log(c);
+    console.log(d);
+    setUserRoute({ ...a, ...b, ...c, ...d });
   };
 
   useEffect(() => {
@@ -188,6 +197,7 @@ function MyApp({ Component, pageProps }) {
           services={services}
           windowWidth={windowWidth}
           media={media}
+          setHeaderHeight={setHeaderHeight}
         />
         {popup}
         <Component
@@ -200,6 +210,7 @@ function MyApp({ Component, pageProps }) {
           windowWidth={windowWidth}
           media={media}
           homepageData={homepageData}
+          headerHeight={headerHeight}
         />
         <Footer
           regions={regions}

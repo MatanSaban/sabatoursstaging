@@ -19,7 +19,7 @@ const carImage = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAKAAAABnCAYAAACH
 const lineImage = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAoCAYAAAAyqOAwAAAACXBIWXMAAC4jAAAuIwF4pT92AAAAOUlEQVQ4je3UsQ0AMAgDwSeKxMDMwcBUpIuUgkxglz65tQHNkA0QEbj7LauKzGRNK0AoFAqfGJ+rOWqlCE/6h6khAAAAAElFTkSuQmCC";
 import jsPDF from 'jspdf';
 import { format } from "date-fns";
-import { customRound, formatDate, importantThing } from './functions.js';
+import { customRound, formatDate, formatDuration, handleEventType, importantThing, showDistance } from './functions.js';
 const generatePDF = (userDetails, route, calculatedPrice, offerId, callback) => {
     console.log('route');
     console.log(route);
@@ -41,43 +41,8 @@ const generatePDF = (userDetails, route, calculatedPrice, offerId, callback) => 
         return labelX - labelWidth - gapInPoints - valueWidth;
     };
 
-    const formatDuration = (totalMinutes) => {
-        const hours = Math.floor(totalMinutes / 60);
-        const minutes = totalMinutes % 60;
-        if (hours > 1) {
-            return `${hours} שעות ו-${minutes} דקות`;
-        } else if (hours == 1) {
-            return `${hours} שעות ו-${minutes} דקות`;
-        } else if (hours < 1) {
-            return `${minutes} דקות`;
-        }
-    };
-    const showDistance = (distance) => {
-        return `${distance ? distance.toFixed(1) : 0} ק"מ`;
-    };
-    const eventTypes = [
-        { label: "אירוע פרטי", value: "private event" },
-        { label: "אירוע", value: "event" },
-        { label: "חתונה", value: "wedding" },
-        { label: "נתב''ג", value: "airport" },
-        { label: "טיול", value: "trip" },
-        { label: "עבודה", value: "work" },
-        { label: "בית ספר", value: "school" },
-        { label: "יום כיף", value: "funday" },
-        { label: "אחר", value: "other" },
-    ];
-    const handleEventType = (eventType) => {
-        let label;
-        const eventTypesArr = eventTypes;
-        if (eventTypesArr) {
-            eventTypesArr.forEach((event) => {
-                if (event.value == eventType) {
-                    label = event.label;
-                }
-            });
-        }
-        return label;
-    };
+    
+    
     doc.setFont('ploni-regular-aaa');  // This is the font name you set when you added the font to jsPDF
     doc.setFontSize(14); // you can adjust the size as required
     // Add logo to the PDF

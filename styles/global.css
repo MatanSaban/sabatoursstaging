@@ -4,7 +4,7 @@ body {
   margin: 0;
   direction: rtl;
   font-family: "Ploni";
-  overflow-x: hidden;
+  /* overflow-x: hidden; */
 }
 * {
   box-sizing: border-box;

@@ -10,6 +10,7 @@ import RouteAndDetails from "../Popup/RouteAndDetails";
 import axios from "axios";
 import checkIcon from "../../public/media/checkIcon.svg";
 import Image from 'next/image';
+import { formatDateToString } from '../../utils/functions';
 
 
 
@@ -225,7 +226,7 @@ const FormFooter = (props) => {
                           handlePopup={props.handlePopup}
                           route={route}
                           eventTypes={eventTypes}
-                          formatDateToString={props?.formatDateToString}
+                          formatDateToString={formatDateToString}
                           showDistance={props?.showDistance}
                           formatDuration={props?.formatDuration}
                           sendDataToApp={props?.sendDataToApp}

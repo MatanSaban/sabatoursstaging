@@ -24,6 +24,9 @@ section.section {
   align-items: center;
   justify-content: center;
 }
+.homeWrapper {
+  overflow-x: hidden;
+}
 section.section.hero {
   height: 100dvh;
   color: $color-white;

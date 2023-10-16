@@ -4,7 +4,7 @@
 .Header {
   width: 100vw;
   height: 100px;
-  align-items: center; 
+  align-items: center;
   padding: 10px 50px;
   display: flex;
   justify-content: space-between;
@@ -15,7 +15,15 @@
   // overflow: hidden;
   transition: all 0.3s ease;
   .LogoWrapper {
-    width: fit-content;
+    width: 300px;
+    height: 100%;
+    margin-bottom: 20px;
+    .logoLink {
+      height: 120px;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+    }
     .logo {
       width: 185px;
       height: 100%;
@@ -125,7 +133,7 @@
   .Header {
     background: #ffffff99 !important;
     backdrop-filter: blur(5px);
-    box-shadow: 0 0 10px black;  
+    box-shadow: 0 0 10px black;
     padding: 5px 10px;
     flex-direction: row-reverse;
     align-items: center;
@@ -136,6 +144,7 @@
       justify-content: center;
       align-items: center;
       width: 26%;
+      z-index: 1;
       .actionButton {
         font-size: 16px;
         padding: 0 5px;
@@ -149,12 +158,15 @@
       width: 0%;
     }
     .LogoWrapper {
-      width: 40%;
+      width: 60%;
       text-align: center;
-      margin: 0 auto;
-      .logo {
-        width: 100%;
-        margin-top: 20px;
+      margin: 20px -20px 0 -20px;
+      z-index: 0;
+      .logoLink {
+        height: inherit;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
       }
     }
     .mobileMenuWrapper {
@@ -162,6 +174,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      z-index: 9999;
       .MobileMenu {
         display: flex;
         flex-direction: column;
@@ -213,7 +226,7 @@
       position: fixed;
       left: -100%;
       top: 0;
-      background: linear-gradient(120deg, $color-blue,  #26bd90);
+      background: linear-gradient(120deg, $color-blue, #26bd90);
       width: 100dvw;
       height: 100dvh;
       z-index: 999;
@@ -250,11 +263,9 @@
           }
         }
       }
-      
     }
     .mobilePopupMenu.active {
       left: 0;
     }
   }
-  
 }

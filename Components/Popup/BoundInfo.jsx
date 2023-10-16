@@ -4,6 +4,7 @@ import locationIcon from "../../public/media/sabantoursLocationIcon.svg";
 import endPointIcon from "../../public/media/saban_tours_favicon_pinkred_green.svg";
 import styles from "./pricesuggestion.module.scss";
 import Image from "next/image";
+import { formatDateToString } from "../../utils/functions";
 
 const BoundInfo = (props) => {
   const direction = props?.bound;
@@ -32,7 +33,7 @@ const BoundInfo = (props) => {
         <li>
           <span className={styles.boldTitle}>שעת התייצבות:</span>{" "}
           <span className={styles.value}>
-            {props?.formatDateToString(
+            {formatDateToString(
               props?.route?.[direction]?.startPoint?.date,
               "time"
             )}
@@ -47,6 +48,10 @@ const BoundInfo = (props) => {
         <li>
           <span className={styles.boldTitle}>מס&apos; נוסעים:</span>{" "}
           <span className={styles.value}>{props?.route?.passengers}</span>
+        </li>
+        <li>
+          <span className={styles.boldTitle}>מס&apos; מזוודות:</span>{" "}
+          <span className={styles.value}>{props?.route?.suitcases}</span>
         </li>
         <li>
           <span className={styles.boldTitle}>זמן נסיעה מוערך:</span>{" "}

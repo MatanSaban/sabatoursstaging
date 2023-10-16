@@ -65,3 +65,71 @@ export const customRound = (num) => {
     return roundedDownToTen;
   }
 }
+
+export const handleRouteTypeLabel = (routeType) => {
+  if (routeType === "OneWay") {
+    return "כיוון אחד";
+  } else if (routeType === "TwoWays") {
+    return "הלוך וחזור";
+  } else if (routeType === "MultiWay") {
+    return "רב יעדים";
+  }
+};
+
+export const handleEventType = (eventType) => {
+  let label;
+  const eventTypesArr = eventTypes;
+  if (eventTypesArr) {
+    eventTypesArr.forEach((event) => {
+      if (event.value == eventType) {
+        label = event.label;
+      }
+    });
+  }
+  return label;
+};
+
+export const eventTypes = [
+  { label: "אירוע פרטי", value: "private event" },
+  { label: "אירוע", value: "event" },
+  { label: "חתונה", value: "wedding" },
+  { label: "נתב''ג", value: "airport" },
+  { label: "טיול", value: "trip" },
+  { label: "עבודה", value: "work" },
+  { label: "בית ספר", value: "school" },
+  { label: "יום כיף", value: "funday" },
+  { label: "אחר", value: "other" },
+];
+
+export  const formatDateToString = (dateObj, dateOrTime) => {
+  if (dateObj) {
+    if (dateOrTime === "date") {
+      const day = dateObj.getDate().toString().padStart(2, "0");
+      const month = (dateObj.getMonth() + 1).toString().padStart(2, "0");
+      const year = dateObj.getFullYear().toString().slice(-2);
+      return `${day}/${month}/${year}`;
+    } else if (dateOrTime === "time") {
+      const hours = dateObj.getHours().toString().padStart(2, "0");
+      const minutes = dateObj.getMinutes().toString().padStart(2, "0");
+      return `${hours}:${minutes}`;
+    }
+  }
+
+  return "";
+};
+
+export const formatDuration = (totalMinutes) => {
+  const hours = Math.floor(totalMinutes / 60);
+  const minutes = totalMinutes % 60;
+  if (hours > 1) {
+    return `${hours} שעות ו-${minutes} דקות`;
+  } else if (hours == 1) {
+    return `${hours} שעות ו-${minutes} דקות`;
+  } else if (hours < 1) {
+    return `${minutes} דקות`;
+  }
+};
+
+export const showDistance = (distance) => {
+  return `${distance ? distance.toFixed(1) : 0} ק"מ`;
+};

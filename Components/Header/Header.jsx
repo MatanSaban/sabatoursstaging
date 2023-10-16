@@ -9,7 +9,7 @@ import LottieLogoAnim from '../../public/media/LogoAnimationLottie.json';
 import Lottie from 'lottie-react';
 
 
-const Header = () => {
+const Header = (props) => {
   const [scrolling, setScrolling] = useState(false);
   const [mobileMenu, setMobileMenu] = useState(false);
   const lottieRef = useRef();
@@ -62,8 +62,19 @@ const Header = () => {
     }, 500);
   }
 
+  const headerRef = useRef(null);
+
+  useEffect(() => {
+    if (headerRef.current) {
+      const height = headerRef.current.offsetHeight;
+      console.log(`The height of the header is: ${height}px`);
+      props?.setHeaderHeight(height);
+    }
+  }, []);
+
   return (
     <header
+    ref={headerRef}
       className={`${styles.Header} ${scrolling ? styles.scrolled : styles.notScrolled
         }`}
     >
@@ -76,7 +87,7 @@ const Header = () => {
         </button>
       </div>
       <div className={styles.LogoWrapper}>
-        <Link href="/">
+        <Link className={styles.logoLink} href="/">
           {/* <Image className={styles.logo} src={Logo} alt='סבן טורס, העמוד בטעינה' />
            */}
           <Lottie onLoopComplete={() => {

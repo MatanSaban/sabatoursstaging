@@ -2,6 +2,7 @@ import React from "react";
 import styles from "./priceform.module.scss";
 import Way from "./Way";
 import FormFooter from "./FormFooter";
+import { formatDateToString } from "../../utils/functions";
 const OneWay = (props) => {
   return (
     <div
@@ -57,7 +58,7 @@ const OneWay = (props) => {
         handleStages={props?.handleStages}
         stage={props?.stage}
         windowWidth={props?.windowWidth}
-        formatDateToString={props?.formatDateToString}
+        formatDateToString={formatDateToString}
         formatDuration={props?.formatDuration}
         showDistance={props?.showDistance}
         sendDataToApp={props?.sendDataToApp}

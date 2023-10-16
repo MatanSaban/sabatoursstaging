@@ -9,6 +9,7 @@ const { v4: uuidv4 } = require("uuid");
 import { format } from "date-fns";
 import { BsCalendar2Event } from "react-icons/bs";
 import FormFooter from "./FormFooter";
+import { eventTypes, formatDateToString, formatDuration, showDistance } from "../../utils/functions";
 
 const PriceForm = (props) => {
   //   console.log("PriceForm comp render");
@@ -35,17 +36,7 @@ const PriceForm = (props) => {
   });
 
   const [selectedOption, setSelectedOption] = useState("OneWay");
-  const eventTypes = [
-    { label: "אירוע פרטי", value: "private event" },
-    { label: "אירוע", value: "event" },
-    { label: "חתונה", value: "wedding" },
-    { label: "נתב''ג", value: "airport" },
-    { label: "טיול", value: "trip" },
-    { label: "עבודה", value: "work" },
-    { label: "בית ספר", value: "school" },
-    { label: "יום כיף", value: "funday" },
-    { label: "אחר", value: "other" },
-  ];
+  
 
   const [route, setRoute] = useState({
     inbound: {
@@ -152,21 +143,7 @@ const PriceForm = (props) => {
     }));
   };
 
-  const formatDuration = (totalMinutes) => {
-    const hours = Math.floor(totalMinutes / 60);
-    const minutes = totalMinutes % 60;
-    if (hours > 1) {
-      return `${hours} שעות ו-${minutes} דקות`;
-    } else if (hours == 1) {
-      return `${hours} שעות ו-${minutes} דקות`;
-    } else if (hours < 1) {
-      return `${minutes} דקות`;
-    }
-  };
-
-  const showDistance = (distance) => {
-    return `${distance ? distance.toFixed(1) : 0} ק"מ`;
-  };
+  
 
   const handleFields = (e) => {
     const name = e.target.name;
@@ -293,20 +270,7 @@ const PriceForm = (props) => {
     }
   };
 
-  const formatDateToString = (dateObj, dateOrTime) => {
-    if (dateOrTime === "date") {
-      const day = dateObj.getDate().toString().padStart(2, "0");
-      const month = (dateObj.getMonth() + 1).toString().padStart(2, "0");
-      const year = dateObj.getFullYear().toString().slice(-2);
-      return `${day}/${month}/${year}`;
-    } else if (dateOrTime === "time") {
-      const hours = dateObj.getHours().toString().padStart(2, "0");
-      const minutes = dateObj.getMinutes().toString().padStart(2, "0");
-      return `${hours}:${minutes}`;
-    }
-
-    return "";
-  };
+ 
 
   // Function to calculate distances and durations between consecutive addresses
   const calculateRouteInformation = async (addresses, direction, datetime) => {
