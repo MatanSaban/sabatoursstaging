@@ -16,7 +16,11 @@ const DriveType = (props) => {
 export default DriveType
 
 export async function getStaticPaths() {
-    const res = await axios.get(`${process.env.DATA_SOURCE}/transportation_types`);
+    const res = await axios.get(`${process.env.DATA_SOURCE}/transportation_types`, {
+        headers: {
+          Authorization: `${process.env.WORDPRESSTOKEN}`,
+        },
+      });
     const driveTypes = res.data;
 
     const paths = driveTypes.map((driverType) => ({
@@ -27,7 +31,11 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }) {
-    const res = await axios.get(`${process.env.DATA_SOURCE}/transportation_types?slug=${params.slug}`);
+    const res = await axios.get(`${process.env.DATA_SOURCE}/transportation_types?slug=${params.slug}`, {
+        headers: {
+          Authorization: `${process.env.WORDPRESSTOKEN}`,
+        },
+      });
     const post = res.data[0];
 
     return { props: { post }, revalidate: 60 };
