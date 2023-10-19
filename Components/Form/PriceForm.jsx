@@ -206,7 +206,7 @@ const PriceForm = (props) => {
     );
   };
 
-  const handleDateChange = (selectedDate, e) => {
+  const handleDateChange = (selectedDate, e, ref) => {
     // console.log("selectedDate");
     // console.log(selectedDate);
     const date = format(selectedDate, "dd/MM/yyyy");
@@ -227,6 +227,9 @@ const PriceForm = (props) => {
         },
       },
     }));
+    if (time) {
+      ref.current.focus();
+    }
   };
 
   const handleStops = (e) => {
@@ -373,19 +376,22 @@ const PriceForm = (props) => {
   ));
   CustomDateInput.displayName = "CustomDateInput";
 
-  const handlePointSelect = (place, direction, point, indexOfStop) => {
-    console.log("place");
-    console.log(place);
-    console.log("direction");
-    console.log(direction);
-    console.log("point");
-    console.log(point);
-    console.log("indexOfStop");
-    console.log(indexOfStop);
-    const address = place?.formatted_address;
+  const handlePointSelect = (place, direction, point, indexOfStop, ref) => {
+    let address = place?.formatted_address;
+    address = `${place?.name}, ${place?.vicinity}`
+    console.log(address);
     const latitude = place?.geometry?.location?.lat();
     const longitude = place?.geometry?.location?.lng();
     const city = extractCity(place?.address_components);
+
+    if (point === "startPoint") {
+      ref.current.state.focused = true
+      ref.current.state.open = true
+      console.log("ref");
+      console.log(ref.current);
+    }
+
+    // handleFields(e);
 
     // Update the route state with the selected address for the appropriate direction (outbound or inbound)
     if (point != "stop") {

@@ -92,11 +92,29 @@
           ul.detailsList {
             text-align: right;
             list-style: none !important;
+            li {
+              position: relative;
+              &:before {
+                content: "";
+                border-right: 2px solid black;
+                height: 50%;
+                position: absolute;
+                right: 0;
+                top: 50%;
+                transform: translate(400%, -50%);
+              }
+            }
+            li:first-child , li:last-child {
+              &::before {
+                border: none;
+              }
+            }
             ul.stopList {
               list-style: none;
               padding: 0 15px 0 0;
               margin: 0;
               li {
+                
                 svg {
                 }
                 span {

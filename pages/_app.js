@@ -25,10 +25,10 @@ function MyApp({ Component, pageProps }) {
   const [minLoadingTimeElapsed, setMinLoadingTimeElapsed] = useState(false);
   const [loadingPercentage, setLoadingPercentage] = useState(0);
   const [loaderShow, setLoaderShow] = useState(true);
-  
+
 
   const [headerHeight, setHeaderHeight] = useState();
-  
+
 
   console.log("MyApp comp render");
 
@@ -68,7 +68,7 @@ function MyApp({ Component, pageProps }) {
         );
         let fetchedRegions = regionRes.data;
         setLoadingPercentage(25);
-        
+
         // Fetch cities
         const citiesRes = await axios.get(
           `${process.env.DATA_SOURCE}/service_areas?per_page=100`,
@@ -77,58 +77,58 @@ function MyApp({ Component, pageProps }) {
               'Authorization': `${process.env.WORDPRESSTOKEN}`,
             }
           }
-          );
-          let fetchedCities = citiesRes.data;
-          setLoadingPercentage(50);
-          
-          const services = await axios.get(
-            `${process.env.DATA_SOURCE}/transportation_types?per_page=100`,
-            {
-              headers: {
-                'Authorization': `${process.env.WORDPRESSTOKEN}`,
-              }
+        );
+        let fetchedCities = citiesRes.data;
+        setLoadingPercentage(50);
+
+        const services = await axios.get(
+          `${process.env.DATA_SOURCE}/transportation_types?per_page=100`,
+          {
+            headers: {
+              'Authorization': `${process.env.WORDPRESSTOKEN}`,
             }
-            );
-            let fetchedServices = services.data;
-            setLoadingPercentage(75);
-            
-            const mediaPromises = fetchedServices.map((service) => {
-              console.log("service");
-              console.log(service);
-              const mainImageId = service?.acf?.feat_image;
-              if (mainImageId != null) {
-                return axios.get(`${process.env.DATA_SOURCE}/media/${mainImageId}`,
-                {
-                  headers: {
-                    'Authorization': `${process.env.WORDPRESSTOKEN}`,
-                  }
-                });
-              }
-            });
-            
-            const mediaResponses = await Promise.all(mediaPromises);
-            
-            fetchedServices = fetchedServices.map((service, index) => {
-              return {
-                ...service,
-                mainImage: mediaResponses[index]?.data?.source_url || null,
-              };
-            });
-            
-            setServices(fetchedServices);
-            
-            // Associate cities with their respective regions
-            fetchedRegions = fetchedRegions.map((region) => {
-              const cities = fetchedCities.filter(
-                (city) => city.region[0] === region.id
-                );
-                return {
+          }
+        );
+        let fetchedServices = services.data;
+        setLoadingPercentage(75);
+
+        const mediaPromises = fetchedServices.map((service) => {
+          console.log("service");
+          console.log(service);
+          const mainImageId = service?.acf?.feat_image;
+          if (mainImageId != null) {
+            return axios.get(`${process.env.DATA_SOURCE}/media/${mainImageId}`,
+              {
+                headers: {
+                  'Authorization': `${process.env.WORDPRESSTOKEN}`,
+                }
+              });
+          }
+        });
+
+        const mediaResponses = await Promise.all(mediaPromises);
+
+        fetchedServices = fetchedServices.map((service, index) => {
+          return {
+            ...service,
+            mainImage: mediaResponses[index]?.data?.source_url || null,
+          };
+        });
+
+        setServices(fetchedServices);
+
+        // Associate cities with their respective regions
+        fetchedRegions = fetchedRegions.map((region) => {
+          const cities = fetchedCities.filter(
+            (city) => city.region[0] === region.id
+          );
+          return {
             ...region,
             cities,
           };
         });
         setRegions(fetchedRegions);
-        
+
         const homepageRes = await axios.get(
           `${process.env.DATA_SOURCE}/pages?slug=home&acf_format=standard`,
           {
@@ -136,15 +136,15 @@ function MyApp({ Component, pageProps }) {
               'Authorization': `${process.env.WORDPRESSTOKEN}`,
             }
           }
-          );
-          const fetchHomepage = homepageRes.data[0];
-          setHomepageData(fetchHomepage);
-          
-        } catch (error) {
-          console.error("An error occurred while fetching data:", error);
-        } finally {
-          setLoadingPercentage(100);
-          // Check if minimum 6 seconds have elapsed before setting loading to false
+        );
+        const fetchHomepage = homepageRes.data[0];
+        setHomepageData(fetchHomepage);
+
+      } catch (error) {
+        console.error("An error occurred while fetching data:", error);
+      } finally {
+        setLoadingPercentage(100);
+        // Check if minimum 6 seconds have elapsed before setting loading to false
         if (minLoadingTimeElapsed) {
           setLoading(false);
         }
@@ -162,15 +162,15 @@ function MyApp({ Component, pageProps }) {
 
   useEffect(() => {
     // If API calls are done and 6 seconds have passed, set loading to false
-    if (minLoadingTimeElapsed && 
+    if (minLoadingTimeElapsed &&
       regions &&
       services &&
       media &&
       homepageData) {
-        setLoaderShow(false);
-        setTimeout(() => {
-          setLoading(false);
-        }, 1000);
+      setLoaderShow(false);
+      setTimeout(() => {
+        setLoading(false);
+      }, 1000);
     }
   }, [minLoadingTimeElapsed, /* your dependencies for API calls being complete */]);
 
@@ -187,11 +187,11 @@ function MyApp({ Component, pageProps }) {
           href="/media/saban_tours_favicon.svg"
         />
         <title>סבן טורס - חברת ההסעות שלך</title>
-        <meta name="theme-color" content="008bcd" /> 
+        <meta name="theme-color" content="008bcd" />
       </Head>
 
       <div className="appWrapper">
-      {loading && <LogoLoader  percentage={loadingPercentage} show={loaderShow} />}
+        {loading && <LogoLoader percentage={loadingPercentage} show={loaderShow} />}
         <Header
           regions={regions}
           services={services}

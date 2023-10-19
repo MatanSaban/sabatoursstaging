@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { BiSolidTimeFive } from "react-icons/bi";
 import { AiOutlinePlus, AiOutlineClose } from "react-icons/ai";
 import { PiDotsThreeOutlineVertical } from "react-icons/pi";
@@ -41,6 +41,13 @@ const Way = ({
   handleStages,
   ...props
 }) => {
+
+  
+
+  const datePickerRef = useRef(null);
+  const endPointInputRef = useRef(null);
+
+
   const totalDistance = // formatDuration
     // showDistance
     wayType == "outbound"
@@ -188,6 +195,19 @@ const Way = ({
 
   console.log(`can proceedstepspspsp ${canProceedStep(props)}`);
 
+  // useEffect(() => {
+  //   console.log("useeffect in WAY!");
+  //   // Assuming route?.startPoint?.date contains the updated date and time
+  //   if (route?.[wayType]?.startPoint?.time) {
+  //     console.log("condition met");
+  //     console.log("condition met");
+  //     console.log("condition met");
+  //     console.log("condition met");
+  //     // Focus the endPoint input here
+  //     endPointInputRef?.current?.focus();
+  //   }
+  // }, [route?.outbound?.startPoint?.time,route?.inbound?.startPoint?.time]);
+
   return (
     <>
       <div className={`${styles[wayType]} ${styles.wayStyle} way`} id={wayType}>
@@ -216,13 +236,15 @@ const Way = ({
                   onLoad={(autocomplete) =>
                     (startPointAutocompleteRef.current = autocomplete)
                   }
-                  onPlaceChanged={(e) =>
+                  onPlaceChanged={(e) => {
                     handlePointSelect(
                       startPointAutocompleteRef.current.getPlace(),
                       wayType,
-                      "startPoint"
+                      "startPoint",
+                      null,
+                      datePickerRef  
                     )
-                  }
+                  }}
                   options={{
                     componentRestrictions: { country: "IL" },
                   }}
@@ -248,8 +270,9 @@ const Way = ({
                 <label htmlFor="date">תאריך יציאה:</label>
                 <div
                   className={`${styles.inputWrapper} ${styles.datePickerWrapper}`}
-                >
+                  >
                   <DatePicker
+                    ref={datePickerRef}
                     locale={he}
                     name="date"
                     showTimeSelect
@@ -272,7 +295,7 @@ const Way = ({
                         30
                       )
                     }
-                    onChange={(date) =>
+                    onChange={(date) => {
                       props.handleDateChange(date, {
                         target: {
                           name: "date",
@@ -283,7 +306,8 @@ const Way = ({
                             },
                           },
                         },
-                      })
+                      }, endPointInputRef);
+                    }
                     }
                   />
                 </div>
@@ -368,7 +392,7 @@ const Way = ({
                       id={`stop_${index}`}
                       required
                       className={styles.stopInput}
-                      defaultValue={
+                      value={
                         props?.route?.[wayType]?.stops[index]?.address
                       }
                       lat={props?.route?.[wayType]?.stops[index]?.lat}
@@ -421,10 +445,11 @@ const Way = ({
                     id="address"
                     required
                     parent="endPoint"
-                    defaultValue={props?.route?.[wayType]?.endPoint?.address}
+                    value={props?.route?.[wayType]?.endPoint?.address}
                     lat={props?.route?.[wayType]?.endPoint?.lat}
                     lng={props?.route?.[wayType]?.endPoint?.lng}
                     onChange={(e) => props.handleFields(e)}
+                    ref={endPointInputRef}
                   />
                 </Autocomplete>
               </div>

@@ -1,3 +1,6 @@
+@import "../../styles/_variables.scss"; // Import the _variables.scss file
+@import "../../styles/globals.scss"; // Import the _variables.scss file
+
 .checkoutPage {
   height: 100%;
   .pageHero {
@@ -91,28 +94,105 @@
         }
       }
     }
-        .checkoutBar {
-            margin: 0 20px;
-            text-align: center;
-            width: 30%;
-            height: 100%;
-            position: sticky;
-            box-shadow: 0 0 10px black;
-            border-radius: 20px;
-            padding: 20px;
-            .mainTitle{ 
-
-            }
-            .section {
-                .sectionTitle {
-                    text-align: right;
-                }
-                .paymentOptions {
-                    display: flex;
-                    flex-direction: column;
-                    text-align: right;
-                }
-            }
+    .checkoutBar {
+      margin: 0 20px;
+      text-align: center;
+      width: 30%;
+      height: 100%;
+      position: sticky;
+      box-shadow: 0 0 10px black;
+      border-radius: 20px;
+      padding: 20px;
+      .mainTitle {
+        font-size: 1.5rem;
+        margin: 0;
+      }
+      .section {
+        .sectionTitle {
+          text-align: right;
+          font-size: 1.2rem;
+          margin: 0;
         }
+        .paymentOptions {
+          display: flex;
+          flex-direction: column;
+          text-align: right;
+          .toPayNow {
+            color: rgb(94, 151, 9);
+        }
+        .toPayLater {
+              color: $color-blue;
+          }
+          .instead {
+            color: rgb(255, 127, 127);
+            text-decoration: line-through;
+          }
+          .discount {
+          }
+        }
+        .importantMessage {
+          color: red;
+          font-size: 0.8rem;
+          line-height: 20px;
+          margin: 10px 0;
+        }
+      }
+      .ccDetailsWrapper {
+        .ccDetailsForm {
+          max-width: 70%;
+          margin: 20px auto;
+          input {
+            width: 100%;
+            border-radius: 5px;
+            border: 1px solid rgb(155, 155, 155);
+          }
+          .wrapper {
+            margin-bottom: 10px;
+          }
+          .ccExpDateAndCvvWrapper {
+            display: grid;
+            grid-template-columns: 32% 32% 32%;
+            justify-content: space-between;
+            select {
+              border-radius: 5px;
+              border: 1px solid rgb(155, 155, 155);
+            }
+          }
+          .ccNameAndIdWrapper {
+            display: flex;
+            justify-content: space-between;
+            input {
+              width: 48%;
+            }
+          }
+          input,
+          select {
+            height: 35px;
+            padding-right: 2px;
+            padding-left: 2px;
+            text-align: center;
+            font-size: 1rem;
+          }
+          .submitButton {
+            border: none;
+            padding: 5px 10px;
+            color: $color-white;
+            background-color: $color-green;
+            font-size: 1rem;
+            border-radius: 10px;
+            width: 100%;
+          }
+          .disabled {
+            opacity: 0.5;
+            cursor: not-allowed !important;
+          }
+          .dealPriceSelected {
+            font-size: 1.3rem;
+            margin: 5px 0;
+            line-height: inherit;
+          }
+        }
+      }
+    }
   }
 }
