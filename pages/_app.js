@@ -143,7 +143,7 @@ function MyApp({ Component, pageProps }) {
       } catch (error) {
         console.error("An error occurred while fetching data:", error);
       } finally {
-        setLoadingPercentage(100);
+        setLoadingPercentage(100); 
         // Check if minimum 6 seconds have elapsed before setting loading to false
         if (minLoadingTimeElapsed) {
           setLoading(false);

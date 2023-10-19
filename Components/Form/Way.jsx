@@ -13,6 +13,7 @@ import stopIcon from "../../public/media/stopIcon.svg";
 import locationIcon from "../../public/media/sabantoursLocationIcon.svg";
 import endPointIcon from "../../public/media/saban_tours_favicon_pinkred_green.svg";
 import styles from "./priceform.module.scss";
+import { isMobile } from "../../utils/functions";
 
 registerLocale("he", he);
 
@@ -46,6 +47,7 @@ const Way = ({
 
   const datePickerRef = useRef(null);
   const endPointInputRef = useRef(null);
+  const startPointInputRef = useRef(null);
 
 
   const totalDistance = // formatDuration
@@ -123,13 +125,7 @@ const Way = ({
   // console.log("route?.startPoint?.date: ", route?.startPoint?.date);
   // console.log("route?.outbound?.duration: ", route?.outbound?.duration);
 
-  const isMobile = (windowWidth) => {
-    if (windowWidth < 769) {
-      return true;
-    } else {
-      return false;
-    }
-  };
+  
 
   const [buttonTextByRouteType, setButtonTextByRouteType] = useState(
     props?.stage
@@ -242,7 +238,7 @@ const Way = ({
                       wayType,
                       "startPoint",
                       null,
-                      datePickerRef  
+                      isMobile(props?.windowWidth) ? endPointInputRef : datePickerRef  
                     )
                   }}
                   options={{
@@ -259,6 +255,7 @@ const Way = ({
                     lat={props?.route?.[wayType]?.startPoint?.lat}
                     lng={props?.route?.[wayType]?.startPoint?.lng}
                     onChange={(e) => props.handleFields(e)}
+                    ref={startPointInputRef}
                   />
                 </Autocomplete>
               </div>
@@ -306,7 +303,7 @@ const Way = ({
                             },
                           },
                         },
-                      }, endPointInputRef);
+                      }, isMobile(props?.windowWidth) ? startPointInputRef : endPointInputRef);
                     }
                     }
                   />

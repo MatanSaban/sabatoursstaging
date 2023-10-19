@@ -133,3 +133,11 @@ export const formatDuration = (totalMinutes) => {
 export const showDistance = (distance) => {
   return `${distance ? distance.toFixed(1) : 0} ק"מ`;
 };
+
+export const isMobile = (windowWidth) => {
+  if (windowWidth < 769) {
+    return true;
+  } else {
+    return false;
+  }
+};

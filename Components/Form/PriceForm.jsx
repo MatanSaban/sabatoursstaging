@@ -9,7 +9,7 @@ const { v4: uuidv4 } = require("uuid");
 import { format } from "date-fns";
 import { BsCalendar2Event } from "react-icons/bs";
 import FormFooter from "./FormFooter";
-import { eventTypes, formatDateToString, formatDuration, showDistance } from "../../utils/functions";
+import { eventTypes, formatDateToString, formatDuration, isMobile, showDistance } from "../../utils/functions";
 
 const PriceForm = (props) => {
   //   console.log("PriceForm comp render");
@@ -228,7 +228,7 @@ const PriceForm = (props) => {
       },
     }));
     if (time) {
-      ref.current.focus();
+      ref.current.focus(); 
     }
   };
 
@@ -384,11 +384,13 @@ const PriceForm = (props) => {
     const longitude = place?.geometry?.location?.lng();
     const city = extractCity(place?.address_components);
 
-    if (point === "startPoint") {
+    if (point === "startPoint" && !isMobile(props?.windowWidth) ) {
       ref.current.state.focused = true
       ref.current.state.open = true
       console.log("ref");
       console.log(ref.current);
+    } else if (point === "startPoint" && isMobile(props?.windowWidth) ) {
+      ref.current.focus(); // end point for mobile after the startpoint
     }
 
     // handleFields(e);

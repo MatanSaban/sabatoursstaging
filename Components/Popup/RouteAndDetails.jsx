@@ -342,7 +342,7 @@ const RouteAndDetails = (props) => {
               }
             );
           });
-          router.push("/checkout") 
+        router.push("/checkout")
       }, 500);
     } else {
       alert("קוד האימות שגוי, אנא נסה שנית.");
@@ -467,7 +467,9 @@ const RouteAndDetails = (props) => {
                 className={`${styles.labelAndInputWrapper} ${styles.formColumn}`}
               >
                 <label htmlFor="phone">טלפון</label>
-                <input type="number" name="phone" id="phone" required />
+                <input type="number" pattern="[0-9]*"
+                  inputmode="numeric"
+                  name="phone" id="phone" required />
               </div>
             </div>
             <button className={styles.priceRequestButton}>המשך</button>
