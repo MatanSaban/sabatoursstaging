@@ -9,12 +9,17 @@ import {
 import PriceSuggestion from "../pricesuggestion";
 import CreditCardPrev from "../../Components/Misc/CreditCardPrev/CreditCardPrev";
 import axios from "axios";
+import useIsraeliIdValidation from '../../Components/Misc/Hooks/IsraeliIdValidation';
+import useCardNumberValidation from '../../Components/Misc/Hooks/CreditCardValidation';
+
 
 const Checkout = (props) => {
 	const [selectedPaymentOption, setSelectedPaymentOption] = useState("downPayment");
 	const [advancePayment, setAdvancePayment] = useState();
 	const [fullPayment, setFullPayment] = useState();
-	const [isValidCC, setisValidCC] = useState(null);
+	const [isValidCC, validateCardNumber] = useCardNumberValidation();
+	const [isValid, validateIsraeliId] = useIsraeliIdValidation();
+	const [error, setError] = useState(null);
 	const [cardDetails, setCardDetails] = useState({
 		fullNameOnCard: "XXXXX XXXXX",
 		citizenId: "",
@@ -63,7 +68,7 @@ const Checkout = (props) => {
 					...prevDetails,
 					ccDate: {
 						...prevDetails.ccDate,
-						[name]: parseInt(updatedValue), // Update either the month or the year
+						[name]: updatedValue, // Update either the month or the year
 					},
 				};
 			} else {
@@ -149,6 +154,13 @@ const Checkout = (props) => {
 
 	const handleSubmitPayment = async (e) => {
 		e.preventDefault();
+		console.log("here");
+		if (!validateCardNumber(cardDetails?.ccNumber)) {
+			return setError("מספר כרטיס האשראי לא תקין");
+		} 
+		if (!validateIsraeliId(cardDetails?.citizenId)) {
+			return setError("מספר תעודת הזהות לא תקין");
+		} 
 		submitButtonRef.current.setAttribute("disabled", true);
 		const sendPayment = await axios.post(`/api/handlePayment`, {
 			"Customer": {
@@ -192,39 +204,13 @@ const Checkout = (props) => {
 	};
 
 
-	const validateCardNumber = (cardNumber) => {
-		let isValid;
-		// Remove all spaces and non-numeric characters
-		const sanitizedCardNumber = String(cardNumber).replace(/\D+/g, '');
-
-		if (sanitizedCardNumber.length !== 16) {
-			isValid = false;
+	useEffect(() => {
+		if (isValidCC && error == "מספר כרטיס האשראי לא תקין") {
+			setError(null);
+		} else if (isValidCC && error !== "מספר כרטיס האשראי לא תקין") {
+			cardNumberRef.current.style.borderColor = "green"
 		}
-
-		let sum = 0;
-
-		// Loop through the sanitized card number digits starting from the rightmost digit
-		for (let i = sanitizedCardNumber.length - 1, toggle = true; i >= 0; i--) {
-			let digit = parseInt(sanitizedCardNumber[i], 10);
-			let weight = toggle ? 1 : 2; // Weight alternates between 1 and 2, starting from the rightmost digit
-
-			// Multiply the digit by its weight
-			let product = digit * weight;
-			// If the product is two-digit, sum its digits
-			if (product > 9) {
-				product = Math.floor(product / 10) + (product % 10);
-			}
-			// Add the product to the sum
-			sum += product;
-			// Toggle the weight for the next iteration
-			toggle = !toggle;
-		}
-		// Check if the sum is divisible by 10
-		isValid = sum % 10 === 0;
-
-		setisValidCC(isValid);
-		return isValid;
-	};
+	}, [isValidCC, error])
 
 
 	return (
@@ -248,7 +234,7 @@ const Checkout = (props) => {
 						handlePopup={props.handlePopup}
 					/>
 				</div>
-				<div className={`${styles.checkoutBar}`} style={{ top: `${props?.headerHeight + 20}px` }}>
+				<div className={`${styles.checkoutBar}`} style={{ top: `${props?.headerHeight + 50}px` }}>
 					<h2 className={styles.mainTitle}>פרטי תשלום</h2>
 					<section className={styles.section}>
 						<h3 className={styles.sectionTitle}>בחירת תנאי תשלום</h3>
@@ -293,7 +279,7 @@ const Checkout = (props) => {
 									type="text"
 									name="fullNameOnCard"
 									id="fullNameOnCard"
-									placeholder="שם מלא על הכרטיס" 
+									placeholder="שם מלא על הכרטיס"
 									defaultValue={`${props?.userRoute?.firstname} ${props?.userRoute?.lastname}`}
 								/>
 								<input
@@ -304,7 +290,14 @@ const Checkout = (props) => {
 									id="citizenId"
 									placeholder="תעודת זהות"
 									maxLength={9} // Limit to 16 characters
-								/>
+									onBlur={(e) => validateIsraeliId(e.target.value)}
+									style={
+										isValid === null
+											? { border: "1px solid #9b9b9b" }
+											: isValid
+												? { border: "2px solid green" }
+												: { border: "2px solid red" }
+									} />
 							</div>
 							<div className={`${styles.ccNumberWrapper} ${styles.wrapper}`}>
 								<input
@@ -316,11 +309,11 @@ const Checkout = (props) => {
 									placeholder="מספר כרטיס"
 									ref={cardNumberRef}
 									style={
-										isValidCC === true
-											? { borderColor: "green" }
-											: isValidCC === false
-												? { borderColor: "red" }
-												: null
+										isValidCC === null
+											? { border: "1px solid #9b9b9b" }
+											: isValidCC
+												? { border: "2px solid green" }
+												: { border: "2px solid red" }
 									}
 									onBlur={(e) => validateCardNumber(cardDetails?.ccNumber)}
 									maxLength={16} // Limit to 16 characters
@@ -397,7 +390,8 @@ const Checkout = (props) => {
 								/>
 							</div>
 							<h4 className={styles.dealPriceSelected}>הסכום לתשלום : {selectedPaymentOption === "downPayment" ? `₪${parseFloat(advancePayment?.downPayment.toFixed(0))}` : `₪${parseFloat(fullPayment?.fullPayment.toFixed(0))}`}</h4>
-							<button className={`${styles.submitButton} ${styles.disabled}`} ref={submitButtonRef}>פתיחת הזמנה</button>
+							<button className={`${styles.submitButton} ${submitButtonRef?.current?.getAttribute("disabled") == true && styles.disabled}`} ref={submitButtonRef}>פתיחת הזמנה</button>
+							<span>{error}</span>
 						</form>
 					</section>
 				</div>

@@ -331,7 +331,7 @@ const RouteAndDetails = (props) => {
                       tempLink.href = blobURL;
                       tempLink.setAttribute(
                         "download",
-                        `SabanTours-Price-Offer-${offerId}.pdf`
+                        `הצעת מחיר סבן טורס-${offerId}.pdf`
                       );
                       document.body.appendChild(tempLink);
                       tempLink.click();

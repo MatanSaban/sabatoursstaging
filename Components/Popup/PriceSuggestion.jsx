@@ -9,41 +9,10 @@ import BoundInfo from "./BoundInfo";
 import generatePDF from "../../utils/generatePDF.js";
 import axios from "axios";
 import { customRound, formatDate, formatDateToString, handleRouteTypeLabel } from "../../utils/functions";
-import { importantThing } from "../../utils/functions";
 import { useRouter } from "next/navigation";
 const PriceSuggestion = (props) => {
   const router = useRouter();
-  const ImportantThingsToSay = (importantThing) => {
-    return (
-      <div className={styles.importantToSay}>
-        <h3>חשוב להגיד</h3>
-        {importantThing.things.map((thing, thingIndex) => (
-          <React.Fragment key={thingIndex}>
-            <p className={styles.importantThing}>
-              <span className={styles.boldTitle}>{thing.title}</span>
-              <br />
-              {thing.content.map((line, lineIndex) => (
-                <React.Fragment key={lineIndex}>
-                  {line}
-                  <br />
-                </React.Fragment>
-              ))}
-            </p>
-            {thing.marked && thing.marked.length ? (
-              <p className={styles.importantThing}>
-                {thing.marked.map((markedLine, markedIndex) => (
-                  <React.Fragment key={markedIndex}>
-                    <span className={styles.boldTitle}>{markedLine}</span>
-                    <br />
-                  </React.Fragment>
-                ))}
-              </p>
-            ) : null}
-          </React.Fragment>
-        ))}
-      </div>
-    );
-  };
+  
 
   const handleEventType = (eventType) => {
     let label;
@@ -214,7 +183,7 @@ const PriceSuggestion = (props) => {
             </button>
           </div>
         </div>
-        {ImportantThingsToSay(importantThing)}
+        {/* {ImportantThingsToSay(importantThing)} */}
       </div>
       <div className={styles.footer}>
         <h3>מאחלים לכם נסיעה טובה, נעימה ובטוחה!</h3>

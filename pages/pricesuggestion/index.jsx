@@ -5,6 +5,7 @@ import Image from "next/image";
 import BoundInfo from "../../Components/Popup/BoundInfo";
 import { jsPDF } from "jspdf";
 import html2canvas from "html2canvas";
+import { importantThing } from "../../utils/functions";
 import { formatDateToString, handleEventType, handleRouteTypeLabel } from "../../utils/functions";
 
 const PriceSuggestion = (props) => {
@@ -19,7 +20,37 @@ const PriceSuggestion = (props) => {
     pdf.save("my-document.pdf");
   };
 
-  
+  const ImportantThingsToSay = (importantThing) => {
+    return (
+      <div className={styles.importantToSay}>
+        <h3>חשוב להגיד</h3>
+        {importantThing.things.map((thing, thingIndex) => (
+          <React.Fragment key={thingIndex}>
+            <p className={styles.importantThing}>
+              <span className={styles.boldTitle}>{thing.title}</span>
+              <br />
+              {thing.content.map((line, lineIndex) => (
+                <React.Fragment key={lineIndex}>
+                  {line}
+                  <br />
+                </React.Fragment>
+              ))}
+            </p>
+            {thing.marked && thing.marked.length ? (
+              <p className={styles.importantThing}>
+                {thing.marked.map((markedLine, markedIndex) => (
+                  <React.Fragment key={markedIndex}>
+                    <span className={styles.boldTitle}>{markedLine}</span>
+                    <br />
+                  </React.Fragment>
+                ))}
+              </p>
+            ) : null}
+          </React.Fragment>
+        ))}
+      </div>
+    );
+  };
 
   return (
     <div className={styles.main} ref={componentRef}>
@@ -125,41 +156,15 @@ const PriceSuggestion = (props) => {
             </ul>
           </div>
         </div>
-        <div className={styles.importantToSay}>
-          <h3>חשוב להגיד</h3>
-          <p className={styles.importantThing}>
-            <span className={styles.boldTitle}>תנאי ביטול:</span>
-            <br />
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur
-            repellendus tenetur, voluptatum itaque odio officiis tempore
-            praesentium? Saepe maiores laudantium accusamus quibusdam eveniet.
-            Ducimus veritatis quae reiciendis maxime adipisci? Laboriosam?
-          </p>
-          <p className={styles.importantThing}>
-            <span className={styles.boldTitle}>תנאי ביטול:</span>
-            <br />
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur
-            repellendus tenetur, voluptatum itaque odio officiis tempore
-            praesentium? Saepe maiores laudantium accusamus quibusdam eveniet.
-            Ducimus veritatis quae reiciendis maxime adipisci? Laboriosam?
-          </p>
-          <p className={styles.importantThing}>
-            <span className={styles.boldTitle}>תנאי ביטול:</span>
-            <br />
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur
-            repellendus tenetur, voluptatum itaque odio officiis tempore
-            praesentium? Saepe maiores laudantium accusamus quibusdam eveniet.
-            Ducimus veritatis quae reiciendis maxime adipisci? Laboriosam?
-          </p>
-        </div>
+        {ImportantThingsToSay(importantThing)}
       </div>
       <div className={styles.footer}>
         <h3>מאחלים לכם נסיעה טובה, נעימה ובטוחה!</h3>
         <Image className={styles.logo} src={Logo} width={200} height={"auto"} alt="logo" />
       </div>
-      <button onClick={() => exportComponentAsPDF(componentRef)}>
+      {/* <button onClick={() => exportComponentAsPDF(componentRef)}>
         הורדת הצעת המחיר
-      </button>
+      </button> */}
     </div>
   );
 };
