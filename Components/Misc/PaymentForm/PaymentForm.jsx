@@ -16,6 +16,15 @@ const PaymentForm = (props) => {
         }
     }, [props?.showPaymentDetailsOnMobile]);
 
+
+    const getPaymentAmount = () => {
+        if (props?.selectedPaymentOption === "downPayment") {
+            return parseFloat(props?.advancePayment?.downPayment.toFixed(0));
+        } else {
+            return parseFloat(props?.fullPayment?.fullPayment.toFixed(0));
+        }
+    };
+
     return (
         <div
             ref={containerRef}
@@ -145,7 +154,8 @@ const PaymentForm = (props) => {
                         }}
                     />
                 </div>
-                <h4 className={styles.dealPriceSelected}>הסכום לתשלום : {props?.selectedPaymentOption === "downPayment" ? `₪${parseFloat(props?.advancePayment?.downPayment.toFixed(0))}` : `₪${parseFloat(props?.fullPayment?.props?.fullPayment.toFixed(0))}`}</h4>
+                <h4 className={styles.dealPriceSelected}>הסכום לתשלום : ₪{getPaymentAmount()}
+                </h4>
                 <button className={`${styles.submitButton} ${props?.submitButtonRef?.current?.getAttribute("disabled") == true && styles.disabled}`} ref={props?.submitButtonRef}>פתיחת הזמנה מאובטחת</button>
                 <span>{props?.error}</span>
             </form>
