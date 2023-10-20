@@ -112,6 +112,7 @@ const RouteAndDetails = (props) => {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
 
+    console.log("eeeeeeeeeee");
     console.log(e);
 
     const newDetails = {};
@@ -163,7 +164,7 @@ const RouteAndDetails = (props) => {
         {
           headers: {
             Authorization: `${process.env.WORDPRESSTOKEN}`,
-          },
+          }, 
         }
       );
 
@@ -177,6 +178,7 @@ const RouteAndDetails = (props) => {
         props?.sendDataToApp(
           props?.route,
           { price: props?.price },
+          { carType: props?.carType },
           { offerId: offerId },
           userDetails // userRoute={props?.userRoute} - to redirect to new PriceSugg page.
         );
@@ -191,6 +193,7 @@ const RouteAndDetails = (props) => {
               userDetails,
               props?.route,
               props?.price,
+              props?.carType,
               offerId,
               async (pdfBlob) => {
                 // Open the PDF in a new tab for validation
@@ -249,7 +252,7 @@ const RouteAndDetails = (props) => {
                         status: "publish",
                         acf: {
                           PO_id: parseInt(offerId),
-                          PO_car_type: "",
+                          PO_car_type: props?.carType,
                           PO_client_email: userDetails.email,
                           PO_client_name:
                             userDetails.firstname + " " + userDetails.lastname,
@@ -320,6 +323,7 @@ const RouteAndDetails = (props) => {
                       pdfBlob: base64data,
                       route: props?.route,
                       price: props?.price,
+                      price: props?.carType,
                       offerId: offerId,
                     })
                     .then((res) => {

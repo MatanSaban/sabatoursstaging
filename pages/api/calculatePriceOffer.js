@@ -293,7 +293,7 @@ function getPriceOffer(route, holidays) {
 
     // 2. Calculate the cost to the client based on the total expense
     result.total = baseExpense; // This is the base cost for the client
-    result.priceDetails.push({ amount: baseExpense, reason: `Base price for ${bestOption}` });
+    result.priceDetails.push({ amount: baseExpense, reason: `Base price for ${bestOption}`, carType: bestOption });
 
     // 3. Add any extra fees if applicable
     const extraFees = calculateExtraFees(route, holidays, result);

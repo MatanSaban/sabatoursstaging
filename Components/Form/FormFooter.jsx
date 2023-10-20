@@ -236,6 +236,7 @@ const FormFooter = (props) => {
                       sendDataToApp={props?.sendDataToApp}
                       userRoute={props?.userRoute}
                       price={res?.data?.price}
+                      carType={res?.data?.priceDetails[0].carType}
                     />
                   );
                 }

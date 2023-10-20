@@ -104,7 +104,8 @@
                 transform: translate(400%, -50%);
               }
             }
-            li:first-child , li:last-child {
+            li:first-child,
+            li:last-child {
               &::before {
                 border: none;
               }
@@ -114,7 +115,6 @@
               padding: 0 15px 0 0;
               margin: 0;
               li {
-                
                 svg {
                 }
                 span {
@@ -154,11 +154,14 @@
       align-items: center;
       position: relative;
       .carImage {
-        border: 1px solid black;
-        width: 150px;
-        height: 150px;
+        width: 100%;
+        height: auto;
         max-height: 100%;
         max-width: 100%;
+        img {
+          width: 100%;
+          object-fit: contain;
+        }
       }
       .offerDetails {
         .line {
@@ -303,7 +306,7 @@
   }
 }
 
-@media only screen and (max-width: 768px) { 
+@media only screen and (max-width: 768px) {
   .main {
     padding: 5px;
     .header {
@@ -314,6 +317,10 @@
       }
     }
     .body {
+      margin: 0;
+      .priceOfferGreeting {
+        margin-top: 50px;
+      }
       .suggestionTitle {
         position: absolute;
         top: 0;
@@ -322,39 +329,55 @@
       .suggestionGreeting {
         padding-top: 70px;
       }
-      .psDates { 
-        margin-top: 0;
+      .psDates {
+        margin-top: 40px;
+        // margin-left: 20px;
       }
       .clientAndTripInfoWrapper {
         .clientAndTripInfo {
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
+          flex-direction: row-reverse;
+          display: flex;
+          align-items: flex-start;
           .info {
             width: 100%;
             text-align: right;
+            p {
+              margin-right: 5px;
+            }
           }
         }
         .tripDetailedInfo {
           flex-direction: column;
           .boundInfo {
+            margin: 0 auto;
+            text-align: right;
+            width: 80%;
             h5 {
               margin-top: 0;
               margin-bottom: 0;
             }
             .detailsList {
               padding: 0;
-          }
-          .detailsList li:first-of-type, .detailsList li:last-of-type {
               list-style: none;
-              padding: 0 0px 0 0; 
+              li {
+                margin-right: 5px ;
+                padding-right: 0 !important;
+                 &::before {
+                  display: none !important;
+                }
+              }
+            }
+            .detailsList li:first-of-type,
+            .detailsList li:last-of-type {
+              list-style: none;
+              padding: 0 0px 0 0;
               margin-left: 10px;
-          }
-          .detailsList li {
+            }
+            .detailsList li {
               list-style: disc;
               padding: 0 5px 0 0;
               margin-right: 5px;
-          }
+            }
           }
         }
       }

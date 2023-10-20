@@ -1,60 +1,15 @@
 import React, { useEffect, useRef, useState } from "react";
 import styles from "./header.module.scss";
-import { MdOutlineThumbUpOffAlt } from "react-icons/md";
 import { AiOutlinePhone } from "react-icons/ai";
-import Logo from "../../public/media/SabanToursLogo.svg";
-import Image from "next/image";
 import Link from "next/link";
 import LottieLogoAnim from '../../public/media/LogoAnimationLottie.json';
 import Lottie from 'lottie-react';
 
 
 const Header = (props) => {
-  const [scrolling, setScrolling] = useState(false);
   const [mobileMenu, setMobileMenu] = useState(false);
   const lottieRef = useRef();
-
-  // useEffect(() => {
-  //   const playLottie = () => {
-  //     lottieRef.current.play();
-  //   };
-
-  //   const stopLottie = () => {
-  //     lottieRef.current.pause();
-  //   };
-
-  //   const lottieInterval = setInterval(() => {
-  //     playLottie();
-
-  //     setTimeout(() => {
-  //       stopLottie();
-  //     }, 5000); // 5 seconds
-  //   }, 5000); // 1 minute
-
-  //   return () => {
-  //     clearInterval(lottieInterval);
-  //   };
-  // }, []);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollTop = window.scrollY;
-      if (scrollTop > 0) {
-        setScrolling(true);
-        console.log("now its 0 - not scrolled");
-      } else {
-        console.log("now its more than 0 - does scrolled");
-        setScrolling(false);
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-
-    // Clean up the event listener when the component is unmounted
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
+  
 
   const closeMobileMenuDelay = () => {
     setTimeout(() => {
@@ -75,7 +30,7 @@ const Header = (props) => {
   return (
     <header
     ref={headerRef}
-      className={`${styles.Header} ${scrolling ? styles.scrolled : styles.notScrolled
+      className={`${styles.Header} ${props?.scrolling ? styles.scrolled : styles.notScrolled
         }`}
     >
       <div className={styles.ActionButtonWrapper}>

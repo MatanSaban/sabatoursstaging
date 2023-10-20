@@ -3,22 +3,12 @@ import styles from "../../Components/Popup/pricesuggestion.module.scss";
 import Logo from "../../public/media/SabanToursLogo.svg";
 import Image from "next/image";
 import BoundInfo from "../../Components/Popup/BoundInfo";
-import { jsPDF } from "jspdf";
-import html2canvas from "html2canvas";
-import { importantThing } from "../../utils/functions";
+import { importantThing, showCarImage, translateCarType } from "../../utils/functions";
 import { formatDateToString, handleEventType, handleRouteTypeLabel } from "../../utils/functions";
 
 const PriceSuggestion = (props) => {
   const componentRef = useRef();
 
-  const exportComponentAsPDF = async (componentRef) => {
-    const canvas = await html2canvas(componentRef.current);
-    const imgData = canvas.toDataURL("image/png");
-
-    const pdf = new jsPDF();
-    pdf.addImage(imgData, "PNG", 0, 0);
-    pdf.save("my-document.pdf");
-  };
 
   const ImportantThingsToSay = (importantThing) => {
     return (
@@ -64,7 +54,7 @@ const PriceSuggestion = (props) => {
           </div>
         </div>
         <h2>הצעת מחיר מס&apos; { props?.offerId}</h2>
-        <h3>היי {props?.userDetails?.firstname}, הנה הצעת המחיר שביקשת:</h3>
+        <h3 className={styles.priceOfferGreeting}>היי {props?.userDetails?.firstname}, הנה הצעת המחיר שביקשת:</h3>
         <div className={styles.clientAndTripInfoWrapper}>
           <div className={styles.clientAndTripInfo}>
             <div className={`${styles.info} ${styles.clientInfo}`}>
@@ -133,16 +123,18 @@ const PriceSuggestion = (props) => {
           </div>
         </div>
         <div className={styles.priceOfferStripe}>
-          <div className={styles.carImage}></div>
+          <div className={styles.carImage}>
+            <Image src={showCarImage(props?.userDetails?.carType)} height={150} width={150} />
+          </div>
           <div className={styles.offerDetails}>
             <div className={styles.line}>
               <span className={styles.boldTitle}>סוג הרכב: </span>
-              <span className={styles.value}>מיניבוס 19 מקומות</span>
+              <span className={styles.value}>{translateCarType(props?.userDetails?.carType)}</span>
             </div>
-            <div className={styles.line}>
+            {/* <div className={styles.line}>
               <span className={styles.boldTitle}>כמות: </span>
               <span className={styles.value}>1</span>
-            </div>
+            </div> */}
             <div className={styles.line}>
               <span className={styles.boldTitle}>מחיר: </span>
               <span className={styles.value}>{props?.userDetails?.price} ש&quot;ח כולל מע&quot;מ</span>

@@ -52,7 +52,7 @@ const CreditCardPrev = (props) => {
         <div className={styles.expDate}>
           {props?.cardDetails?.ccDate?.month}/{props?.cardDetails?.ccDate?.year}
         </div>
-        <div className={styles.clientName}>{props.cardDetails.fullNameOnCard}</div>
+        <div className={styles.clientName}>{props?.cardDetails?.fullNameOnCard}</div>
       </div>
       <div
         className={styles.ccPrevImageBack}

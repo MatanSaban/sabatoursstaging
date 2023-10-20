@@ -4,13 +4,15 @@ import {
 	eventTypes,
 	formatDateToString,
 	formatDuration,
+	isMobile,
 	showDistance,
 } from "../../utils/functions";
 import PriceSuggestion from "../pricesuggestion";
-import CreditCardPrev from "../../Components/Misc/CreditCardPrev/CreditCardPrev";
 import axios from "axios";
 import useIsraeliIdValidation from '../../Components/Misc/Hooks/IsraeliIdValidation';
 import useCardNumberValidation from '../../Components/Misc/Hooks/CreditCardValidation';
+import PaymentForm from "../../Components/Misc/PaymentForm/PaymentForm";
+import { AiFillMinusCircle, AiFillPlusCircle, AiOutlineCaretDown, AiOutlineCaretUp, AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
 
 
 const Checkout = (props) => {
@@ -39,11 +41,13 @@ const Checkout = (props) => {
 
 	const handleCardDetails = (e) => {
 		const { name, value } = e.target;
+		
 
 		setCardDetails((prevDetails) => {
 			const fieldMapping = {
 				fullNameOnCard: 'fullNameOnCard',
 				cardNumber: 'ccNumber',
+				citizenId: 'citizenId',
 				month: 'ccDate',
 				year: 'ccDate',
 				CVV: 'ccCVV',
@@ -125,24 +129,21 @@ const Checkout = (props) => {
 		if (fullPrice) {
 			advancePayment = fullPrice * 0.15;
 			paymentLeft = Math.floor((fullPrice - advancePayment) / 10) * 10;
-			if (selectedPaymentOption == "downPayment") {
-				return setAdvancePayment({
+				setAdvancePayment({
 					downPayment: advancePayment,
 					paymentLeft: paymentLeft,
 				});
-			} else {
 				fullPayment = fullPrice - fullPrice * 0.05;
 				let fullPaymentRoundedDownToTen = Math.floor(fullPayment / 10) * 10;
 				// Calculate the discount amount and percentage
 				let discountSum = fullPrice - fullPaymentRoundedDownToTen;
 				let discountPercentage = (discountSum / fullPrice) * 100;
 
-				return setFullPayment({
+				setFullPayment({
 					fullPayment: fullPaymentRoundedDownToTen,
 					discountSum: discountSum,
 					discountPercentage: discountPercentage,
 				});
-			}
 		}
 	};
 
@@ -157,10 +158,10 @@ const Checkout = (props) => {
 		console.log("here");
 		if (!validateCardNumber(cardDetails?.ccNumber)) {
 			return setError("מספר כרטיס האשראי לא תקין");
-		} 
+		}
 		if (!validateIsraeliId(cardDetails?.citizenId)) {
 			return setError("מספר תעודת הזהות לא תקין");
-		} 
+		}
 		submitButtonRef.current.setAttribute("disabled", true);
 		const sendPayment = await axios.post(`/api/handlePayment`, {
 			"Customer": {
@@ -202,16 +203,13 @@ const Checkout = (props) => {
 		console.log('sendPaymentRes');
 		console.log(sendPaymentRes);
 	};
+	
 
+	const [showPaymentDetailsOnMobile, setShowPaymentDetailsOnMobile] = useState(false);
 
-	useEffect(() => {
-		if (isValidCC && error == "מספר כרטיס האשראי לא תקין") {
-			setError(null);
-		} else if (isValidCC && error !== "מספר כרטיס האשראי לא תקין") {
-			cardNumberRef.current.style.borderColor = "green"
-		}
-	}, [isValidCC, error])
-
+	const handlePaymentShow = () => {
+		return setShowPaymentDetailsOnMobile(!showPaymentDetailsOnMobile);
+	}
 
 	return (
 		<div className={styles.checkoutPage}>
@@ -234,9 +232,8 @@ const Checkout = (props) => {
 						handlePopup={props.handlePopup}
 					/>
 				</div>
-				<div className={`${styles.checkoutBar}`} style={{ top: `${props?.headerHeight + 50}px` }}>
-					<h2 className={styles.mainTitle}>פרטי תשלום</h2>
-					<section className={styles.section}>
+				<div className={`${styles.checkoutBar} ${showPaymentDetailsOnMobile && styles.show}`} style={!isMobile(props?.windowWidth) ? { top: `${props?.headerHeight + 20 }px` } : null}>
+					<section className={styles.section}> 
 						<h3 className={styles.sectionTitle}>בחירת תנאי תשלום</h3>
 						<div className={styles.paymentOptions}>
 							<label>
@@ -260,140 +257,44 @@ const Checkout = (props) => {
 							</label>
 						</div>
 					</section>
-					<section className={styles.section}>
-						<h4 className={styles.importantMessage}>
-							הודעה חשובה!
-							<br />
-							לאחר הזנת פרטי התשלום לא נחייב אותך עד לאישור הנסיעה בשיחת טלפון.
-							<br />
-							אך כן תיתפס מסגרת של {selectedPaymentOption == "downPayment" ? `${advancePayment?.downPayment?.toFixed(0)}₪` : `${fullPayment?.fullPayment?.toFixed(0)}₪`} עד אישור או אי אישור הנסיעה מצידנו.
-						</h4>
+					{
+						!isMobile(props?.windowWidth) && <section className={styles.section}>
+							<h4 className={styles.importantMessage}>
+								הודעה חשובה!
+								<br />
+								לאחר הזנת פרטי התשלום לא נחייב אותך עד לאישור הנסיעה בשיחת טלפון.
+								<br />
+								אך כן תיתפס מסגרת של {selectedPaymentOption == "downPayment" ? `${advancePayment?.downPayment?.toFixed(0)}₪` : `${fullPayment?.fullPayment?.toFixed(0)}₪`} עד אישור או אי אישור הנסיעה מצידנו.
+							</h4>
+						</section>
+					}
+					<section className={`${styles.section} ${styles.ccDetailsWrapper} `} >
+						<PaymentForm
+							showPaymentDetailsOnMobile={showPaymentDetailsOnMobile}
+							cardDetails={cardDetails}
+							userRoute={props?.userRoute}
+							handleCardDetails={handleCardDetails}
+							handleSubmitPayment={handleSubmitPayment}
+							handleSelectListOpenAndFocuses={handleSelectListOpenAndFocuses}
+							isValid={isValid}
+							cardNumberRef={cardNumberRef}
+							isValidCC={isValidCC}
+							yearSelectRef={yearSelectRef}
+							monthSelectRef={monthSelectRef}
+							cvvInputRef={cvvInputRef}
+							selectedPaymentOption={selectedPaymentOption}
+							fullPayment={fullPayment}
+							submitButtonRef={submitButtonRef}
+							error={error}
+							validateIsraeliId={validateIsraeliId}
+							validateCardNumber={validateCardNumber}
+							setCardDetails={setCardDetails}
+							advancePayment={advancePayment}
+							scrolling={props?.scrolling}
+							scrollTopVal={props?.scrollTopVal}				  
+						/>
 					</section>
-					<section className={`${styles.section} ${styles.ccDetailsWrapper}`}>
-						<CreditCardPrev cardDetails={cardDetails} />
-						<form onSubmit={(e) => handleSubmitPayment(e)} className={styles.ccDetailsForm}>
-							<div className={`${styles.ccNameAndIdWrapper} ${styles.wrapper}`}>
-								<input
-									required
-									onChange={(e) => { handleCardDetails(e) }}
-									type="text"
-									name="fullNameOnCard"
-									id="fullNameOnCard"
-									placeholder="שם מלא על הכרטיס"
-									defaultValue={`${props?.userRoute?.firstname} ${props?.userRoute?.lastname}`}
-								/>
-								<input
-									required
-									onChange={(e) => { handleCardDetails(e); handleSelectListOpenAndFocuses(e) }}
-									type="text"
-									name="citizenId"
-									id="citizenId"
-									placeholder="תעודת זהות"
-									maxLength={9} // Limit to 16 characters
-									onBlur={(e) => validateIsraeliId(e.target.value)}
-									style={
-										isValid === null
-											? { border: "1px solid #9b9b9b" }
-											: isValid
-												? { border: "2px solid green" }
-												: { border: "2px solid red" }
-									} />
-							</div>
-							<div className={`${styles.ccNumberWrapper} ${styles.wrapper}`}>
-								<input
-									required
-									onChange={(e) => { handleCardDetails(e); handleSelectListOpenAndFocuses(e) }}
-									type="text"
-									name="cardNumber"
-									id="cardNumber"
-									placeholder="מספר כרטיס"
-									ref={cardNumberRef}
-									style={
-										isValidCC === null
-											? { border: "1px solid #9b9b9b" }
-											: isValidCC
-												? { border: "2px solid green" }
-												: { border: "2px solid red" }
-									}
-									onBlur={(e) => validateCardNumber(cardDetails?.ccNumber)}
-									maxLength={16} // Limit to 16 characters
-									onKeyPress={(e) => {
-										// Allow only numeric characters (0-9) and prevent other characters
-										if (e.key && !/^[0-9]*$/.test(e.key)) {
-											e.preventDefault();
-										}
-									}}
-								/>
-							</div>
-							<div className={`${styles.ccExpDateAndCvvWrapper} ${styles.wrapper}`}>
-								<select
-									required
-									ref={yearSelectRef}
-									onChange={(e) => { handleCardDetails(e); handleSelectListOpenAndFocuses(e) }}
-									className={`${styles.number} ${styles.year}`}
-									name="year"
-									id="year"
-								>
-									<option selected disabled value="">
-										שנה
-									</option>
-									{Array.from({ length: 21 }, (_, i) => {
-										const currentYear = new Date().getFullYear();
-										const yearValue = (currentYear + i).toString();
-										return (
-											<option key={i} value={yearValue}>
-												{yearValue}
-											</option>
-										);
-									})}
-								</select>
-								<select
-									required
-									ref={monthSelectRef}
-									onChange={(e) => { handleCardDetails(e); handleSelectListOpenAndFocuses(e) }}
-									className={`${styles.number} ${styles.month}`}
-									name="month"
-									id="month"
-								>
-									<option selected disabled value="">
-										חודש
-									</option>
-									{Array.from({ length: 12 }, (_, i) => {
-										const monthValue = (i + 1).toString().padStart(2, '0o');
-										return (
-											<option key={i} value={monthValue}>
-												{monthValue}
-											</option>
-										);
-									})}
-								</select>
-								<input
-									onChange={(e) => handleCardDetails(e)}
-									className={styles.number}
-									type="text"
-									name="CVV"
-									id="CVV"
-									ref={cvvInputRef}
-									required
-									placeholder="CVV"
-									maxLength={3} // Set maximum length to 3 characters
-									onInput={(e) => {
-										e.target.value = e.target.value.replace(/\D/g, ''); // Remove non-numeric characters
-									}}
-									onFocus={() => setCardDetails((prev) => ({ ...prev, cardSide: 'back' }))}
-									onBlur={(e) => {
-										setCardDetails((prev) => ({ ...prev, cardSide: 'front' }));
-										if (e.target.value.length < 3) {
-											e.target.value = '';
-										}
-									}}
-								/>
-							</div>
-							<h4 className={styles.dealPriceSelected}>הסכום לתשלום : {selectedPaymentOption === "downPayment" ? `₪${parseFloat(advancePayment?.downPayment.toFixed(0))}` : `₪${parseFloat(fullPayment?.fullPayment.toFixed(0))}`}</h4>
-							<button className={`${styles.submitButton} ${submitButtonRef?.current?.getAttribute("disabled") == true && styles.disabled}`} ref={submitButtonRef}>פתיחת הזמנה</button>
-							<span>{error}</span>
-						</form>
-					</section>
+					<button className={styles.togglePaymentButton} onClick={() => handlePaymentShow()}>{showPaymentDetailsOnMobile ? <><span>הקטן אזור תשלום</span> <AiOutlineCaretDown/></> : <><span>הגדל אזור תשלום</span> <AiOutlineCaretUp/></>}</button>
 				</div>
 			</div>
 		</div>

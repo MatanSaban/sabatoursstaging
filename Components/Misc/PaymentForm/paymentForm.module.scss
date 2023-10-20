@@ -1,0 +1,82 @@
+@import "../../../styles/_variables.scss"; // Import the _variables.scss file
+@import "../../../styles/globals.scss"; // Import the global.scss file
+.formAndCardWrapper {
+    transition: all 0.5s ease;
+    z-index: 0;
+    overflow-y: hidden;
+    .mainTitle {
+        font-size: 1.2rem;
+        font-weight: bold;
+        text-align: right;
+    }
+}
+
+.ccDetailsForm {
+    max-width: 70%;
+    margin: 20px auto;
+    input {
+      width: 100%;
+      border-radius: 5px;
+      border: 1px solid rgb(155, 155, 155);
+    }
+    .wrapper {
+      margin-bottom: 10px;
+    }
+    .ccExpDateAndCvvWrapper {
+      display: grid;
+      grid-template-columns: 32% 32% 32%;
+      justify-content: space-between;
+      select {
+        border-radius: 5px;
+        border: 1px solid rgb(155, 155, 155);
+      }
+    }
+    .ccNameAndIdWrapper {
+      display: flex;
+      justify-content: space-between;
+      input {
+        width: 48%;
+      }
+    }
+    input,
+    select {
+      height: 35px;
+      padding-right: 2px;
+      padding-left: 2px;
+      text-align: center;
+      font-size: 1rem;
+    }
+    .submitButton {
+      border: none;
+      padding: 5px 10px;
+      color: $color-white;
+      background-color: $color-green;
+      font-size: 1.2rem;
+      border-radius: 10px;
+      width: 100%;
+      text-shadow: 0 0 10px black;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+    .disabled {
+      opacity: 0.5;
+      cursor: not-allowed !important;
+    }
+    .dealPriceSelected {
+      font-size: 1.3rem;
+      margin: 5px 0;
+      line-height: inherit;
+    }
+  }
+
+  @media only screen and (max-width: 768px) {
+    .formAndCardWrapper.show {
+        max-height: max-content;
+        z-index: 0;
+    }
+    .formAndCardWrapper.hide {
+        max-height: min-content;
+        opacity: 0;
+        z-index: -1;
+    }
+  }

@@ -25,9 +25,33 @@ function MyApp({ Component, pageProps }) {
   const [minLoadingTimeElapsed, setMinLoadingTimeElapsed] = useState(false);
   const [loadingPercentage, setLoadingPercentage] = useState(0);
   const [loaderShow, setLoaderShow] = useState(true);
-
-
   const [headerHeight, setHeaderHeight] = useState();
+  const [scrolling, setScrolling] = useState(false);
+  const [scrollTopVal, setScrollTopVal] = useState(0);
+
+  
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.scrollY;
+      setScrollTopVal(scrollTop);
+      if (scrollTop > 0) {
+        setScrolling(true);
+      } else {
+        setScrolling(false); 
+      }
+    };
+  
+    window.addEventListener("scroll", handleScroll);
+  
+    // Clean up the event listener when the component is unmounted
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+  
+  
+  
 
 
   console.log("MyApp comp render");
@@ -44,7 +68,7 @@ function MyApp({ Component, pageProps }) {
     console.log(b);
     console.log(c);
     console.log(d);
-    setUserRoute({ ...a, ...b, ...c, ...d });
+    setUserRoute({ ...a, ...b, ...c, ...d, ...e, ...f });
   };
 
   useEffect(() => {
@@ -198,9 +222,13 @@ function MyApp({ Component, pageProps }) {
           windowWidth={windowWidth}
           media={media}
           setHeaderHeight={setHeaderHeight}
-        />
+          scrolling={scrolling}
+          scrollTopVal={scrollTopVal}
+          />
         {popup}
         <Component
+          scrolling={scrolling}
+          scrollTopVal={scrollTopVal}
           {...pageProps}
           handlePopup={handlePopup}
           sendDataToApp={sendDataToApp}
@@ -211,8 +239,10 @@ function MyApp({ Component, pageProps }) {
           media={media}
           homepageData={homepageData}
           headerHeight={headerHeight}
-        />
+          />
         <Footer
+          scrolling={scrolling}
+          scrollTopVal={scrollTopVal}
           regions={regions}
           services={services}
           windowWidth={windowWidth}

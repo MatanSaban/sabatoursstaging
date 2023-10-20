@@ -141,3 +141,67 @@ export const isMobile = (windowWidth) => {
     return false;
   }
 };
+
+export const translateCarType = (carType) => {
+  let carNameStr;
+  switch (carType) {
+    case "taxi":
+      carNameStr = "מונית ספיישל"
+      break;
+    case "vipTaxi":
+      carNameStr = "מונית VIP גדולה"
+      break;
+    case "minibus14":
+      carNameStr = "מיניבוס 14 מקומות"
+      break;
+    case "minibus19":
+      carNameStr = "מיניבוס 19 מקומות"
+      break;
+    case "midibus":
+      carNameStr = "מידיבוס 35 מקומות"
+      break;
+    case "bus":
+      carNameStr = "אוטובוס סטנדרט 55 מקומות"
+      break;
+    case "maxiBus":
+      carNameStr = "אוטובוס מקסי 60 מקומות"
+      break;
+  }
+  return carNameStr;
+}
+
+export const showCarImage = (carType) => {
+  let carImageName = "";
+
+  switch (carType) {
+    case "taxi":
+      carImageName = "taxi";
+      break;
+    case "vipTaxi":
+      carImageName = "vipTaxi";
+      break;
+    case "minibus14":
+      carImageName = "minibus14";
+      break;
+    case "minibus19":
+      carImageName = "minibus19";
+      break;
+    case "midibus":
+      carImageName = "midibus";
+      break;
+    case "bus":
+      carImageName = "bus";
+      break;
+    case "maxiBus":
+      carImageName = "maxiBus";
+      break;
+    default:
+      carImageName = "maxiBus";
+      break;
+  }
+
+  const path = "/media/carTypes/";
+  const carImagePath = `${path}${encodeURIComponent(carImageName)}.png`; // Assuming the images are in jpg format
+
+  return carImagePath;
+};
