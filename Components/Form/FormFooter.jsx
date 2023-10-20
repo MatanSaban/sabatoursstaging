@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './formFooter.module.scss'
 import Link from "next/link";
 import { AiOutlineQuestion } from "react-icons/ai";
@@ -15,6 +15,21 @@ import { formatDateToString } from '../../utils/functions';
 
 
 const FormFooter = (props) => {
+
+
+  const [showButtonsFor, setShowButtonsFor] = useState(null);  // State to track which input is clicked
+
+  const handleNumInpField = (e, field) => {
+    console.log("clicked");
+    setShowButtonsFor(field);
+  };
+
+  const adjustValue = (field, delta, e) => {
+    e.preventDefault();
+    let value = props?.route[field] || 0;
+    value = Math.max(0, Math.min(60, value + delta)); // Ensuring it's between 0 and 60
+    props?.setRoute({ ...props?.route, [field]: value });
+  };
 
   return (
     <div className={styles.formFooter}>
@@ -85,6 +100,7 @@ const FormFooter = (props) => {
             value={props?.route.passengers ? props?.route.passengers : 1}
             min={1}
             max={60}
+            onClick={(e) => { handleNumInpField(e, 'passengers') }}
             onChange={(e) => {
               if (e.target.value < 1) {
                 e.target.value = 1;
@@ -100,6 +116,12 @@ const FormFooter = (props) => {
               }
             }}
           />
+          {showButtonsFor === 'passengers' && (
+            <div className={styles.buttonsWrapper}>
+              <button onClick={(e) => adjustValue('passengers', 1, e)}>+</button>
+              <button onClick={(e) => adjustValue('passengers', -1, e)}>-</button>
+            </div>
+          )}
         </div>
       </div>
       <div className={styles.suitcasesCountWrapper}>
@@ -114,9 +136,10 @@ const FormFooter = (props) => {
             inputmode="numeric"
             name="suitcasesCount"
             id="suitcasesCount"
-            defaultValue={0}
+            value={props?.route.suitcases ? props?.route.suitcases : 0}
             min={0}
             max={60}
+            onClick={(e) => { handleNumInpField(e, 'suitcases') }}
             onChange={(e) => {
               props?.setRoute({
                 ...props?.route,
@@ -124,6 +147,12 @@ const FormFooter = (props) => {
               });
             }}
           />
+          {showButtonsFor === 'suitcases' && (
+            <div className={styles.buttonsWrapper}>
+              <button onClick={(e) => adjustValue('suitcases', 1, e)}>+</button>
+              <button onClick={(e) => adjustValue('suitcases', -1, e)}>-</button>
+            </div>
+          )}
         </div>
       </div>
       <div className={styles.eventTypeWrapper}>

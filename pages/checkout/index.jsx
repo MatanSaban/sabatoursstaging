@@ -294,7 +294,7 @@ const Checkout = (props) => {
 							scrollTopVal={props?.scrollTopVal}				  
 						/>
 					</section>
-					<button className={styles.togglePaymentButton} onClick={() => handlePaymentShow()}>{showPaymentDetailsOnMobile ? <><span>הקטן אזור תשלום</span> <AiOutlineCaretDown/></> : <><span>הגדל אזור תשלום</span> <AiOutlineCaretUp/></>}</button>
+					<button className={styles.togglePaymentButton} onClick={() => handlePaymentShow()}>{showPaymentDetailsOnMobile ? <><span>הקטן אזור תשלום</span> <AiOutlineCaretDown/></> : <><span>מעבר לתשלום</span> <AiOutlineCaretUp/></>}</button>
 				</div>
 			</div>
 		</div>

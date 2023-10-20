@@ -43,6 +43,8 @@ const PaymentForm = (props) => {
                         placeholder="תעודת זהות"
                         maxLength={9} // Limit to 16 characters
                         onBlur={(e) => props?.validateIsraeliId(e.target.value)}
+                        pattern="[0-9]*"
+                        inputmode="numeric"
                         style={
                             props?.isValid === null
                                 ? { border: "1px solid #9b9b9b" }
@@ -58,6 +60,8 @@ const PaymentForm = (props) => {
                         type="text"
                         name="cardNumber"
                         id="cardNumber"
+                        pattern="[0-9]*"
+                        inputmode="numeric"
                         placeholder="מספר כרטיס"
                         ref={props?.cardNumberRef}
                         style={

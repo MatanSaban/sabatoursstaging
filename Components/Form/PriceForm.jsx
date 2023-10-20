@@ -228,7 +228,7 @@ const PriceForm = (props) => {
       },
     }));
     if (time) {
-      ref.current.focus(); 
+      ref?.current?.focus(); 
     }
   };
 

@@ -303,7 +303,7 @@ const Way = ({
                             },
                           },
                         },
-                      }, isMobile(props?.windowWidth) ? startPointInputRef : endPointInputRef);
+                      }, isMobile(props?.windowWidth) ? null : endPointInputRef);
                     }
                     }
                   />
