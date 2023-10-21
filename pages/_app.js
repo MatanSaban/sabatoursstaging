@@ -16,10 +16,10 @@ const libraries = ["places"]; // define the libraries needed
 function MyApp({ Component, pageProps }) {
   const [userRoute, setUserRoute] = useState();
   const [popup, setPopup] = useState(<Popup show={false} />);
-  // const [regions, setRegions] = useState([]);
-  // const [services, setServices] = useState([]);
-  // const [media, setMedia] = useState([]);
-  // const [homepageData, setHomepageData] = useState();
+  const [regions, setRegions] = useState([]);
+  const [services, setServices] = useState([]);
+  const [media, setMedia] = useState([]);
+  const [homepageData, setHomepageData] = useState();
   const [windowWidth, setWindowWidth] = useState();
   const [loading, setLoading] = useState(false);
   const [minLoadingTimeElapsed, setMinLoadingTimeElapsed] = useState(false);
@@ -28,9 +28,6 @@ function MyApp({ Component, pageProps }) {
   const [headerHeight, setHeaderHeight] = useState();
   const [scrolling, setScrolling] = useState(false);
   const [scrollTopVal, setScrollTopVal] = useState(0);
-
-  const { regions, services, media, homepageData } = pageProps;
-
 
   
 
@@ -63,146 +60,9 @@ function MyApp({ Component, pageProps }) {
     setUserRoute({ ...a, ...b, ...c, ...d, ...e, ...f });
   };
 
-  // useEffect(() => {
-  //   // Simulate loading progress if you wish, or set it to 100 directly
-  //   setLoading(true);
-  //   setLoadingPercentage(24);
-  //   if (pageProps.regions) {
-  //     setLoadingPercentage(25);
-  //   } else if (pageProps.services) {
-  //     setLoadingPercentage(50);
-  //   } else if (pageProps.media) {
-  //     setLoadingPercentage(75);
-  //   } else {
-  //     setLoadingPercentage(100);
-  //     setLoading(false);
-  //   }
-  //   // if (pageProps.regions && pageProps.services && pageProps.media && pageProps.homepageData) {
-  //   // }
-  // }, [pageProps]);
-
-  // useEffect(() => {
-  //   setLoading(true);  // Set loading to true when you initiate API calls
-  //   const minLoadingTime = setTimeout(() => {
-  //     setMinLoadingTimeElapsed(true);
-  //   }, 5000);  // 6000 milliseconds = 6 seconds
-
-  //   setWindowWidth(window.innerWidth);
-  //   // load post types relevant for home page + when user enters the website.
-  //   const fetchData = async () => {
-  //     try {
-  //       // Fetch regions
-  //       const regionRes = await axios.get(
-  //         `${process.env.DATA_SOURCE}/region?per_page=100`,
-  //         {
-  //           headers: {
-  //             'Authorization': `${process.env.WORDPRESSTOKEN}`,
-  //           }
-  //         }
-  //       );
-  //       let fetchedRegions = regionRes.data;
-  //       setLoadingPercentage(25);
-
-  //       // Fetch cities
-  //       const citiesRes = await axios.get(
-  //         `${process.env.DATA_SOURCE}/service_areas?per_page=100`,
-  //         {
-  //           headers: {
-  //             'Authorization': `${process.env.WORDPRESSTOKEN}`,
-  //           }
-  //         }
-  //       );
-  //       let fetchedCities = citiesRes.data;
-  //       setLoadingPercentage(50);
-
-  //       const services = await axios.get(
-  //         `${process.env.DATA_SOURCE}/transportation_types?per_page=100`,
-  //         {
-  //           headers: {
-  //             'Authorization': `${process.env.WORDPRESSTOKEN}`,
-  //           }
-  //         }
-  //       );
-  //       let fetchedServices = services.data;
-  //       setLoadingPercentage(75);
-
-  //       const mediaPromises = fetchedServices.map((service) => {
-  //         console.log("service");
-  //         console.log(service);
-  //         const mainImageId = service?.acf?.feat_image;
-  //         if (mainImageId != null) {
-  //           return axios.get(`${process.env.DATA_SOURCE}/media/${mainImageId}`,
-  //             {
-  //               headers: {
-  //                 'Authorization': `${process.env.WORDPRESSTOKEN}`,
-  //               }
-  //             });
-  //         }
-  //       });
-
-  //       const mediaResponses = await Promise.all(mediaPromises);
-
-  //       fetchedServices = fetchedServices.map((service, index) => {
-  //         return {
-  //           ...service,
-  //           mainImage: mediaResponses[index]?.data?.source_url || null,
-  //         };
-  //       });
-
-  //       setServices(fetchedServices);
-
-  //       // Associate cities with their respective regions
-  //       fetchedRegions = fetchedRegions.map((region) => {
-  //         const cities = fetchedCities.filter(
-  //           (city) => city.region[0] === region.id
-  //         );
-  //         return {
-  //           ...region,
-  //           cities,
-  //         };
-  //       });
-  //       setRegions(fetchedRegions);
-
-  //       const homepageRes = await axios.get(
-  //         `${process.env.DATA_SOURCE}/pages?slug=home&acf_format=standard`,
-  //         {
-  //           headers: {
-  //             'Authorization': `${process.env.WORDPRESSTOKEN}`,
-  //           }
-  //         }
-  //       );
-  //       const fetchHomepage = homepageRes.data[0];
-  //       setHomepageData(fetchHomepage);
-
-  //     } catch (error) {
-  //       console.error("An error occurred while fetching data:", error);
-  //     } finally {
-  //       setLoadingPercentage(100); 
-  //       // Check if minimum 6 seconds have elapsed before setting loading to false
-  //       if (minLoadingTimeElapsed) {
-  //         setLoading(false);
-  //       } else if (loadingPercentage == 100) {
-  //         setLoading(false);
-  //       }
-  //     }
-  //   };
-
-  //   fetchData();
-
-  //   return () => {
-  //     clearTimeout(minLoadingTime);
-  //   };
-
-  // }, []);
-
-
   useEffect(() => {
     // If API calls are done and 6 seconds have passed, set loading to false
-    if (minLoadingTimeElapsed &&
-      regions &&
-      services &&
-      media &&
-      homepageData) {
+    if (minLoadingTimeElapsed) {
       setLoaderShow(false);
       setTimeout(() => {
         setLoading(false);
@@ -210,7 +70,40 @@ function MyApp({ Component, pageProps }) {
     }
   }, [minLoadingTimeElapsed, /* your dependencies for API calls being complete */]);
 
+  useEffect(() => {
+    setLoading(true);  // Set loading to true when you initiate API calls
 
+    // Calculate the interval time needed to go from 0 to 100 in 5 seconds
+    const totalDuration = 5200; // 5 seconds in milliseconds
+    const intervalTime = totalDuration / 100; // duration for each increment
+
+    // Initialize loading percentage to 0
+    setLoadingPercentage(0);
+
+    // Set an interval to increment the loadingPercentage
+    const intervalId = setInterval(() => {
+      setLoadingPercentage(prev => {
+        if (prev >= 100) {
+          clearInterval(intervalId);  // Clear the interval when it reaches 100
+          return 100;
+        }
+        return prev + 1;  // Increment by 1
+      });
+    }, intervalTime);
+
+    // Set the minimum loading time to 5 seconds
+    setTimeout(() => {
+      setMinLoadingTimeElapsed(true);
+    }, totalDuration);
+
+    return () => {
+      clearInterval(intervalId);  // Clear the interval when the component unmounts
+    };
+}, []);
+
+
+
+  
   return (
     <LoadScript
       googleMapsApiKey={process.env.GOOGLE_MAPS_API_KEY}
@@ -227,7 +120,7 @@ function MyApp({ Component, pageProps }) {
       </Head>
 
       <div className="appWrapper">
-      {loading && <LogoLoader percentage={loadingPercentage} show={loading} />}
+        {loading && <LogoLoader percentage={loadingPercentage} show={loaderShow} />}
         <Header
           regions={regions}
           services={services}
@@ -266,3 +159,6 @@ function MyApp({ Component, pageProps }) {
 }
 
 export default MyApp;
+
+
+

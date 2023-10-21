@@ -13,6 +13,8 @@ import { BsWhatsapp } from 'react-icons/bs'
 import { BsEnvelopeAt } from 'react-icons/bs'
 import { decodeHTMLEntities } from "../../utils/functions";
 
+
+
 const HomeComp = (props) => {
 
   const [pageData, setPageData] = useState();
@@ -99,7 +101,7 @@ const HomeComp = (props) => {
         <div className={styles.areas}>
           {
             props?.regions?.map((area) => {
-              if (area.cities.length) {
+              if (area?.cities?.length) {
                 return (
 
                   <div key={area.id} className={styles.area}>

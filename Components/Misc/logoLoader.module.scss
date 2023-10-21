@@ -4,22 +4,30 @@
     width: 100dvw;
     height: 100dvh;
     position: fixed;
-    display: flex;
+    display: flex; 
     justify-content: center;
     align-items: center;
     flex-direction: column;
     opacity: 1;
     transition: all 0.5s ease;
     .LoaderPercentage {
-        font-weight: bold;
-        font-size: 20px;
-        width: 75px;
-        height: 75px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border-radius: 50%;
-        transition: all 0.5s ease;
+        // font-weight: bold;
+        // font-size: 20px;
+        // width: 75px;
+        // height: 75px;
+        // display: flex;
+        // justify-content: center;
+        // align-items: center;
+        // border-radius: 50%;
+        // transition: all 0.5s ease;
+        width: 300px;
+        max-width: 300px;
+        text-align: center;
+        padding: 10px;
+        border-radius: 20px;
+        border: 1px solid #00000050;
+        transition: all 0.2s ease;
+        // background: linear-gradient(40deg, green 0%,  #ffffff 0%);
     }
     .LogoAnimation {
         width: 50dvw;
