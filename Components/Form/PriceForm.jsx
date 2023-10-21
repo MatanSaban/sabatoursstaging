@@ -866,7 +866,7 @@ const PriceForm = (props) => {
           formatDuration={formatDuration}
           showDistance={showDistance}
           formatDateToString={formatDateToString}
-          sendDataToApp={props?.sendDataToApp}
+          sendDataToApp={props?.sendDataToApp} 
           />
         </>
         }

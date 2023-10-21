@@ -60,7 +60,19 @@ function MyApp({ Component, pageProps }) {
     setUserRoute({ ...a, ...b, ...c, ...d, ...e, ...f });
   };
 
+  
+
+    
+
+  // useEffect(() => {
+  //   setLoading(true);  // Set loading to true when you initiate API calls
+  //   setTimeout(() => {
+  //     setMinLoadingTimeElapsed(true);
+  //   }, 5000);  // 6000 milliseconds = 6 seconds
+  // })
+
   useEffect(() => {
+    setWindowWidth(window.innerWidth);
     // If API calls are done and 6 seconds have passed, set loading to false
     if (minLoadingTimeElapsed) {
       setLoaderShow(false);
@@ -74,7 +86,7 @@ function MyApp({ Component, pageProps }) {
     setLoading(true);  // Set loading to true when you initiate API calls
 
     // Calculate the interval time needed to go from 0 to 100 in 5 seconds
-    const totalDuration = 5200; // 5 seconds in milliseconds
+    const totalDuration = 5500; // 5 seconds in milliseconds
     const intervalTime = totalDuration / 100; // duration for each increment
 
     // Initialize loading percentage to 0
