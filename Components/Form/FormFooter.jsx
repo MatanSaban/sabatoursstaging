@@ -94,7 +94,7 @@ const FormFooter = (props) => {
           <input
             type="number"
             pattern="[0-9]*"
-            inputmode="numeric"
+            inputMode="numeric"
             name="passengersCount"
             id="passengersCount"
             value={props?.route.passengers ? props?.route.passengers : 1}
@@ -133,7 +133,7 @@ const FormFooter = (props) => {
           <input
             type="number"
             pattern="[0-9]*"
-            inputmode="numeric"
+            inputMode="numeric"
             name="suitcasesCount"
             id="suitcasesCount"
             value={props?.route.suitcases ? props?.route.suitcases : 0}

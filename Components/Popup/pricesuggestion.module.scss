@@ -149,12 +149,12 @@
     .priceOfferStripe {
       background-color: $color-green;
       display: flex;
-      justify-content: space-between;
+      justify-content: space-around;
       padding: 20px;
       align-items: center;
       position: relative;
       .carImage {
-        width: 100%;
+        width: auto;
         height: auto;
         max-height: 100%;
         max-width: 100%;

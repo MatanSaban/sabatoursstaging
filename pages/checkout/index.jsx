@@ -205,7 +205,7 @@ const Checkout = (props) => {
 	};
 	
 
-	const [showPaymentDetailsOnMobile, setShowPaymentDetailsOnMobile] = useState(false);
+	const [showPaymentDetailsOnMobile, setShowPaymentDetailsOnMobile] = useState(!isMobile() ? true : false);
 
 	const handlePaymentShow = () => {
 		return setShowPaymentDetailsOnMobile(!showPaymentDetailsOnMobile);

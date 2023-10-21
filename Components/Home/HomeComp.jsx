@@ -21,7 +21,6 @@ const HomeComp = (props) => {
 
   useEffect(() => {
     if (props?.homepageData) {
-      console.log(props.homepageData);
       setPageData(props?.homepageData);
     }
   }, [props])

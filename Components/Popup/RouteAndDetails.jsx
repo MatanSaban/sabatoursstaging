@@ -152,27 +152,23 @@ const RouteAndDetails = (props) => {
       props.handlePopup(false, <Popup show={false} />);
       let offerId;
 
-      const wpRes = await axios.post(
-        `${process.env.DATA_SOURCE}/price_offers`,
-        {
-          title: {
-            raw: "הצעת מחיר חדשה",
-            rendered: "הצעת מחיר חדשה",
-          },
-          status: "pending",
-        },
-        {
-          headers: {
-            Authorization: `${process.env.WORDPRESSTOKEN}`,
-          }, 
-        }
-      );
+      try {
+        const wpRes = await axios.post(
+          `/api/priceOffers`,
+          {
+            title: {
+              raw: "הצעת מחיר חדשה",
+              rendered: "הצעת מחיר חדשה",
+            },
+            status: "pending",
+          }
+        );
 
-      if (wpRes.status !== 201) {
-        console.error("Failed to create post");
-        return;
-      } else {
-        offerId = wpRes.data.id;
+        offerId = await wpRes.data.id;
+        console.log('wpResssss');
+        console.log(wpRes);
+      } catch (error) {
+        console.log(error);
       }
       setTimeout(() => {
         props?.sendDataToApp(
@@ -220,31 +216,23 @@ const RouteAndDetails = (props) => {
                     formData.append("file", file);
 
                     // Step 2: Upload PDF to WordPress Media Library
-                    const mediaRes = await axios.post(
-                      `${process.env.DATA_SOURCE}/media`,
-                      formData,
-                      {
-                        headers: {
-                          Authorization: `${process.env.WORDPRESSTOKEN}`,
-                          "Content-Disposition": `form-data; filename="price_offer_${offerId}.pdf"`,
-                          "Content-Type": "multipart/form-data",
-                        },
-                      }
-                    );
 
-                    if (mediaRes.status !== 201) {
-                      console.error("Failed to upload media");
-                      return;
-                    }
+                    console.log('offerId');
+                    console.log(offerId);
+
+                    const mediaRes = await axios.post(
+                      `/api/uploadPdf`,
+                      formData, offerId
+                    );
                     console.log("mediaRes");
                     console.log(mediaRes);
-                    const mediaID = mediaRes.data.id;
-                    offerId = offerId;
+                    const mediaID = await mediaRes.data.id;
 
                     // Step 3: Update Post with Media ID
-                    const updatePriceOffer = await axios.put(
-                      `${process.env.DATA_SOURCE}/price_offers/${offerId}`,
+                    await axios.put(
+                      `api/priceOffers/`,
                       {
+                        offerId,
                         title: {
                           raw: `הצעת מחיר מספר ${offerId}`,
                           rendered: `הצעת מחיר מספר ${offerId}`,
@@ -303,15 +291,8 @@ const RouteAndDetails = (props) => {
                           },
                           PO_file: mediaID, // Use the media ID from the first step
                         },
-                      },
-                      {
-                        headers: {
-                          Authorization: `${process.env.WORDPRESSTOKEN}`,
-                        },
                       }
                     );
-                    console.log("updatePriceOffer");
-                    console.log(updatePriceOffer);
                   } catch (error) {
                     console.error("An error occurred:", error);
                   }
@@ -323,7 +304,7 @@ const RouteAndDetails = (props) => {
                       pdfBlob: base64data,
                       route: props?.route,
                       price: props?.price,
-                      price: props?.carType,
+                      carType: props?.carType,
                       offerId: offerId,
                     })
                     .then((res) => {
@@ -472,7 +453,7 @@ const RouteAndDetails = (props) => {
               >
                 <label htmlFor="phone">טלפון</label>
                 <input type="number" pattern="[0-9]*"
-                  inputmode="numeric"
+                  inputMode="numeric"
                   name="phone" id="phone" required />
               </div>
             </div>
