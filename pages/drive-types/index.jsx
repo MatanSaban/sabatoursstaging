@@ -1,8 +1,8 @@
 import React from "react";
 import styles from "./driveTypes.module.scss";
 
-const driveTypes = () => {
+const DriveTypes = () => {
   return <div className={styles.driveTypesWrapper}></div>;
 };
 
-export default driveTypes;
+export default DriveTypes;

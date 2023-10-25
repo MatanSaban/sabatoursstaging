@@ -1,6 +1,7 @@
 import React from "react";
 import HomeComp from "../Components/Home/HomeComp.jsx";
 import axios from "axios";
+import logo from '../public/media/faviconSquare.png'
 
 export async function getServerSideProps(context) {
   try {
@@ -106,6 +107,23 @@ export async function getServerSideProps(context) {
   }
 }
 
+const handleButton = () => {
+  Notification.requestPermission().then(perm => {
+    if (perm === "granted") {
+      const notification = new Notification("הודעה חדשה מ-סבן טורס", {
+        body: "רציתי לדעת שאת שלי, \n רציתי לקחת אותך איתי \n למקום אחר, שם נוכל לאהוב ולגדול",
+        data: {hello: "world"}, 
+        icon: logo.src
+      })
+
+      notification.addEventListener("show", e => {
+        console.log("e")
+        console.log()
+      })
+    } 
+  })
+}
+
 
 const Home = (props) => {
   return (
@@ -120,6 +138,7 @@ const Home = (props) => {
         media={props?.initialData?.media}
         homepageData={props?.initialData?.homepageData}
       />
+      <button onClick={() => handleButton()}>נוטיפיקיישן</button>
     </div>
   );
 };

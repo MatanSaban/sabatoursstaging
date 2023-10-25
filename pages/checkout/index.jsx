@@ -14,6 +14,7 @@ import useIsraeliIdValidation from '../../Components/Misc/Hooks/IsraeliIdValidat
 import useCardNumberValidation from '../../Components/Misc/Hooks/CreditCardValidation';
 import PaymentForm from "../../Components/Misc/PaymentForm/PaymentForm";
 import { AiFillMinusCircle, AiFillPlusCircle, AiOutlineCaretDown, AiOutlineCaretUp, AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
+import PageHero from "../../Components/Misc/PageHero";
 
 
 const Checkout = (props) => {
@@ -214,9 +215,7 @@ const Checkout = (props) => {
 
 	return (
 		<div className={styles.checkoutPage}>
-			<div className={styles.pageHero}>
-				<h1>הזמנת ההסעה</h1>
-			</div>
+			<PageHero/>
 			<div className={styles.checkoutContent}>
 				<div className={styles.routeDetails}>
 					<PriceSuggestion

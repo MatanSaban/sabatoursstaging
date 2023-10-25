@@ -1,0 +1,13 @@
+.pageHero {
+    min-height: 40vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url("../../public/media/heroBg.png");
+    background-position: bottom -150px right;
+    h1 {
+      font-size: 3rem;
+      color: white;
+      text-shadow: 0 0 10px black;
+    }
+  }

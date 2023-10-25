@@ -111,7 +111,7 @@ const HomeComp = (props) => {
                       {area?.cities?.map((city) => {
                         return (
                           <button className={styles.cityButton} key={city.id}>
-                            <Link className={styles.cityLink} href={city.link}>
+                            <Link className={styles.cityLink} href={`/areas/${city.slug}`}>
                               <span>
                                 הסעה ל{city.title.rendered}
                               </span>

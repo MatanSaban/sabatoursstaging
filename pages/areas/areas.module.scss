@@ -1,0 +1,148 @@
+/* Areas page */
+.areas {
+}
+
+/* End Of Areas page */
+
+/* Single Area */
+.singleAreaWrapper {
+  .contentWrapper {
+    padding: 0 100px;
+    margin-bottom: 100px;
+    .introductionWrapper {
+      text-align: center;
+      max-width: 50%;
+      margin: 0 auto;
+      .introduction {
+        background-color: #000;
+        border-radius: 20px;
+        padding: 20px;
+        margin: 20px;
+        color: white;
+        h2 {
+          text-shadow: 0 0 20px #ffffff;
+          font-size: 2rem;
+        }
+        p {
+          font-size: 1.3rem;
+        }
+      }
+    }
+    .titlesWrapper {
+      margin-top: 100px;
+      .titles {
+        width: 90%;
+        margin: 0 auto;
+        .titleSectionWrapper {
+          position: relative;
+          .transparentIcon {
+            position: absolute;
+            z-index: -1;
+            // width: 200px;
+            img {
+              animation-name: rotateAnim;
+              animation-duration: 4s;
+              animation-direction: alternate;
+              animation-iteration-count: infinite;
+              animation-fill-mode: both;
+              animation-play-state: running;
+            }
+          }
+  
+          .titleSection {
+            // background-color: red;
+            box-shadow: 10px -5px 30px #d1d1d1;
+            border-radius: 30px;
+            padding: 20px;
+            margin: 20px;
+            margin-bottom: 100px;
+            background-color: #ffffff50;
+            backdrop-filter: blur(5px);
+            z-index: 1;
+            .title {
+              font-size: 1.8rem;
+              position: absolute;
+              top: 0;
+              right: 0;
+              transform: translateY(-50%);
+              background: linear-gradient(45deg, #ffffff00 35%, #2982e9 80%);
+              color: white;
+              width: 100%;
+              padding: 10px;
+              padding-right: 20px;
+              border-radius: 20px 20px 0 20px;
+            }
+            .text {
+              font-size: 1.3rem;
+              padding-right: 25px;
+              margin-top: 70px;
+            }
+          }
+        }
+      }
+    }
+    
+  }
+}
+
+/* End Of Single Area */
+
+
+/* mobile css */
+
+/* Single Area */
+@media only screen and (max-width: 768px) {
+
+  .singleAreaWrapper {
+    overflow-x: hidden;
+    .contentWrapper {
+      padding: 0;
+      .introductionWrapper {
+        max-width: 90%;
+        .introduction {
+          h2 {
+          }
+          p {
+          }
+        }
+      }
+      .titlesWrapper {
+        .titles {
+          width: 100%;
+          .titleSectionWrapper {
+            .transparentIcon {
+              img {
+              }
+            }
+    
+            .titleSection {
+              margin-bottom: 50px;
+              .title {
+                background: linear-gradient(45deg, #ffffff00 10%, #2982e9 85%);
+                text-shadow: 0 0 10px black;
+                font-size: 1.5rem;
+              }
+              .text {
+              }
+            }
+          }
+        }
+      }
+      
+    }
+  }
+}
+
+/* End Of Single Area */
+/* end of mobile css */
+
+/* KEYFRAMES */
+
+@keyframes rotateAnim {
+  0% {
+    transform: rotate(-20deg);
+  }
+  100% {
+    transform: rotate(20deg);
+  }
+}
