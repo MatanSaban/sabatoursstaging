@@ -8,19 +8,15 @@ import { LoadScript } from "@react-google-maps/api";
 import Popup from "../Components/Popup/Popup";
 import { useState, useEffect } from "react";
 import Head from "next/head";
-import axios from "axios";
 import LogoLoader from "../Components/Misc/LogoLoader";
 import GoogleTag from '../utils/GoogleTag.js'
+import Script from "next/script";
 
 const libraries = ["places"]; // define the libraries needed
 
 function MyApp({ Component, pageProps }) {
   const [userRoute, setUserRoute] = useState();
   const [popup, setPopup] = useState(<Popup show={false} />);
-  const [regions, setRegions] = useState([]);
-  const [services, setServices] = useState([]);
-  const [media, setMedia] = useState([]);
-  const [homepageData, setHomepageData] = useState();
   const [windowWidth, setWindowWidth] = useState();
   const [loading, setLoading] = useState(false);
   const [minLoadingTimeElapsed, setMinLoadingTimeElapsed] = useState(false);
@@ -30,8 +26,6 @@ function MyApp({ Component, pageProps }) {
   const [scrolling, setScrolling] = useState(false);
   const [scrollTopVal, setScrollTopVal] = useState(0);
 
-  
-
   useEffect(() => {
     const handleScroll = () => {
       const scrollTop = window.scrollY;
@@ -39,18 +33,18 @@ function MyApp({ Component, pageProps }) {
       if (scrollTop > 0) {
         setScrolling(true);
       } else {
-        setScrolling(false); 
+        setScrolling(false);
       }
     };
-  
+
     window.addEventListener("scroll", handleScroll);
-  
+
     // Clean up the event listener when the component is unmounted
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
-  
+
   const handlePopup = (bool, content) => {
     return setPopup(
       <Popup show={bool} content={content} setPopup={setPopup} />
@@ -60,17 +54,6 @@ function MyApp({ Component, pageProps }) {
   const sendDataToApp = (a, b, c, d, e, f) => {
     setUserRoute({ ...a, ...b, ...c, ...d, ...e, ...f });
   };
-
-  
-
-    
-
-  // useEffect(() => {
-  //   setLoading(true);  // Set loading to true when you initiate API calls
-  //   setTimeout(() => {
-  //     setMinLoadingTimeElapsed(true);
-  //   }, 5000);  // 6000 milliseconds = 6 seconds
-  // })
 
   useEffect(() => {
     setWindowWidth(window.innerWidth);
@@ -112,11 +95,8 @@ function MyApp({ Component, pageProps }) {
     return () => {
       clearInterval(intervalId);  // Clear the interval when the component unmounts
     };
-}, []);
+  }, []);
 
-
-
-  
   return (
     <LoadScript
       googleMapsApiKey={process.env.GOOGLE_MAPS_API_KEY}
@@ -130,20 +110,26 @@ function MyApp({ Component, pageProps }) {
         />
         <title>סבן טורס - חברת ההסעות שלך</title>
         <meta name="theme-color" content="008bcd" />
-        <GoogleTag/>
+        <script src={`https://www.googletagmanager.com/gtag/js?id=${process.env.GOOGLE_TAG_MANGER_ID}`} />
+        <script id="google-analytics">
+          {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);} 
+          gtag('js', new Date());
+ 
+          gtag('config', '${process.env.GOOGLE_TAG_MANGER_ID}');
+        `}
+        </script>
       </Head>
 
       <div className="appWrapper">
         {loading && <LogoLoader percentage={loadingPercentage} show={loaderShow} />}
         <Header
-          regions={regions}
-          services={services}
           windowWidth={windowWidth}
-          media={media}
           setHeaderHeight={setHeaderHeight}
           scrolling={scrolling}
           scrollTopVal={scrollTopVal}
-          />
+        />
         {popup}
         <Component
           scrolling={scrolling}
@@ -152,20 +138,13 @@ function MyApp({ Component, pageProps }) {
           handlePopup={handlePopup}
           sendDataToApp={sendDataToApp}
           userRoute={userRoute}
-          regions={regions}
-          services={services}
           windowWidth={windowWidth}
-          media={media}
-          homepageData={homepageData}
           headerHeight={headerHeight}
-          />
+        />
         <Footer
           scrolling={scrolling}
           scrollTopVal={scrollTopVal}
-          regions={regions}
-          services={services}
           windowWidth={windowWidth}
-          media={media}
         />
       </div>
     </LoadScript>
