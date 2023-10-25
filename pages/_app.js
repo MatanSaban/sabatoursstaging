@@ -9,8 +9,6 @@ import Popup from "../Components/Popup/Popup";
 import { useState, useEffect } from "react";
 import Head from "next/head";
 import LogoLoader from "../Components/Misc/LogoLoader";
-import Hotjar from '@hotjar/browser';
-
 
 
 const libraries = ["places"]; // define the libraries needed
@@ -26,11 +24,6 @@ function MyApp({ Component, pageProps }) {
   const [headerHeight, setHeaderHeight] = useState();
   const [scrolling, setScrolling] = useState(false);
   const [scrollTopVal, setScrollTopVal] = useState(0);
-
-  const siteId = 3708673;
-  const hotjarVersion = 6;
-
-  Hotjar.init(siteId, hotjarVersion);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -125,6 +118,18 @@ function MyApp({ Component, pageProps }) {
  
           gtag('config', 'G-4WWJ8F67H9');
         `}
+        </script>
+        {/* <!-- Hotjar Tracking Code for https://saban-tours.co.il/ --> */}
+        <script> {`
+                (function(h,o,t,j,a,r){
+                    h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+                    h._hjSettings={hjid:3708673,hjsv:6};
+                    a=o.getElementsByTagName('head')[0];
+                    r=o.createElement('script');r.async=1;
+                    r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+                    a.appendChild(r);
+                })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+              `}
         </script>
       </Head>
 
