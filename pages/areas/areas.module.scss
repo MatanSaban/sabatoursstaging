@@ -14,16 +14,17 @@
       max-width: 50%;
       margin: 0 auto;
       .introduction {
-        background-color: #000;
+        background-color: #7fc342;
         border-radius: 20px;
         padding: 20px;
         margin: 20px;
         color: white;
         h2 {
-          text-shadow: 0 0 20px #ffffff;
+          text-shadow: 0 0 20px #00000090;
           font-size: 2rem;
         }
         p {
+          text-shadow: 0 0 20px #00000090;
           font-size: 1.3rem;
         }
       }
