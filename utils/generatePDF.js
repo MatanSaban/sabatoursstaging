@@ -353,7 +353,7 @@ const generatePDF = (userDetails, route, calculatedPrice, carType, offerId, call
         y: AddedPagePositionY + 33,
         w: 35,
         h: 10,
-        text: reverseString("הזמנת ההסעה"),
+        text: reverseString("הזמנת ההסעה"), 
         textColor: {
             red: 255,
             green: 255,

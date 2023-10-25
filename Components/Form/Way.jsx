@@ -14,6 +14,7 @@ import locationIcon from "../../public/media/sabantoursLocationIcon.svg";
 import endPointIcon from "../../public/media/saban_tours_favicon_pinkred_green.svg";
 import styles from "./priceform.module.scss";
 import { isMobile } from "../../utils/functions";
+import DateTimePicker from "./DateAndTimeComp";
 
 registerLocale("he", he);
 
@@ -43,12 +44,24 @@ const Way = ({
   ...props
 }) => {
 
-  
 
-  const datePickerRef = useRef(null);
+
   const endPointInputRef = useRef(null);
-  const startPointInputRef = useRef(null);
 
+  
+  const [datePickerRef , setDatePickerRef] = useState();
+
+  useEffect(() => {
+    console.log("use effect for datepicker ref from WAy");
+    console.log("use effect for datepicker ref from WAy");
+    console.log("use effect for datepicker ref from WAy");
+    console.log("use effect for datepicker ref from WAy");
+    console.log(datePickerRef);
+    console.log("use effect for datepicker ref from WAy");
+    console.log("use effect for datepicker ref from WAy");
+    console.log("use effect for datepicker ref from WAy");
+    console.log("use effect for datepicker ref from WAy");
+  },[datePickerRef])
 
   const totalDistance = // formatDuration
     // showDistance
@@ -125,7 +138,7 @@ const Way = ({
   // console.log("route?.startPoint?.date: ", route?.startPoint?.date);
   // console.log("route?.outbound?.duration: ", route?.outbound?.duration);
 
-  
+
 
   const [buttonTextByRouteType, setButtonTextByRouteType] = useState(
     props?.stage
@@ -189,21 +202,6 @@ const Way = ({
     return false;
   };
 
-  console.log(`can proceedstepspspsp ${canProceedStep(props)}`);
-
-  // useEffect(() => {
-  //   console.log("useeffect in WAY!");
-  //   // Assuming route?.startPoint?.date contains the updated date and time
-  //   if (route?.[wayType]?.startPoint?.time) {
-  //     console.log("condition met");
-  //     console.log("condition met");
-  //     console.log("condition met");
-  //     console.log("condition met");
-  //     // Focus the endPoint input here
-  //     endPointInputRef?.current?.focus();
-  //   }
-  // }, [route?.outbound?.startPoint?.time,route?.inbound?.startPoint?.time]);
-
   return (
     <>
       <div className={`${styles[wayType]} ${styles.wayStyle} way`} id={wayType}>
@@ -238,7 +236,7 @@ const Way = ({
                       wayType,
                       "startPoint",
                       null,
-                      isMobile(props?.windowWidth) ? endPointInputRef : datePickerRef  
+                      endPointInputRef.current
                     )
                   }}
                   options={{
@@ -255,82 +253,28 @@ const Way = ({
                     lat={props?.route?.[wayType]?.startPoint?.lat}
                     lng={props?.route?.[wayType]?.startPoint?.lng}
                     onChange={(e) => props.handleFields(e)}
-                    ref={startPointInputRef}
                   />
                 </Autocomplete>
               </div>
             </ConditionalWrapper>
-            <ConditionalDateTimeWrapper
-              condition={isMobile(props?.windowWidth)}
-            >
-              <div className={`${styles.labelAndInputWrapper}`}>
-                <label htmlFor="date">תאריך יציאה:</label>
-                <div
-                  className={`${styles.inputWrapper} ${styles.datePickerWrapper}`}
-                  >
-                  <DatePicker
-                    ref={datePickerRef}
-                    locale={he}
-                    name="date"
-                    showTimeSelect
-                    timeCaption="שעה"
-                    parent="startPoint"
-                    minDate={
-                      wayType == "outbound" ? new Date() : props?.minTimeInbound
-                    }
-                    id="date"
-                    customInput={<CustomDateInput />}
-                    selected={route?.startPoint?.date}
-                    dateFormat="dd/MM/yyyy"
-                    minTime={resolvedMinTimeValue}
-                    maxTime={
-                      new Date(
-                        props.today.getFullYear(),
-                        props.today.getMonth(),
-                        props.today.getDate(),
-                        23,
-                        30
-                      )
-                    }
-                    onChange={(date) => {
-                      props.handleDateChange(date, {
-                        target: {
-                          name: "date",
-                          closest: () => document.getElementById(wayType),
-                          attributes: {
-                            parent: {
-                              value: "startPoint",
-                            },
-                          },
-                        },
-                      }, isMobile(props?.windowWidth) ? null : endPointInputRef);
-                    }
-                    }
-                  />
-                </div>
-              </div>
-              <div className={`${styles.labelAndInputWrapper}`}>
-                <label htmlFor="time">שעת יציאה:</label>
-                <div
-                  className={`${styles.inputWrapper} ${styles.timeInputWrapper}`}
-                >
-                  <i className={styles.timePickerIcon}>
-                    <BiSolidTimeFive />
-                  </i>
-                  <input
-                    type="text"
-                    name="time"
-                    id="time"
-                    parent="startPoint"
-                    required
-                    disabled
-                    value={
-                      route?.startPoint?.date &&
-                      format(route?.startPoint?.date, "HH:mm")
-                    }
-                  />
-                </div>
-              </div>
+            <ConditionalDateTimeWrapper condition={isMobile(props?.windowWidth)}>
+              <DateTimePicker
+                resolvedMinTimeValue={resolvedMinTimeValue}
+                route={route}
+                handleDateChange={props.handleDateChange}
+                CustomDateInput={CustomDateInput}
+                datePickerRef={datePickerRef}
+                setDatePickerRef={setDatePickerRef}
+                today={props.today}
+                isMobile={isMobile(props?.windowWidth)}
+                endPointInputRef={endPointInputRef}
+                labelAndInputWrapper={styles.labelAndInputWrapper}
+                inputWrapper={styles.inputWrapper}
+                datePickerWrapper={styles.datePickerWrapper}
+                timeInputWrapper={styles.timeInputWrapper}
+                timePickerIcon={styles.timePickerIcon}
+                wayType={wayType}
+              />
             </ConditionalDateTimeWrapper>
           </div>
           {route?.stops?.length > 0 && (
@@ -422,6 +366,8 @@ const Way = ({
               >
                 <label htmlFor="address">נקודת יעד:</label>
                 <Autocomplete
+
+
                   onLoad={(autocomplete) =>
                     (endPointAutocompleteRef.current = autocomplete)
                   }
@@ -429,7 +375,9 @@ const Way = ({
                     handlePointSelect(
                       endPointAutocompleteRef.current.getPlace(),
                       wayType,
-                      "endPoint"
+                      "endPoint", 
+                      null,
+                      datePickerRef
                     )
                   }
                   options={{
@@ -437,6 +385,7 @@ const Way = ({
                   }}
                 >
                   <input
+                    ref={endPointInputRef}
                     type="text"
                     name="address"
                     id="address"
@@ -446,23 +395,21 @@ const Way = ({
                     lat={props?.route?.[wayType]?.endPoint?.lat}
                     lng={props?.route?.[wayType]?.endPoint?.lng}
                     onChange={(e) => props.handleFields(e)}
-                    ref={endPointInputRef}
                   />
                 </Autocomplete>
               </div>
             </ConditionalWrapper>
             <div
-              className={`${styles.addStopWrapper} ${
-                routeInfo?.[wayType]?.legs?.length > 1 &&
-                (!routeInfo?.[wayType]?.legs[
-                  routeInfo?.[wayType]?.legs.length - 1
-                ]?.duration ||
-                  !routeInfo?.[wayType]?.legs[
+              className={`${styles.addStopWrapper} ${routeInfo?.[wayType]?.legs?.length > 1 &&
+                  (!routeInfo?.[wayType]?.legs[
                     routeInfo?.[wayType]?.legs.length - 1
-                  ]?.distance)
+                  ]?.duration ||
+                    !routeInfo?.[wayType]?.legs[
+                      routeInfo?.[wayType]?.legs.length - 1
+                    ]?.distance)
                   ? styles.cannotAdd
                   : styles.canAdd
-              }`}
+                }`}
               onClick={(e) => {
                 if (
                   routeInfo?.[wayType]?.legs?.length <= 1 ||
@@ -484,13 +431,13 @@ const Way = ({
               </i>
               <span>
                 {routeInfo?.[wayType]?.legs?.length <= 1 ||
-                (routeInfo?.[wayType]?.legs?.length > 1 &&
-                  routeInfo?.[wayType]?.legs[
-                    routeInfo?.[wayType]?.legs.length - 1
-                  ]?.duration &&
-                  routeInfo?.[wayType]?.legs[
-                    routeInfo?.[wayType]?.legs.length - 1
-                  ]?.distance)
+                  (routeInfo?.[wayType]?.legs?.length > 1 &&
+                    routeInfo?.[wayType]?.legs[
+                      routeInfo?.[wayType]?.legs.length - 1
+                    ]?.duration &&
+                    routeInfo?.[wayType]?.legs[
+                      routeInfo?.[wayType]?.legs.length - 1
+                    ]?.distance)
                   ? addStopText
                   : "העצירה האחרונה אינה מלאה"}
               </span>
@@ -507,9 +454,8 @@ const Way = ({
             </button>
           )}
           <button
-            className={`${styles.directionButton} ${
-              styles.directionButtonForward
-            } ${canProceedStep(props) ? "" : styles.cannotProcceed}`} 
+            className={`${styles.directionButton} ${styles.directionButtonForward
+              } ${canProceedStep(props) ? "" : styles.cannotProcceed}`}
             onClick={(e) => {
               if (canProceedStep(props)) {
                 handleStages(e, props?.stage + 1);

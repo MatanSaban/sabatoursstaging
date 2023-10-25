@@ -384,13 +384,12 @@ const PriceForm = (props) => {
     const longitude = place?.geometry?.location?.lng();
     const city = extractCity(place?.address_components);
 
-    if (point === "startPoint" && !isMobile(props?.windowWidth) ) {
-      ref.current.state.focused = true
-      ref.current.state.open = true
-      console.log("ref");
-      console.log(ref.current);
-    } else if (point === "startPoint" && isMobile(props?.windowWidth) ) {
-      ref.current.focus(); // end point for mobile after the startpoint
+    if (point === "endPoint" ) {
+      console.log('ref');
+      // ref.current.focus = true
+      console.log(ref);
+      ref.current.state.focused = true;
+      ref.current.state.open = true;
     }
 
     // handleFields(e);

@@ -386,17 +386,18 @@
               // gap: 10px;
               margin-right: 10px;
             }
-            .mobileConditionalDateTimeWrapper {
-              display: flex;
-              justify-content: flex-start;
-              margin-bottom: 20px;
-              .labelAndInputWrapper {
-                width: 40%;
-                margin: 0 10px;
-              }
-            }
+            
             .addStopWrapper {
               margin-top: 20px;
+            }
+          }
+          .mobileConditionalDateTimeWrapper {
+            display: flex;
+            justify-content: flex-start;
+            margin-bottom: 20px;
+            .labelAndInputWrapper {
+              width: 40%;
+              margin: 0 10px;
             }
           }
           .endPointWrapper {

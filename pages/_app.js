@@ -10,6 +10,7 @@ import { useState, useEffect } from "react";
 import Head from "next/head";
 import axios from "axios";
 import LogoLoader from "../Components/Misc/LogoLoader";
+import Gtag from "../utils/gtag";
 
 const libraries = ["places"]; // define the libraries needed
 
@@ -129,6 +130,7 @@ function MyApp({ Component, pageProps }) {
         />
         <title>סבן טורס - חברת ההסעות שלך</title>
         <meta name="theme-color" content="008bcd" />
+        <Gtag/>
       </Head>
 
       <div className="appWrapper">

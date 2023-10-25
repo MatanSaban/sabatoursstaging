@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import styles from "./checkout.module.scss";
 import {
+	customRound,
 	eventTypes,
 	formatDateToString,
 	formatDuration,
@@ -41,7 +42,7 @@ const Checkout = (props) => {
 
 	const handleCardDetails = (e) => {
 		const { name, value } = e.target;
-		
+
 
 		setCardDetails((prevDetails) => {
 			const fieldMapping = {
@@ -127,23 +128,23 @@ const Checkout = (props) => {
 		let discountSum;
 
 		if (fullPrice) {
-			advancePayment = fullPrice * 0.15;
-			paymentLeft = Math.floor((fullPrice - advancePayment) / 10) * 10;
-				setAdvancePayment({
-					downPayment: advancePayment,
-					paymentLeft: paymentLeft,
-				});
-				fullPayment = fullPrice - fullPrice * 0.05;
-				let fullPaymentRoundedDownToTen = Math.floor(fullPayment / 10) * 10;
-				// Calculate the discount amount and percentage
-				let discountSum = fullPrice - fullPaymentRoundedDownToTen;
-				let discountPercentage = (discountSum / fullPrice) * 100;
+			advancePayment = customRound(fullPrice) * 0.15;
+			paymentLeft = Math.floor((customRound(fullPrice) - advancePayment) / 10) * 10;
+			setAdvancePayment({
+				downPayment: advancePayment,
+				paymentLeft: paymentLeft,
+			});
+			fullPayment = customRound(fullPrice) - customRound(fullPrice) * 0.05;
+			let fullPaymentRoundedDownToTen = Math.floor(fullPayment / 10) * 10;
+			// Calculate the discount amount and percentage
+			let discountSum = customRound(fullPrice) - fullPaymentRoundedDownToTen;
+			let discountPercentage = (discountSum / customRound(fullPrice)) * 100;
 
-				setFullPayment({
-					fullPayment: fullPaymentRoundedDownToTen,
-					discountSum: discountSum,
-					discountPercentage: discountPercentage,
-				});
+			setFullPayment({
+				fullPayment: fullPaymentRoundedDownToTen,
+				discountSum: discountSum,
+				discountPercentage: discountPercentage,
+			});
 		}
 	};
 
@@ -177,8 +178,8 @@ const Checkout = (props) => {
 						"Description": props?.userRoute?.routeType === "OneWay" ?
 							`נסיעה הלוך מ: ${props?.userRoute?.outbound?.startPoint?.address} \nל: ${props?.userRoute?.outbound?.endPoint?.address} \nבתאריך: ${formatDateToString(props?.userRoute?.outbound?.startPoint?.date, 'date')} ובשעה : ${formatDateToString(props?.userRoute?.outbound?.startPoint?.time, 'time')}  \nעם ${props?.userRoute?.outbound?.stops?.length} עצירות בדרך.`
 							:
-							`נסיעה הלוך מ: ${props?.userRoute?.outbound?.startPoint?.address} \nל: ${props?.userRoute?.outbound?.endPoint?.address} \nבתאריך: ${formatDateToString(props?.userRoute?.outbound?.startPoint?.date, 'date')} \nעם ${props?.userRoute?.outbound?.stops} עצירות בדרך
-				 ונסיעה בחזור מ: ${props?.userRoute?.inbound?.startPoint?.address} \nל: ${props?.userRoute?.inbound?.endPoint?.address} \nבתאריך: ${formatDateToString(props?.userRoute?.inbound?.startPoint?.date, 'date')} ובשעה : ${formatDateToString(props?.userRoute?.inbound?.startPoint?.time, 'time')} \nעם ${props?.userRoute?.inbound?.stops} עצירות בדרך.`
+							`נסיעה הלוך מ: ${props?.userRoute?.outbound?.startPoint?.address} \nל: ${props?.userRoute?.outbound?.endPoint?.address} \nבתאריך: ${formatDateToString(props?.userRoute?.outbound?.startPoint?.date, 'date')} \nעם ${props?.userRoute?.outbound?.stops?.length} עצירות בדרך
+				 ונסיעה בחזור מ: ${props?.userRoute?.inbound?.startPoint?.address} \nל: ${props?.userRoute?.inbound?.endPoint?.address} \nבתאריך: ${formatDateToString(props?.userRoute?.inbound?.startPoint?.date, 'date')} ובשעה : ${formatDateToString(props?.userRoute?.inbound?.startPoint?.time, 'time')} \nעם ${props?.userRoute?.inbound?.stops?.length} עצירות בדרך.`
 					},
 					"Quantity": 1,
 					"UnitPrice": selectedPaymentOption === "downPayment" ? parseFloat(advancePayment?.downPayment.toFixed(0)) / 1.17 : parseFloat(fullPayment?.fullPayment.toFixed(0)) / 1.17,
@@ -203,7 +204,7 @@ const Checkout = (props) => {
 		console.log('sendPaymentRes');
 		console.log(sendPaymentRes);
 	};
-	
+
 
 	const [showPaymentDetailsOnMobile, setShowPaymentDetailsOnMobile] = useState(!isMobile() ? true : false);
 
@@ -232,8 +233,8 @@ const Checkout = (props) => {
 						handlePopup={props.handlePopup}
 					/>
 				</div>
-				<div className={`${styles.checkoutBar} ${showPaymentDetailsOnMobile && styles.show}`} style={!isMobile(props?.windowWidth) ? { top: `${props?.headerHeight + 20 }px` } : null}>
-					<section className={styles.section}> 
+				<div className={`${styles.checkoutBar} ${showPaymentDetailsOnMobile && styles.show}`} style={!isMobile(props?.windowWidth) ? { top: `${props?.headerHeight + 20}px` } : null}>
+					<section className={styles.section}>
 						<h3 className={styles.sectionTitle}>בחירת תנאי תשלום</h3>
 						<div className={styles.paymentOptions}>
 							<label>
@@ -291,10 +292,16 @@ const Checkout = (props) => {
 							setCardDetails={setCardDetails}
 							advancePayment={advancePayment}
 							scrolling={props?.scrolling}
-							scrollTopVal={props?.scrollTopVal}				  
+							scrollTopVal={props?.scrollTopVal}
 						/>
 					</section>
-					<button className={styles.togglePaymentButton} onClick={() => handlePaymentShow()}>{showPaymentDetailsOnMobile ? <><span>הקטן אזור תשלום</span> <AiOutlineCaretDown/></> : <><span>מעבר לתשלום</span> <AiOutlineCaretUp/></>}</button>
+					<button
+						className={styles.togglePaymentButton}
+						onClick={() => handlePaymentShow()}>
+						{showPaymentDetailsOnMobile ?
+							<><span>הקטן אזור תשלום</span> <AiOutlineCaretUp /></>
+							: <><span>מעבר לתשלום</span> <AiOutlineCaretDown /></>}
+					</button>
 				</div>
 			</div>
 		</div>

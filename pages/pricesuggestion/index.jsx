@@ -124,7 +124,7 @@ const PriceSuggestion = (props) => {
         </div>
         <div className={styles.priceOfferStripe}>
           <div className={styles.carImage}>
-            <Image src={showCarImage(props?.userDetails?.carType)} height={150} width={150} />
+            <Image src={showCarImage(props?.userDetails?.carType)} height={150} width={150} alt={`image of ${props?.userDetails?.carType} vehicle`} />
           </div>
           <div className={styles.offerDetails}>
             <div className={styles.line}>

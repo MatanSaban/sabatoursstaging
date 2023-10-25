@@ -40,9 +40,9 @@ const BoundInfo = (props) => {
           </span>
         </li>
         <li>
-          <span className={styles.boldTitle}>מרחק נסיעה הלוך:</span>{" "}
+          <span className={styles.boldTitle}>מרחק נסיעה:</span>{" "}
           <span className={styles.value}>
-            {props?.route?.[direction]?.distance} ק&quot;מ
+            {(props?.route?.[direction]?.distance)?.toFixed(2)} ק&quot;מ
           </span>
         </li>
         <li>
