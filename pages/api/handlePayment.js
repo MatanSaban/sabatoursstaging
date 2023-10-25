@@ -1,7 +1,5 @@
 import axios from "axios";
 export default async function handler(req, res) {
-    console.log('req');
-    console.log(req.body.items);
     try {
         const data = req.body;
         data.Credentials = {

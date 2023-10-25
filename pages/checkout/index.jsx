@@ -157,7 +157,6 @@ const Checkout = (props) => {
 
 	const handleSubmitPayment = async (e) => {
 		e.preventDefault();
-		console.log("here");
 		if (!validateCardNumber(cardDetails?.ccNumber)) {
 			return setError("מספר כרטיס האשראי לא תקין");
 		}
@@ -202,8 +201,6 @@ const Checkout = (props) => {
 		}
 		);
 		const sendPaymentRes = sendPayment?.data;
-		console.log('sendPaymentRes');
-		console.log(sendPaymentRes);
 	};
 
 

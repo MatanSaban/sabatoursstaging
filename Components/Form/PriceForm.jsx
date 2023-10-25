@@ -12,7 +12,6 @@ import FormFooter from "./FormFooter";
 import { eventTypes, formatDateToString, formatDuration, isMobile, showDistance } from "../../utils/functions";
 
 const PriceForm = (props) => {
-  //   console.log("PriceForm comp render");
 
   const today = new Date();
 
@@ -131,7 +130,6 @@ const PriceForm = (props) => {
       }
     });
 
-    // console.log(newStops);
 
     // To update the state with the new stops array, you can call `setRoute`
     setRoute((prevRoute) => ({
@@ -207,8 +205,6 @@ const PriceForm = (props) => {
   };
 
   const handleDateChange = (selectedDate, e, ref) => {
-    // console.log("selectedDate");
-    // console.log(selectedDate);
     const date = format(selectedDate, "dd/MM/yyyy");
     const time = format(selectedDate, "HH:mm");
 
@@ -237,8 +233,6 @@ const PriceForm = (props) => {
     const way = e.target.closest(".way").id;
     const value = e.target.value;
 
-    // console.log("way");
-    // console.log(way);
   };
 
   const isPointFilledCorrectly = (point) => {
@@ -379,15 +373,11 @@ const PriceForm = (props) => {
   const handlePointSelect = (place, direction, point, indexOfStop, ref) => {
     let address = place?.formatted_address;
     address = `${place?.name}, ${place?.vicinity}`
-    console.log(address);
     const latitude = place?.geometry?.location?.lat();
     const longitude = place?.geometry?.location?.lng();
     const city = extractCity(place?.address_components);
 
     if (point === "endPoint" ) {
-      console.log('ref');
-      // ref.current.focus = true
-      console.log(ref);
       ref.current.state.focused = true;
       ref.current.state.open = true;
     }
@@ -653,9 +643,6 @@ const PriceForm = (props) => {
 
   useEffect(() => {}, [route?.routeType]);
 
-  useEffect(() => {
-    console.log("comp PRICEFORMWAY");
-  }, []);
 
   const [stage, setStage] = useState(1);
 

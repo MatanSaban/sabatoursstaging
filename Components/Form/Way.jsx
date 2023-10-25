@@ -52,15 +52,6 @@ const Way = ({
   const [datePickerRef , setDatePickerRef] = useState();
 
   useEffect(() => {
-    console.log("use effect for datepicker ref from WAy");
-    console.log("use effect for datepicker ref from WAy");
-    console.log("use effect for datepicker ref from WAy");
-    console.log("use effect for datepicker ref from WAy");
-    console.log(datePickerRef);
-    console.log("use effect for datepicker ref from WAy");
-    console.log("use effect for datepicker ref from WAy");
-    console.log("use effect for datepicker ref from WAy");
-    console.log("use effect for datepicker ref from WAy");
   },[datePickerRef])
 
   const totalDistance = // formatDuration
@@ -129,37 +120,19 @@ const Way = ({
 
   const resolvedMinTimeValue = minTimeValue();
 
-  // console.log(`MinTime value in ${wayType}: ${minTimeValue}`);
-  // console.log("minTimeInbound: ", props?.minTimeInbound);
-  // console.log(
-  //   "props?.isToday(route?.startPoint?.date): ",
-  //   props?.isToday(route?.startPoint?.date)
-  // );
-  // console.log("route?.startPoint?.date: ", route?.startPoint?.date);
-  // console.log("route?.outbound?.duration: ", route?.outbound?.duration);
-
-
 
   const [buttonTextByRouteType, setButtonTextByRouteType] = useState(
     props?.stage
   );
 
   useEffect(() => {
-    console.log("useeffect in way blat");
-    console.log("props.route.routeType");
-    console.log(props.route.routeType);
     switch (props.route.routeType) {
       case "OneWay":
-        console.log("here 1");
-        console.log(props);
         if (props.stage === 1) {
-          console.log("here 2");
           setButtonTextByRouteType("פרטי נסיעה אחרונים");
         }
         break;
       case "TwoWays":
-        console.log("here 3");
-        console.log(props);
         if (props.stage == 1) {
           setButtonTextByRouteType("פרטי דרך חזור");
         } else if (props.stage == 2) {

@@ -3,7 +3,6 @@ import styles from "./popup.module.scss";
 import { AiFillCloseCircle } from "react-icons/ai";
 
 const Popup = (props) => {
-  // console.log("popup comp render");
   const handleClose = () => {
     props.setPopup(<Popup show={false} content={props?.content} />);
   };

@@ -1,5 +1,78 @@
 /* Areas page */
-.areas {
+.regionsWrapper {
+  .regions {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    text-align: center;
+    gap: 10px;
+    width: 95%;
+    margin: 100px auto;
+    position: relative;
+    .region {
+      background-color: #ffffff70;
+      border-radius: 20px;
+      box-shadow: 0 0 40px #e6e6e6;
+      padding: 5px 20px;
+      background-position: 0% bottom;
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-blend-mode: luminosity;
+      transition: all 0.3s ease;
+      .regionName {
+        font-size: 1.9rem;
+        font-weight: 900;
+        color: white;
+        text-shadow: 0 0 10px black;
+        letter-spacing: 1px;
+        background-color: #00000099;
+        width: 100%;
+      }
+      &:hover {
+        box-shadow: 0 0 20px #cecece;
+        background-blend-mode: darken;
+      }
+      ul {
+        list-style: none;
+        text-align: center;
+        padding: 0;
+        display: flex;
+        flex-wrap: wrap;
+        .listItem {
+          background-color: rgb(19, 123, 221);
+          border-radius: 20px;
+          overflow: hidden;
+          margin: 10px;
+          transition: all 0.3s ease;
+          &:hover {
+            background-color: rgb(79, 170, 255);
+          }
+          .link {
+            text-decoration: none;
+            font-size: 1rem;
+            color: white;
+            padding: 5px 8px;
+            font-weight: bold;
+            letter-spacing: 0.2px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            .cityName {
+              margin-right: 5px;
+            }
+          }
+        }
+      }
+      // .cover {
+      //   background-color: #00000050;
+      //   position: absolute;
+      //   left: 0;
+      //   top: 0;
+      //   z-index: 1;
+      //   width: 100%;
+      //   height: 100%;
+      // }
+    }
+  }
 }
 
 /* End Of Areas page */

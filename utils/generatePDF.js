@@ -30,8 +30,6 @@ import { customRound, formatDate, formatDuration, handleEventType, importantThin
 
 
 const generatePDF = (userDetails, route, calculatedPrice, carType, offerId, callback) => {
-    console.log('route');
-    console.log(route);
     const doc = new jsPDF();
     const getLeftOfLabelPosition = (doc, label, value, labelX, isHebrew, customPoints) => {
         let gapInPoints = -9; // Roughly ~2.5px

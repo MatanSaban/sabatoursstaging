@@ -20,7 +20,6 @@ const FormFooter = (props) => {
   const [showButtonsFor, setShowButtonsFor] = useState(null);  // State to track which input is clicked
 
   const handleNumInpField = (e, field) => {
-    console.log("clicked");
     setShowButtonsFor(field);
   };
 
@@ -249,9 +248,6 @@ const FormFooter = (props) => {
                 },
               })
               .then((res) => {
-                console.log("res");
-                console.log("res");
-                console.log(res);
                 if (res.status === 200) {
                   props.handlePopup(
                     true,

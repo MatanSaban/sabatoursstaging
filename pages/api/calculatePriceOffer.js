@@ -149,12 +149,6 @@ function getVehicleOptions(passengerCount, suitcaseCount) {
 
 function calculateFuelCost(distance, vehicleType) {
     const fuelExpense = distance * VEHICLES[vehicleType].pricePerKilometer;
-    console.log('price per km');
-    console.log(VEHICLES[vehicleType].pricePerKilometer);
-    console.log('distance');
-    console.log(distance);
-    console.log('fuelExpense');
-    console.log(fuelExpense);
     return fuelExpense;
 }
 
@@ -173,8 +167,6 @@ function calculateTripCost(route) {
         }
         vehicleCosts[option] = totalCostForOption;
     }
-    console.log("vehicleCosts")
-    console.log(vehicleCosts)
 
     return vehicleCosts;
 }
@@ -318,8 +310,6 @@ function getPriceOffer(route, holidays) {
         result.priceDetails.push({ amount: selectedVehicle.minPrice, reason: "Minimum price applied" });
     }
 
-    console.log('result');
-    console.log(result);
 
     return result;
 }

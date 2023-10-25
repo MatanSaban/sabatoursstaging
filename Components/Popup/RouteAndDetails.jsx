@@ -38,7 +38,6 @@ const RouteAndDetails = (props) => {
   //   return null; // Return something or display an error message
   // }
 
-  console.log("route and details comp render");
 
   const outBoundStartPointCoors = useMemo(
     () => ({
@@ -112,8 +111,6 @@ const RouteAndDetails = (props) => {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
 
-    console.log("eeeeeeeeeee");
-    console.log(e);
 
     const newDetails = {};
     const inputsArray = Array.from(e.target);
@@ -165,8 +162,6 @@ const RouteAndDetails = (props) => {
         );
 
         offerId = await wpRes.data.id;
-        console.log('wpResssss');
-        console.log(wpRes);
       } catch (error) {
         console.log(error);
       }
@@ -181,8 +176,6 @@ const RouteAndDetails = (props) => {
         axios
           .post(`/api/sendPriceSuggestion`, { userDetails: userDetails })
           .then((res) => {
-            console.log("res res racist");
-            console.log(res);
 
             // Generate the PDF blob from the user details.
             generatePDF(
@@ -217,15 +210,11 @@ const RouteAndDetails = (props) => {
 
                     // Step 2: Upload PDF to WordPress Media Library
 
-                    console.log('offerId');
-                    console.log(offerId);
 
                     const mediaRes = await axios.post(
                       `/api/uploadPdf`,
                       formData, offerId
                     );
-                    console.log("mediaRes");
-                    console.log(mediaRes);
                     const mediaID = await mediaRes.data.id;
 
                     // Step 3: Update Post with Media ID
@@ -308,7 +297,6 @@ const RouteAndDetails = (props) => {
                       offerId: offerId,
                     })
                     .then((res) => {
-                      console.log("Server response:", res);
 
                       // Triggering download for the user
                       const blobURL = window.URL.createObjectURL(pdfBlob);

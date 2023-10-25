@@ -4,8 +4,6 @@ import styles from "./priceform.module.scss";
 import Way from "./Way";
 
 const TwoWays = (props) => {
-  // formatDuration showDistance
-  // console.log("TwoWays.jsx render");
   return (
     <div
       className={styles.twoWays}

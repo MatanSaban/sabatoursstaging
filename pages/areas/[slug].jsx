@@ -33,7 +33,7 @@ export async function getStaticProps({ params }) {
             Authorization: `${process.env.WORDPRESSTOKEN}`,
         },
     });
-    const data = await response.json();
+    const data = await response.json(); 
     const pageData = await data[0];
 
     return { props: { pageData } };
@@ -43,7 +43,7 @@ export async function getStaticProps({ params }) {
 const AreaPage = ({ pageData }) => {
 
     const renderTitles = (titlesAndTextArray) => {
-        const jsx = titlesAndTextArray.map((titleAndText, index) => {
+        const jsx = titlesAndTextArray?.map((titleAndText, index) => {
 
             let LogoImage;
 

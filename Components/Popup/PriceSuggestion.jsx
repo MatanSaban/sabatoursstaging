@@ -18,13 +18,8 @@ const PriceSuggestion = (props) => {
     let label;
     const eventTypesArr = props?.eventTypes;
     if (eventTypesArr) {
-      console.log("eventTypesArr");
-      console.log(eventTypesArr);
-      console.log("eventType");
-      console.log(eventType);
       eventTypesArr.forEach((event) => {
         if (event.value == eventType) {
-          console.log("eurika! : " + event.label);
           label = event.label;
         }
       });

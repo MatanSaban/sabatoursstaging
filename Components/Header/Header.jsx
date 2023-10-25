@@ -22,7 +22,6 @@ const Header = (props) => {
   useEffect(() => {
     if (headerRef.current) {
       const height = headerRef.current.offsetHeight;
-      console.log(`The height of the header is: ${height}px`);
       props?.setHeaderHeight(height);
     }
   }, []);
