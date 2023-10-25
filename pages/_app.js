@@ -110,14 +110,14 @@ function MyApp({ Component, pageProps }) {
         />
         <title>סבן טורס - חברת ההסעות שלך</title>
         <meta name="theme-color" content="008bcd" />
-        <script src={`https://www.googletagmanager.com/gtag/js?id=${process.env.GOOGLE_TAG_MANGER_ID}`} />
-        <script id="google-analytics">
+        <script src={`https://www.googletagmanager.com/gtag/js?id=G-4WWJ8F67H9`} async/>
+        <script async id="google-analytics">
           {`
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);} 
           gtag('js', new Date());
  
-          gtag('config', '${process.env.GOOGLE_TAG_MANGER_ID}');
+          gtag('config', 'G-4WWJ8F67H9');
         `}
         </script>
       </Head>
