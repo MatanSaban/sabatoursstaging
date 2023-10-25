@@ -8,6 +8,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@hotjar/browser": "^1.0.9",
     "@react-google-maps/api": "^2.19.2",
     "@react-pdf/renderer": "^3.1.12",
     "axios": "^1.4.0",
