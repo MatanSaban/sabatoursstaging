@@ -1,6 +1,6 @@
 import Script from 'next/script'
  
-function Gtag() {
+const GoogleTag = () => {
   return (
     <div className="container">
       <Script src="https://www.googletagmanager.com/gtag/js?id=G-4WWJ8F67H9" />
@@ -17,4 +17,4 @@ function Gtag() {
   )
 }
  
-export default Gtag
+export default GoogleTag;

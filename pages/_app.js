@@ -10,7 +10,7 @@ import { useState, useEffect } from "react";
 import Head from "next/head";
 import axios from "axios";
 import LogoLoader from "../Components/Misc/LogoLoader";
-import GoogleTag from "../utils/gtag";
+import GoogleTag from '../utils/GoogleTag.js'
 
 const libraries = ["places"]; // define the libraries needed
 
