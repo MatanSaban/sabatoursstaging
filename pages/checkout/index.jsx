@@ -215,7 +215,7 @@ const Checkout = (props) => {
 
 	return (
 		<div className={styles.checkoutPage}>
-			<PageHero/>
+            <PageHero title={`הזמנת נסיעה`} />
 			<div className={styles.checkoutContent}>
 				<div className={styles.routeDetails}>
 					<PriceSuggestion
