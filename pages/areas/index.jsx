@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './Areas.module.scss';
+import styles from './areas.module.scss';
 import Link from 'next/link';
 
 // export async function getStaticProps() {
