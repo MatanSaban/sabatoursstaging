@@ -1,31 +1,13 @@
-import Image from 'next/image'
 import React from 'react'
-import Logo from '../../public/media/Logo.gif';
+import Logo from '../../public/media/LogoAnimationLottie.json';
 import styles from './logoLoader.module.scss'
+import Lottie from 'lottie-react';
 
 const LogoLoader = ({percentage, show, showPercentage}) => {
 
-    const loadingStyles = (percentage) => {
-        switch (percentage) {
-          case 0:
-            return {};
-          case 25:
-            return { backgroundColor: "#000", color: "#fff" };
-          case 50:
-            return { backgroundColor: "#b2ffb9" , color: "#fff" };
-          case 75:
-            return { backgroundColor: "#4bbd55" , color: "#fff" };
-          case 100:
-            return { backgroundColor: "#209e00" , color: "#fff" };
-          default:
-            return {};
-        }
-      };
-    
-
   return (
     <div className={`${styles.LogoAnimationWrapper} ${!show && styles.dontShow}`}>
-        <Image className={styles.LogoAnimation} src={Logo} alt='סבן טורס, העמוד בטעינה' />
+        <Lottie className={styles.LogoAnimation} animationData={Logo} alt='סבן טורס, העמוד בטעינה' autoPlay={true}/>
         {
           showPercentage && 
         <div className={styles.LoaderPercentage} style={{background:`linear-gradient(90deg, #76ad24 ${percentage}%,  #ffffff 0%)`, color: `${percentage > 48 && "#fff" }`, textShadow: `${percentage > 48 && "0 0 10px #000"}`}}>{percentage}%</div>
