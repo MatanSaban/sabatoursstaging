@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:mobile="http://www.google.com/schemas/sitemap-mobile/1.0" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
+<url><loc>http://localhost:3000</loc><lastmod>2023-10-26T22:58:31.777Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>http://localhost:3000/areas</loc><lastmod>2023-10-26T22:58:31.777Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>http://localhost:3000/checkout</loc><lastmod>2023-10-26T22:58:31.777Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>http://localhost:3000/drive-types</loc><lastmod>2023-10-26T22:58:31.777Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>http://localhost:3000/pricesuggestion</loc><lastmod>2023-10-26T22:58:31.777Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>http://localhost:3000/drive-types/הסעות-עובדי-הייטק-וסטארטאפים</loc><lastmod>2023-10-26T22:58:31.777Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>http://localhost:3000/drive-types/הסעות-אומנים</loc><lastmod>2023-10-26T22:58:31.777Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>http://localhost:3000/drive-types/שירות-העברות-נתבג</loc><lastmod>2023-10-26T22:58:31.777Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>http://localhost:3000/drive-types/הסעות-למפעלים</loc><lastmod>2023-10-26T22:58:31.777Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>http://localhost:3000/drive-types/הסעות-עובדים</loc><lastmod>2023-10-26T22:58:31.777Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>http://localhost:3000/drive-types/הסעות-לנתבג</loc><lastmod>2023-10-26T22:58:31.777Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>http://localhost:3000/drive-types/הסעות-לחתונה</loc><lastmod>2023-10-26T22:58:31.777Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>http://localhost:3000/areas/פתח-תקווה</loc><lastmod>2023-10-26T22:58:31.777Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>http://localhost:3000/areas/עכו</loc><lastmod>2023-10-26T22:58:31.777Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>http://localhost:3000/areas/ירושלים</loc><lastmod>2023-10-26T22:58:31.777Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>http://localhost:3000/areas/אילת</loc><lastmod>2023-10-26T22:58:31.777Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>http://localhost:3000/areas/ראשון-לציון</loc><lastmod>2023-10-26T22:58:31.777Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>http://localhost:3000/areas/חולון</loc><lastmod>2023-10-26T22:58:31.777Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+</urlset>
