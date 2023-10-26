@@ -143,18 +143,18 @@ function MyApp({ Component, pageProps }) {
           scrollTopVal={scrollTopVal}
         />
         {popup}
-        <PageWrapper> 
-          <Component
-            scrolling={scrolling}
-            scrollTopVal={scrollTopVal}
-            {...pageProps}
-            handlePopup={handlePopup}
-            sendDataToApp={sendDataToApp}
-            userRoute={userRoute}
-            windowWidth={windowWidth}
-            headerHeight={headerHeight}
-          />
-      </PageWrapper>
+        <PageWrapper
+          scrolling={scrolling}
+          scrollTopVal={scrollTopVal}
+          {...pageProps}
+          handlePopup={handlePopup}
+          sendDataToApp={sendDataToApp}
+          userRoute={userRoute}
+          windowWidth={windowWidth}
+          headerHeight={headerHeight}
+        >
+          <Component {...pageProps} />
+        </PageWrapper>
         <Footer
           scrolling={scrolling}
           scrollTopVal={scrollTopVal}

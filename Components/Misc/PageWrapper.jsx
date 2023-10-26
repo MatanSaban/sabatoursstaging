@@ -1,56 +1,66 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect, Children, cloneElement } from 'react';
 import { useRouter } from "next/router";
 import LogoLoader from './Loading';
 
-function PageWrapper({ children }) {
-    const [loading, setLoading] = useState(false);
+function PageWrapper({ children, ...props }) {
+    const [loading, setLoading] = useState(true);  // Set initial loading state to true
     const [percentage, setPercentage] = useState(0);
-    const [showChildren, setShowChildren] = useState(false);  // New state variable
+    const [showChildren, setShowChildren] = useState(false);
     const router = useRouter();
-  
+
     useEffect(() => {
-      // Function to update the percentage (you can customize this logic)
-      const updatePercentage = (val) => {
-        setPercentage(val);
-        if (val < 100) {
-          setTimeout(() => updatePercentage(val + 25), 500);  // Increment by 25 every 500ms
-        } else {
-          setLoading(false);  // Hide loader once percentage reaches 100
+        // Function to handle updating the percentage and loading state
+        const updatePercentage = (val) => {
+            setPercentage(val);
+            if (val < 100) {
+                setTimeout(() => updatePercentage(val + 25), 500);
+            } else {
+                setLoading(false);
+            }
+        };
+
+        // Event handlers
+        const handleRouteChangeStart = () => {
+            setLoading(true);
+            setShowChildren(false);
+            updatePercentage(0);
+        };
+        const handleRouteChangeComplete = () => {
+            setLoading(false);
+            setShowChildren(true);
+        };
+        const handleRouteChangeError = () => setLoading(false);
+
+        // Listen for route changes
+        router.events.on('routeChangeStart', handleRouteChangeStart);
+        router.events.on('routeChangeComplete', handleRouteChangeComplete);
+        router.events.on('routeChangeError', handleRouteChangeError);
+
+        // Ensure children are shown on initial load
+        if (router.isReady) {
+            setLoading(false);
+            setShowChildren(true);
         }
-      };
-  
-      // Event handlers
-      const handleRouteChangeStart = () => {
-        setLoading(true);
-        setShowChildren(false);  // Hide children when route change starts
-        updatePercentage(0);
-      };
-      const handleRouteChangeComplete = () => {
-        setLoading(false);  // Set loading to false, which sets `show` in LogoLoader to false
-        setShowChildren(true);  // Show children after 1s
-        // setTimeout(() => {
-        // }, 0);
-      };
-      const handleRouteChangeError = () => setLoading(false);
-  
-      // Listen for route changes
-      router.events.on('routeChangeStart', handleRouteChangeStart);
-      router.events.on('routeChangeComplete', handleRouteChangeComplete);
-      router.events.on('routeChangeError', handleRouteChangeError);
-  
-      return () => {
-        // Cleanup event listeners
-        router.events.off('routeChangeStart', handleRouteChangeStart);
-        router.events.off('routeChangeComplete', handleRouteChangeComplete);
-        router.events.off('routeChangeError', handleRouteChangeError);
-      };
+
+        return () => {
+            // Cleanup event listeners
+            router.events.off('routeChangeStart', handleRouteChangeStart);
+            router.events.off('routeChangeComplete', handleRouteChangeComplete);
+            router.events.off('routeChangeError', handleRouteChangeError);
+        };
     }, [router]);
-  
+
     return (
-      <>
-        {loading ? <LogoLoader percentage={percentage} show={true} showPercentage={false} /> : <LogoLoader percentage={percentage} show={false} showPercentage={false} />}
-        {showChildren ? children : null}
-      </>
+        <>
+            {loading ? <LogoLoader percentage={percentage} show={true} showPercentage={false} /> : <LogoLoader percentage={percentage} show={false} showPercentage={false} />}
+            {showChildren ?
+                <div>
+                    {Children.map(children, child => {
+                        return cloneElement(child, props);
+                    })}
+                </div>
+                : null}
+        </>
     );
 }
 

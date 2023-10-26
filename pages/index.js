@@ -4,7 +4,7 @@ import axios from "axios";
 import logo from '../public/media/faviconSquare.png'
 import { updateRegionImages } from "../utils/functions.js";
 
-export async function getServerSideProps(context) {
+export async function getStaticProps(context) {
   try {
     const WORDPRESSTOKEN = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsIm5hbWUiOiJzYWJhbnRvdV9hZG1pbiIsImlhdCI6MTY5Nzg5ODY2MiwiZXhwIjoxODU1NTc4NjYyfQ.oCkMkngRArnT1BwRs6bExWcQ-jsDncZla0SmHMIu588';  // Replace with your actual token
     const DATA_SOURCE = 'https://saban-tours.ussl.co.il/wp-json/wp/v2';  // Replace with your actual API endpoint
@@ -106,7 +106,7 @@ export async function getServerSideProps(context) {
     return {
       props: {
         ...initialData
-      },
+      }, revalidate: 60
     };
   }
 }
@@ -116,7 +116,7 @@ const handleButton = () => {
     if (perm === "granted") {
       const notification = new Notification("הודעה חדשה מ-סבן טורס", {
         body: "רציתי לדעת שאת שלי, \n רציתי לקחת אותך איתי \n למקום אחר, שם נוכל לאהוב ולגדול",
-        data: {hello: "world"}, 
+        data: { hello: "world" },
         icon: logo.src
       })
 
@@ -124,7 +124,7 @@ const handleButton = () => {
         console.log("e")
         console.log()
       })
-    } 
+    }
   })
 }
 
