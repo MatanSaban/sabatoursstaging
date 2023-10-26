@@ -4,6 +4,7 @@ import PageHero from '../../Components/Misc/PageHero';
 import Lottie from 'lottie-react';
 import animation from '../../public/media/404animation.json'
 import Link from 'next/link';
+import Head from 'next/head';
 
 const Error404Page = () => {
   return (

@@ -15,6 +15,7 @@ import useCardNumberValidation from '../../Components/Misc/Hooks/CreditCardValid
 import PaymentForm from "../../Components/Misc/PaymentForm/PaymentForm";
 import { AiFillMinusCircle, AiFillPlusCircle, AiOutlineCaretDown, AiOutlineCaretUp, AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
 import PageHero from "../../Components/Misc/PageHero";
+import Head from "next/head";
 
 
 const Checkout = (props) => {

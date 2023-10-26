@@ -3,6 +3,7 @@ import styles from './areas.module.scss';
 import PageHero from '../../Components/Misc/PageHero';
 import RegionsComp from '../../Components/Home/RegionsComp';
 import { fetchImage, updateRegionImages } from '../../utils/functions';
+import Head from 'next/head';
 
 export async function getStaticProps() {
     // Fetch the list of available areas and regions

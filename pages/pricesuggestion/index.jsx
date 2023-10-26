@@ -5,6 +5,7 @@ import Image from "next/image";
 import BoundInfo from "../../Components/Popup/BoundInfo";
 import { importantThing, showCarImage, translateCarType } from "../../utils/functions";
 import { formatDateToString, handleEventType, handleRouteTypeLabel } from "../../utils/functions";
+import Head from "next/head";
 
 const PriceSuggestion = (props) => {
   const componentRef = useRef();
