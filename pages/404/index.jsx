@@ -7,6 +7,12 @@ import Link from 'next/link';
 
 const Error404Page = () => {
   return (
+    <>
+    <Head>
+      <title>
+        סבן טורס | שגיאה 404
+      </title>
+    </Head>
     <div className={styles.errorPageWrapper}> 
       <PageHero title={"שגיאה 404 : עמוד לא קיים"} /> 
       <div className={styles.content}>
@@ -27,6 +33,7 @@ const Error404Page = () => {
         </Link>
       </div>
     </div>
+    </>
   )
 }
 

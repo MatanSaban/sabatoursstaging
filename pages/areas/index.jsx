@@ -4,7 +4,7 @@ import PageHero from '../../Components/Misc/PageHero';
 import RegionsComp from '../../Components/Home/RegionsComp';
 import { fetchImage, updateRegionImages } from '../../utils/functions';
 
-export async function getStaticProps () {
+export async function getStaticProps() {
     // Fetch the list of available areas and regions
     const [citiesResponse, regionsResponse] = await Promise.all([
         fetch(`${process.env.DATA_SOURCE}/service_areas?per_page=100`, {
@@ -29,10 +29,17 @@ export async function getStaticProps () {
 
 const Areas = ({ cities, regions }) => {
     return (
-        <div className={styles.regionsWrapper}>
-            <PageHero title={"אזורי השירות של סבן טורס"}/> 
-            <RegionsComp regions={regions} cities={cities} />
-        </div>
+        <>
+            <Head>
+                <title>
+                    סבן טורס | אזורי שירות
+                </title>
+            </Head>
+            <div className={styles.regionsWrapper}>
+                <PageHero title={"אזורי השירות של סבן טורס"} />
+                <RegionsComp regions={regions} cities={cities} />
+            </div>
+        </>
     );
 };
 export default Areas;

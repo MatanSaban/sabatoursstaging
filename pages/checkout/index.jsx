@@ -211,6 +211,12 @@ const Checkout = (props) => {
 	}
 
 	return (
+		<>
+		<Head>
+      <title>
+        סבן טורס | עמוד תשלום
+      </title>
+    </Head>
 		<div className={styles.checkoutPage}>
             <PageHero title={`הזמנת נסיעה`} />
 			<div className={styles.checkoutContent}>
@@ -301,6 +307,7 @@ const Checkout = (props) => {
 				</div>
 			</div>
 		</div>
+		</>
 	);
 };
 

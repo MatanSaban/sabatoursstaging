@@ -4,6 +4,7 @@ import Link from "next/link";
 import PageHero from "../../Components/Misc/PageHero";
 import { decodeHTMLEntities } from "../../utils/functions";
 import Image from "next/image";
+import Head from "next/head";
 
 export async function getStaticProps() {
   // Fetch the list of available areas and regions
@@ -55,6 +56,12 @@ const updatedDts = await Promise.all(transportationTypes.map(updateDtImages));
 
 const DriveTypes = ({ driveTypes }) => {
   return (
+    <>
+    <Head>
+      <title>
+        סבן טורס | סוגי הסעות
+      </title>
+    </Head>
     <div className={styles.driveTypesWrapper}>
       <PageHero title={"סוגי ההסעות שלנו"}/>
       <div className={styles.services}>
@@ -71,6 +78,7 @@ const DriveTypes = ({ driveTypes }) => {
         ))}
       </div>
     </div>
+    </>
   )
     ;
 };

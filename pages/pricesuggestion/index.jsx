@@ -43,6 +43,12 @@ const PriceSuggestion = (props) => {
   };
 
   return (
+    <>
+    <Head>
+      <title>
+        סבן טורס | הצעת מחיר
+      </title>
+    </Head>
     <div className={styles.main} ref={componentRef}>
       <div className={styles.body}>
         <div className={styles.psDates}>
@@ -158,6 +164,7 @@ const PriceSuggestion = (props) => {
         הורדת הצעת המחיר
       </button> */}
     </div>
+    </>
   );
 };
 
