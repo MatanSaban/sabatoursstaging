@@ -99,14 +99,15 @@ export async function getStaticProps(context) {
           media: serializableMediaResponses,  // Now should be serializable
           homepageData: fetchedHomepage,
         },
-      },
+      }, revalidate: 60
     };
   } catch (error) {
     console.error("An error occurred:", error);
     return {
       props: {
         ...initialData
-      }, revalidate: 60
+      }, 
+      revalidate: 60
     };
   }
 }
