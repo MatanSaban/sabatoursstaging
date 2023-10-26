@@ -27,9 +27,9 @@ function PageWrapper({ children }) {
       };
       const handleRouteChangeComplete = () => {
         setLoading(false);  // Set loading to false, which sets `show` in LogoLoader to false
-        setTimeout(() => {
-          setShowChildren(true);  // Show children after 1s
-        }, 1000);
+        setShowChildren(true);  // Show children after 1s
+        // setTimeout(() => {
+        // }, 0);
       };
       const handleRouteChangeError = () => setLoading(false);
   
