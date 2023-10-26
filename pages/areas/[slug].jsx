@@ -19,7 +19,7 @@ export async function getStaticPaths() {
 }
 
 // Function to fetch data for a single page
-export async function getStaticProps({ params }) {
+export async function getServerSideProps({ params }) {
     // Fetch the data for the specific area based on the slug
     const response = await fetch(`${process.env.DATA_SOURCE}/service_areas?slug=${params.slug}`, {
         headers: {

@@ -75,16 +75,11 @@ const Header = (props) => {
               סוגי רכבים
             </Link>
           </li>
-          <li className={styles.menuItem} >
-            <Link className={styles.menuItemLink} href="/">
-              מידע כללי
-            </Link>
-          </li>
-          <li className={styles.menuItem} >
+          {/* <li className={styles.menuItem} >
             <Link className={styles.menuItemLink} href="/">
               מאמרים
             </Link>
-          </li>
+          </li> */}
           <li className={styles.menuItem} >
             <Link className={styles.menuItemLink} href="/">
               אודותינו
@@ -137,16 +132,11 @@ const Header = (props) => {
                 סוגי רכבים
               </Link>
             </li>
-            <li className={styles.menuItem} onClick={() => closeMobileMenuDelay()}>
-              <Link className={styles.menuItemLink} href="/">
-                מידע כללי
-              </Link>
-            </li>
-            <li className={styles.menuItem} onClick={() => closeMobileMenuDelay()}>
+            {/* <li className={styles.menuItem} onClick={() => closeMobileMenuDelay()}>
               <Link className={styles.menuItemLink} href="/">
                 מאמרים
               </Link>
-            </li>
+            </li> */}
             <li className={styles.menuItem} onClick={() => closeMobileMenuDelay()}>
               <Link className={styles.menuItemLink} href="/">
                 אודותינו

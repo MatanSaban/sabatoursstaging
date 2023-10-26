@@ -5,7 +5,7 @@ import PageHero from "../../Components/Misc/PageHero";
 import { decodeHTMLEntities } from "../../utils/functions";
 import Image from "next/image";
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   // Fetch the list of available areas and regions
   const transportationTypesRes = await fetch(`${process.env.DATA_SOURCE}/transportation_types?per_page=100`, {
     headers: {
