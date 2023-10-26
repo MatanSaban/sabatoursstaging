@@ -14,7 +14,7 @@ const nextConfig = {
     SUMIT_APIKEY: "DewD8H4e3DCDlv15P7tCyp8tf2LZe9c07IFfiAc0GlfYadNDVK",
     SUMIT_CHARGE_ENDPOINT: "https://api.sumit.co.il/billing/payments/charge/",
     GOOGLE_TAG_MANAGER_ID: "G-4WWJ8F67H9",
-    SITE_URL: "https:saban-tours.co.il"
+    SITE_URL: "https://saban-tours.co.il"
   },
   images: {
     domains: ["saban-tours.ussl.co.il"],
