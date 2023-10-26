@@ -8,7 +8,8 @@ import { LoadScript } from "@react-google-maps/api";
 import Popup from "../Components/Popup/Popup";
 import { useState, useEffect } from "react";
 import Head from "next/head";
-import LogoLoader from "../Components/Misc/LogoLoader";
+import LogoLoader from "../Components/Misc/Loading";
+import PageWrapper from "../Components/Misc/PageWrapper";
 
 
 const libraries = ["places"]; // define the libraries needed
@@ -134,7 +135,7 @@ function MyApp({ Component, pageProps }) {
       </Head>
 
       <div className="appWrapper">
-        {loading && <LogoLoader percentage={loadingPercentage} show={loaderShow} />}
+        {loading && <LogoLoader percentage={loadingPercentage} showPercentage={true} show={loaderShow} />}
         <Header
           windowWidth={windowWidth}
           setHeaderHeight={setHeaderHeight}
@@ -142,16 +143,18 @@ function MyApp({ Component, pageProps }) {
           scrollTopVal={scrollTopVal}
         />
         {popup}
-        <Component
-          scrolling={scrolling}
-          scrollTopVal={scrollTopVal}
-          {...pageProps}
-          handlePopup={handlePopup}
-          sendDataToApp={sendDataToApp}
-          userRoute={userRoute}
-          windowWidth={windowWidth}
-          headerHeight={headerHeight}
-        />
+        <PageWrapper> 
+          <Component
+            scrolling={scrolling}
+            scrollTopVal={scrollTopVal}
+            {...pageProps}
+            handlePopup={handlePopup}
+            sendDataToApp={sendDataToApp}
+            userRoute={userRoute}
+            windowWidth={windowWidth}
+            headerHeight={headerHeight}
+          />
+      </PageWrapper>
         <Footer
           scrolling={scrolling}
           scrollTopVal={scrollTopVal}

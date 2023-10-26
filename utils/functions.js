@@ -222,6 +222,7 @@ export const renderTitles = (titlesAndTextArray, styles) => {
 
       switch (index) {
           case 0:
+          case 3:
               LogoImage = <Image 
                   className={`${styles.blue_green}`}
                   src={blue_green}
@@ -231,6 +232,7 @@ export const renderTitles = (titlesAndTextArray, styles) => {
               />
               break;
           case 1:
+          case 4:
               LogoImage = <Image
                   className={`${styles.pink_blue}`}
                   src={pink_blue}
@@ -240,6 +242,7 @@ export const renderTitles = (titlesAndTextArray, styles) => {
               />
               break;
           case 2:
+          case 5:
               LogoImage = <Image
                   className={`${styles.green_pink}`}
                   src={green_pink}
@@ -249,6 +252,7 @@ export const renderTitles = (titlesAndTextArray, styles) => {
               />
               break;
           case 3:
+          case 6:
               LogoImage = <Image
                   className={`${styles.pink_blue}`}
                   src={pink_blue}
@@ -294,6 +298,12 @@ export const getPositionStyles = (index) => {
           return { left: '30%', top: '-20%' };
       case 3:
           return { right: '-50px', top: '10%' };
+      case 4:
+          return { left: '20%', top: '0%' };
+      case 5:
+          return { right: '10%', top: '0%' };
+      case 6:
+          return { left: '0%', top: '0%' };
       default:
           return { left: '35%', top: '20%', transform: "translate(-50%, -50%)" };
   }

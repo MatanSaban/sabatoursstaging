@@ -3,7 +3,7 @@ import React from 'react'
 import Logo from '../../public/media/Logo.gif';
 import styles from './logoLoader.module.scss'
 
-const LogoLoader = ({percentage, show}) => {
+const LogoLoader = ({percentage, show, showPercentage}) => {
 
     const loadingStyles = (percentage) => {
         switch (percentage) {
@@ -26,7 +26,10 @@ const LogoLoader = ({percentage, show}) => {
   return (
     <div className={`${styles.LogoAnimationWrapper} ${!show && styles.dontShow}`}>
         <Image className={styles.LogoAnimation} src={Logo} alt='סבן טורס, העמוד בטעינה' />
+        {
+          showPercentage && 
         <div className={styles.LoaderPercentage} style={{background:`linear-gradient(90deg, #76ad24 ${percentage}%,  #ffffff 0%)`, color: `${percentage > 48 && "#fff" }`, textShadow: `${percentage > 48 && "0 0 10px #000"}`}}>{percentage}%</div>
+        }
         <h3 className={styles.LoaderTitle}>מיד האתר יעלה, טוען...</h3>
     </div>
   )

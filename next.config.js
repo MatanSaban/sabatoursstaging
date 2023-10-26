@@ -2,6 +2,9 @@
 const nextConfig = {
   reactStrictMode: false,
   swcMinify: true,
+  devIndicators: {
+    buildActivity: false,
+  },
   env: {
     GOOGLE_MAPS_API_KEY: "AIzaSyDqXMWSWoY417DNKERQid8teEuoxBjMLLo",
     DATA_SOURCE: "https://saban-tours.ussl.co.il/wp-json/wp/v2",
