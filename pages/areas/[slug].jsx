@@ -2,21 +2,7 @@ import React from "react";
 import SinglePost from "../../Components/Misc/SinglePost";
 
 
-// Function to fetch data for all the paths
-export async function getStaticPaths() {
-    // Fetch the list of available slugs
-    const response = await fetch(`${process.env.DATA_SOURCE}/service_areas?per_page=100`, {
-        headers: {
-            Authorization: `${process.env.WORDPRESSTOKEN}`,
-        },
-    });
-    const areas = await response.json();
-    const paths = areas.map(area => ({
-        params: { slug: decodeURIComponent(area.slug) },
-    }));
 
-    return { paths, fallback: false };
-}
 
 // Function to fetch data for a single page
 export async function getServerSideProps({ params }) {
