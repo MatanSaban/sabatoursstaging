@@ -12,6 +12,7 @@ import { BsTelephone } from 'react-icons/bs'
 import { BsWhatsapp } from 'react-icons/bs'
 import { BsEnvelopeAt } from 'react-icons/bs'
 import { decodeHTMLEntities } from "../../utils/functions";
+import RegionsComp from "./RegionsComp";
 
 
 
@@ -39,6 +40,7 @@ const HomeComp = (props) => {
       Math.floor(servicesToDisplay?.length / 2) * 2
     );
   }
+
 
 
   return (
@@ -91,13 +93,16 @@ const HomeComp = (props) => {
           windowWidth={props?.windowWidth}
         />
       </section>
-      {props?.regions && <section className={`${styles.whereAreWe} ${styles.section}`} style={{ backgroundImage: `url(${props?.homepageData?.acf?.section_service_areas?.desktop_bg_image})` }}>
+      {/* style={{ backgroundImage: `url(${props?.homepageData?.acf?.section_service_areas?.desktop_bg_image})` }} */}
+      {props?.regions && <section className={`${styles.whereAreWe} ${styles.section}`} > 
         <div className={styles.sectionWhiteGradient}>
 
         </div>
         <h2 className={styles.sectionTitle} dangerouslySetInnerHTML={{ __html: props?.homepageData?.acf?.section_service_areas?.title }} />
 
-        <div className={styles.areas}>
+        <RegionsComp regions={props?.regions} cities={props?.cities} />
+
+        {/* <div className={styles.areas}>
           {
             props?.regions?.map((area) => {
               if (area?.cities?.length) {
@@ -125,7 +130,7 @@ const HomeComp = (props) => {
               }
             })
           }
-        </div>
+        </div> */}
       </section>}
       {servicesToDisplay?.length &&
         <section className={`${styles.whereWeGo} ${styles.section}`}>

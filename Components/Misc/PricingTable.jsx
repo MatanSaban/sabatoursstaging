@@ -5,7 +5,7 @@ const PricingTable = ({ tableObj, cityName }) => {
     return (
         <div className={styles.pricingTableWrapper}>
             <h2 className={styles.pricingTableTitle}>מחירון הסעות</h2>
-            {Object.keys(tableObj)?.map((rowByPassengersNum, index) => {
+            {tableObj && Object?.keys(tableObj)?.map((rowByPassengersNum, index) => {
                 let tableTitle;
                 switch (rowByPassengersNum) {
                     case "upto_4":

@@ -1,3 +1,9 @@
+import blue_green from "../public/media/icon_blue_green.svg";
+import pink_blue from "../public/media/icon_pink_blue.svg";
+import green_pink from "../public/media/icon_green_pink.svg";
+import Image from "next/image";
+
+
 export function formatDate(dateObj) {
   if (!dateObj) {
     dateObj = new Date();
@@ -204,4 +210,125 @@ export const showCarImage = (carType) => {
   const carImagePath = `${path}${encodeURIComponent(carImageName)}.png`; // Assuming the images are in jpg format
 
   return carImagePath;
+};
+
+
+export const renderTitles = (titlesAndTextArray, styles) => {
+  const jsx = titlesAndTextArray?.map((titleAndText, index) => {
+
+      let LogoImage;
+
+      const positionStyles = getPositionStyles(index);  // Get position styles based on index
+
+      switch (index) {
+          case 0:
+              LogoImage = <Image 
+                  className={`${styles.blue_green}`}
+                  src={blue_green}
+                  height={450}
+                  width={300}
+                  alt={"saban tours logo in brand colors - blue and green"}
+              />
+              break;
+          case 1:
+              LogoImage = <Image
+                  className={`${styles.pink_blue}`}
+                  src={pink_blue}
+                  height={420}
+                  width={250}
+                  alt={"saban tours logo in brand colors - pink and blue"}
+              />
+              break;
+          case 2:
+              LogoImage = <Image
+                  className={`${styles.green_pink}`}
+                  src={green_pink}
+                  height={255}
+                  width={150}
+                  alt={"saban tours logo in brand colors - green and pink"}
+              />
+              break;
+          case 3:
+              LogoImage = <Image
+                  className={`${styles.pink_blue}`}
+                  src={pink_blue}
+                  height={255}
+                  width={150}
+                  alt={"saban tours logo in brand colors - pink and blue"}
+              />
+              break;
+
+          default:
+              LogoImage = <Image
+                  className={`${styles.blue_green}`}
+                  src={blue_green}
+                  height={450}
+                  width={300}
+                  alt={"saban tours logo in brand colors - blue and green"}
+              />
+              break;
+      }
+
+      return (
+          <div key={index} className={styles.titleSectionWrapper}>
+              <div className={styles.transparentIcon} style={positionStyles}>{LogoImage}</div>
+              <div className={styles.titleSection}>
+                  <h3 className={styles.title}>{titleAndText.title}</h3>
+                  <div className={styles.text} dangerouslySetInnerHTML={{ __html: titleAndText.text }} />
+              </div>
+          </div>
+      )
+  })
+  return jsx;
+}
+
+
+
+export const getPositionStyles = (index) => {
+  switch (index) {
+      case 0:
+          return { left: '0%', top: '-20%' };
+      case 1:
+          return { left: '80%', bottom: '20px' };
+      case 2:
+          return { left: '30%', top: '-20%' };
+      case 3:
+          return { right: '-50px', top: '10%' };
+      default:
+          return { left: '35%', top: '20%', transform: "translate(-50%, -50%)" };
+  }
+};
+
+
+export const fetchImage = async (imgId) => {
+  try {
+      const res = await fetch(`${process.env.DATA_SOURCE}/media/${imgId}`, {
+          headers: {
+              Authorization: `${process.env.WORDPRESSTOKEN}`,
+          },
+      });
+      if (!res.ok) {
+          throw new Error(`Failed to fetch image ${imgId}: ${res.statusText}`);
+      }
+      const data = await res.json();
+      return data.source_url;  // Corrected path to access the URL
+  } catch (error) {
+      console.error(`Error fetching image ${imgId}:`, error);
+      return null;  // return null in case of an error
+  }
+};
+
+export const updateRegionImages = async (reg) => {
+  const [desktopImageUrl, mobileImageUrl] = await Promise.all([
+      fetchImage(reg?.acf?.bg_image_desktop),
+      fetchImage(reg?.acf?.bg_image_mobile)
+  ]);
+  const newReg = {
+      ...reg,
+      acf: {
+          bg_image_desktop: desktopImageUrl ? desktopImageUrl : null,
+          bg_image_mobile: mobileImageUrl ? mobileImageUrl : null
+      }
+  };
+  return newReg;
 };

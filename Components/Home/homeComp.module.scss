@@ -109,7 +109,7 @@ section.section.niceToMeet {
   }
 }
 section.section.whereAreWe {
-  // background: url("../../public/media/saban_tours_van_image.png");
+  background: url("../../public/media/saban_tours_van_image.png");
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -120,49 +120,6 @@ section.section.whereAreWe {
   align-items: center;
   padding-top: 150px;
   position: relative;
-  .areas {
-    display: flex;
-    width: 100%;
-    justify-content: space-between;
-    padding: 20px 100px;
-    margin-top: 50px;
-    .area {
-      background-color: #ffffff80;
-      padding: 20px;
-      border-radius: 10px;
-      backdrop-filter: blur(3px);
-      .areaTitle {
-        font-size: 24px;
-        text-align: right;
-      }
-      .cities {
-        text-align: center;
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        position: relative;
-        width: 100%;
-        .cityButton {
-          margin: 5px;
-          border: 1px solid $color-blue;
-          padding: 2px 4px;
-          border-radius: 50px;
-          transition: all 0.3s ease;
-          .cityLink {
-            color: $color-black;
-            text-decoration: none;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
-          }
-          &:hover {
-            background-color: $color-blue;
-            .cityLink {
-              color: $color-white;
-            }
-          }
-        }
-      }
-    }
-  }
 }
 section.section.whereWeGo {
   width: 70dvw;

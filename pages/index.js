@@ -2,6 +2,7 @@ import React from "react";
 import HomeComp from "../Components/Home/HomeComp.jsx";
 import axios from "axios";
 import logo from '../public/media/faviconSquare.png'
+import { updateRegionImages } from "../utils/functions.js";
 
 export async function getServerSideProps(context) {
   try {
@@ -55,15 +56,15 @@ export async function getServerSideProps(context) {
       }
     });
 
-    const regionsWithCities = fetchedRegions.map((region) => {
-      const cities = fetchedCities.filter(
-        (city) => city.region[0] === region.id
-      );
-      return {
-        ...region,
-        cities,
-      };
-    });
+    // const regionsWithCities = fetchedRegions.map((region) => {
+    //   const cities = fetchedCities.filter(
+    //     (city) => city.region[0] === region.id
+    //   );
+    //   return {
+    //     ...region,
+    //     cities,
+    //   };
+    // });
 
     const mediaResponses = await Promise.all(mediaPromises);
     const serializableMediaResponses = mediaResponses.map(response => response?.data);
@@ -86,10 +87,13 @@ export async function getServerSideProps(context) {
     );
     const fetchedHomepage = homepageRes.data[0];
 
+    const updatedRegions = await Promise.all(fetchedRegions.map(updateRegionImages));
+
+
     return {
       props: {
         initialData: {
-          regions: regionsWithCities,
+          regions: updatedRegions,
           cities: fetchedCities,
           services: fetchedServices,
           media: serializableMediaResponses,  // Now should be serializable
@@ -130,6 +134,7 @@ const Home = (props) => {
     <div>
       <HomeComp
         regions={props?.initialData?.regions}
+        cities={props?.initialData?.cities}
         services={props?.initialData?.services}
         windowWidth={props?.windowWidth}
         handlePopup={props.handlePopup}

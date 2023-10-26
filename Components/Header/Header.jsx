@@ -61,12 +61,17 @@ const Header = (props) => {
             </Link>
           </li>
           <li className={styles.menuItem} >
-            <Link className={styles.menuItemLink} href="/">
+            <Link className={styles.menuItemLink} href="/areas">
+              אזורי שירות
+            </Link>
+          </li>
+          <li className={styles.menuItem} >
+            <Link className={styles.menuItemLink} href="/drive-types">
               סוגי הסעות
             </Link>
           </li>
           <li className={styles.menuItem} >
-            <Link className={styles.menuItemLink} href="/">
+            <Link className={styles.menuItemLink} href="/drive-types">
               סוגי רכבים
             </Link>
           </li>
@@ -118,7 +123,12 @@ const Header = (props) => {
               </Link>
             </li>
             <li className={styles.menuItem} onClick={() => closeMobileMenuDelay()}>
-              <Link className={styles.menuItemLink} href="/">
+              <Link className={styles.menuItemLink} href="/areas">
+                אזורי שירות
+              </Link>
+            </li>
+            <li className={styles.menuItem} onClick={() => closeMobileMenuDelay()}>
+              <Link className={styles.menuItemLink} href="/drive-types">
                 סוגי הסעות
               </Link>
             </li>
