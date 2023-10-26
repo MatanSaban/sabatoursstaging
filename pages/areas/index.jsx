@@ -4,7 +4,7 @@ import PageHero from '../../Components/Misc/PageHero';
 import RegionsComp from '../../Components/Home/RegionsComp';
 import { fetchImage, updateRegionImages } from '../../utils/functions';
 
-export async function getServerSideProps () {
+export async function getStaticProps () {
     // Fetch the list of available areas and regions
     const [citiesResponse, regionsResponse] = await Promise.all([
         fetch(`${process.env.DATA_SOURCE}/service_areas?per_page=100`, {
@@ -24,7 +24,7 @@ export async function getServerSideProps () {
 
     const updatedRegions = await Promise.all(regions.map(updateRegionImages));
 
-    return { props: { cities, regions: updatedRegions } };
+    return { props: { cities, regions: updatedRegions }, revalidate: 60 };
 }
 
 const Areas = ({ cities, regions }) => {
