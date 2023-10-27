@@ -53,6 +53,7 @@ const HomeComp = (props) => {
           height={350}
           width={350}
           alt="לוגו של סבן טורס"
+          priority={true}
         />
         <h1 dangerouslySetInnerHTML={{ __html: props?.homepageData?.acf?.section_hero?.h1_title }} />
         <button className={`${styles.actionButton} ${styles.pinkButton}`}>
