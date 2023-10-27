@@ -11,7 +11,7 @@ import PriceForm from "../Form/PriceForm";
 import { BsTelephone } from 'react-icons/bs'
 import { BsWhatsapp } from 'react-icons/bs'
 import { BsEnvelopeAt } from 'react-icons/bs'
-import { decodeHTMLEntities } from "../../utils/functions";
+import { decodeHTMLEntities, isMobile } from "../../utils/functions";
 import RegionsComp from "./RegionsComp";
 
 
@@ -46,7 +46,7 @@ const HomeComp = (props) => {
   return (
     <div className={styles.homeWrapper}>
       
-      <section className={`${styles.section} ${styles.hero}`} style={{ backgroundImage: `url(${props?.homepageData?.acf?.section_hero?.hero_image_desktop})` }}>
+      <section className={`${styles.section} ${styles.hero}`} style={{ backgroundImage: `url(${props?.homepageData?.acf?.section_hero[isMobile(props?.windowWidth) ? "hero_image_mobile" : "hero_image_desktop"]})` }}>
         <Image
           className={styles.logo}
           src={Logo}
@@ -94,7 +94,7 @@ const HomeComp = (props) => {
         />
       </section>
       {/* style={{ backgroundImage: `url(${props?.homepageData?.acf?.section_service_areas?.desktop_bg_image})` }} */}
-      {props?.regions && <section className={`${styles.whereAreWe} ${styles.section}`} > 
+      {props?.regions && <section className={`${styles.whereAreWe} ${styles.section}`} style={{ backgroundImage: `url(${props?.homepageData?.acf?.section_service_areas[isMobile(props?.windowWidth) ? "mobile_bg_image" : "desktop_bg_image"]})` }} > 
         <div className={styles.sectionWhiteGradient}>
 
         </div>
