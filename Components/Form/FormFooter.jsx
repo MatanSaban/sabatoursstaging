@@ -10,7 +10,7 @@ import RouteAndDetails from "../Popup/RouteAndDetails";
 import axios from "axios";
 import checkIcon from "../../public/media/checkIcon.svg";
 import Image from 'next/image';
-import { formatDateToString } from '../../utils/functions';
+import { formatDateToString, isMobile } from '../../utils/functions';
 
 
 
@@ -29,6 +29,62 @@ const FormFooter = (props) => {
     value = Math.max(0, Math.min(60, value + delta)); // Ensuring it's between 0 and 60
     props?.setRoute({ ...props?.route, [field]: value });
   };
+
+
+  const handleGetPriceOffer = (e) => {
+    let route = props?.route;
+    let eventTypes = props?.eventTypes;
+    const userRoute = props.userRoute;
+    e.preventDefault();
+    props?.canProceed() &&
+      axios
+        .post(`/api/calculatePriceOffer`, {
+          properties: {
+            route,
+            userRoute,
+            eventTypes,
+          },
+        })
+        .then((res) => {
+          if (res.status === 200) {
+            props.handlePopup(
+              true,
+              <RouteAndDetails
+                handlePopup={props.handlePopup}
+                route={route}
+                eventTypes={eventTypes}
+                formatDateToString={formatDateToString}
+                showDistance={props?.showDistance}
+                formatDuration={props?.formatDuration}
+                sendDataToApp={props?.sendDataToApp}
+                userRoute={props?.userRoute}
+                price={res?.data?.price}
+                carType={res?.data?.priceDetails[0].carType}
+              />
+            );
+          }
+        })
+  }
+
+
+  const handleCannotContinue = (e) => {
+    e.preventDefault();
+    props?.handlePopup(true, 
+      <div>
+        תאשר את תנאי השימוש יא דרעק
+      </div>
+      )
+      setTimeout(() => {
+        props?.handlePopup(false, 
+          <div>
+            תאשר את תנאי השימוש יא דרעק
+          </div>
+          )
+        
+      }, 2000);
+  }
+
+
 
   return (
     <div className={styles.formFooter}>
@@ -86,7 +142,7 @@ const FormFooter = (props) => {
           </i>
         </div>
         <span>מספר נוסעים מקסימלי: </span>
-        <div className={styles.inputWithIconWrapper}>
+        <div className={styles.inputWithIconWrapper} >
           <i>
             <SlPeople />
           </i>
@@ -94,6 +150,7 @@ const FormFooter = (props) => {
             type="number"
             pattern="[0-9]*"
             inputMode="numeric"
+            readOnly={isMobile() ? true : false}
             name="passengersCount"
             id="passengersCount"
             value={props?.route.passengers ? props?.route.passengers : 1}
@@ -134,6 +191,7 @@ const FormFooter = (props) => {
             pattern="[0-9]*"
             inputMode="numeric"
             name="suitcasesCount"
+            readOnly={isMobile() ? true : false}
             id="suitcasesCount"
             value={props?.route.suitcases ? props?.route.suitcases : 0}
             min={0}
@@ -232,40 +290,9 @@ const FormFooter = (props) => {
       <button
         className={`${styles.priceRequestButton} ${!props?.canProceed() && styles.cannotSend
           }`}
-        disabled={props?.canProceed() ? false : true}
+        readOnly={props?.canProceed() ? false : true}
         onClick={(e) => {
-          let route = props?.route;
-          let eventTypes = props?.eventTypes;
-          const userRoute = props.userRoute;
-          e.preventDefault();
-          props?.canProceed() &&
-            axios
-              .post(`/api/calculatePriceOffer`, {
-                properties: {
-                  route,
-                  userRoute,
-                  eventTypes,
-                },
-              })
-              .then((res) => {
-                if (res.status === 200) {
-                  props.handlePopup(
-                    true,
-                    <RouteAndDetails
-                      handlePopup={props.handlePopup}
-                      route={route}
-                      eventTypes={eventTypes}
-                      formatDateToString={formatDateToString}
-                      showDistance={props?.showDistance}
-                      formatDuration={props?.formatDuration}
-                      sendDataToApp={props?.sendDataToApp}
-                      userRoute={props?.userRoute}
-                      price={res?.data?.price}
-                      carType={res?.data?.priceDetails[0].carType}
-                    />
-                  );
-                }
-              });
+          props?.canProceed() ? handleGetPriceOffer(e) : handleCannotContinue(e)
         }}
       >
         <span>הצעת מחיר אונליין</span>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import styles from "./homeComp.module.scss";
 import { FaRoute } from "react-icons/fa";
 import Logo from "../../public/media/SabanToursLogo.svg";
@@ -26,20 +26,19 @@ const HomeComp = (props) => {
     }
   }, [props])
 
-  let servicesToDisplay = props?.services;
-
-  if (props?.windowWidth >= 768) {
-    // Assuming 768px as the breakpoint for desktop
-    servicesToDisplay = servicesToDisplay?.slice(
-      0,
-      Math.floor(servicesToDisplay?.length / 3) * 3
-    );
-  } else {
-    servicesToDisplay = servicesToDisplay?.slice(
-      0,
-      Math.floor(servicesToDisplay?.length / 2) * 2
-    );
-  }
+  const servicesToDisplay = React.useMemo(() => {
+    if (props?.windowWidth >= 768) {
+        return props?.services?.slice( 
+            0,
+            Math.floor(props?.services?.length / 3) * 3
+        );
+    } else {
+        return props?.services?.slice(
+            0,
+            Math.floor(props?.services?.length / 2) * 2
+        );
+    }
+}, [props?.services, props?.windowWidth]);
 
 
 
@@ -102,36 +101,6 @@ const HomeComp = (props) => {
         <h2 className={styles.sectionTitle} dangerouslySetInnerHTML={{ __html: props?.homepageData?.acf?.section_service_areas?.title }} />
 
         <RegionsComp regions={props?.regions} cities={props?.cities} />
-
-        {/* <div className={styles.areas}>
-          {
-            props?.regions?.map((area) => {
-              if (area?.cities?.length) {
-                return (
-
-                  <div key={area.id} className={styles.area}>
-                    <h3 className={styles.areaTitle}>
-                      {area.name}
-                    </h3>
-                    <div className={styles.cities}>
-                      {area?.cities?.map((city) => {
-                        return (
-                          <button className={styles.cityButton} key={city.id}>
-                            <Link className={styles.cityLink} href={`/areas/${city.slug}`}>
-                              <span>
-                                הסעה ל{city.title.rendered}
-                              </span>
-                            </Link>
-                          </button>
-                        )
-                      })}
-                    </div>
-                  </div>
-                )
-              }
-            })
-          }
-        </div> */}
       </section>}
       {servicesToDisplay?.length &&
         <section className={`${styles.whereWeGo} ${styles.section}`}>
