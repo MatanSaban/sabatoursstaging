@@ -49,6 +49,7 @@ const PriceSuggestion = (props) => {
       <title>
         סבן טורס | הצעת מחיר
       </title>
+      <meta name="robots" content="noindex" />
     </Head>
     <div className={styles.main} ref={componentRef}>
       <div className={styles.body}>

@@ -36,7 +36,7 @@ export async function getStaticProps({ params }) {
 const AreaPage = ({ pageData }) => {
     
     return (
-        <SinglePost pageData={pageData}/>
+        <SinglePost spType={"area"} pageData={pageData}/>
     );
 };
 

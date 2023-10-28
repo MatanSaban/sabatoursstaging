@@ -213,101 +213,102 @@ const Checkout = (props) => {
 
 	return (
 		<>
-		<Head>
-      <title>
-        סבן טורס | עמוד תשלום
-      </title>
-    </Head>
-		<div className={styles.checkoutPage}>
-            <PageHero title={`הזמנת נסיעה`} />
-			<div className={styles.checkoutContent}>
-				<div className={styles.routeDetails}>
-					<PriceSuggestion
-						route={props?.userRoute}
-						userDetails={props?.userRoute}
-						show={true}
-						eventTypes={eventTypes}
-						formatDateToString={formatDateToString}
-						showDistance={showDistance}
-						formatDuration={formatDuration}
-						price={props?.userRoute?.price}
-						offerId={props?.userRoute?.offerId}
-						sendDataToApp={props.sendDataToApp}
-						handlePopup={props.handlePopup}
-					/>
-				</div>
-				<div className={`${styles.checkoutBar} ${showPaymentDetailsOnMobile && styles.show}`} style={!isMobile(props?.windowWidth) ? { top: `${props?.headerHeight + 20}px` } : null}>
-					<section className={styles.section}>
-						<h3 className={styles.sectionTitle}>בחירת תנאי תשלום</h3>
-						<div className={styles.paymentOptions}>
-							<label>
-								<input
-									onChange={(e) => setSelectedPaymentOption(e.target.value)}
-									type="radio"
-									name="paymentOption"
-									value="downPayment"
-									defaultChecked
-								/>
-								תשלום מקדמה של <b className={styles.toPayNow}>₪{advancePayment?.downPayment?.toFixed(0)}</b> וסכום של <b className={styles.toPayLater}>₪{advancePayment?.paymentLeft?.toFixed(0)}</b> מול הנהג
-							</label>
-							<label>
-								<input
-									onChange={(e) => setSelectedPaymentOption(e.target.value)}
-									type="radio"
-									name="paymentOption"
-									value="fullPayment"
-								/>
-								תשלום אונליין של <b className={styles.toPayNow}>₪{fullPayment?.fullPayment?.toFixed(0)}</b> במקום <b className={styles.instead}>₪{props?.userRoute?.price?.toFixed(0)}</b> (הנחה של <b className={styles.discount}>₪{fullPayment?.discountSum?.toFixed(0)}</b>)
-							</label>
-						</div>
-					</section>
-					{
-						!isMobile(props?.windowWidth) && <section className={styles.section}>
-							<h4 className={styles.importantMessage}>
-								הודעה חשובה!
-								<br />
-								לאחר הזנת פרטי התשלום לא נחייב אותך עד לאישור הנסיעה בשיחת טלפון.
-								<br />
-								אך כן תיתפס מסגרת של {selectedPaymentOption == "downPayment" ? `${advancePayment?.downPayment?.toFixed(0)}₪` : `${fullPayment?.fullPayment?.toFixed(0)}₪`} עד אישור או אי אישור הנסיעה מצידנו.
-							</h4>
-						</section>
-					}
-					<section className={`${styles.section} ${styles.ccDetailsWrapper} `} >
-						<PaymentForm
-							showPaymentDetailsOnMobile={showPaymentDetailsOnMobile}
-							cardDetails={cardDetails}
-							userRoute={props?.userRoute}
-							handleCardDetails={handleCardDetails}
-							handleSubmitPayment={handleSubmitPayment}
-							handleSelectListOpenAndFocuses={handleSelectListOpenAndFocuses}
-							isValid={isValid}
-							cardNumberRef={cardNumberRef}
-							isValidCC={isValidCC}
-							yearSelectRef={yearSelectRef}
-							monthSelectRef={monthSelectRef}
-							cvvInputRef={cvvInputRef}
-							selectedPaymentOption={selectedPaymentOption}
-							fullPayment={fullPayment}
-							submitButtonRef={submitButtonRef}
-							error={error}
-							validateIsraeliId={validateIsraeliId}
-							validateCardNumber={validateCardNumber}
-							setCardDetails={setCardDetails}
-							advancePayment={advancePayment}
-							scrolling={props?.scrolling}
-							scrollTopVal={props?.scrollTopVal}
+			<Head>
+				<title>
+					סבן טורס | עמוד תשלום
+				</title>
+				<meta name="robots" content="noindex" />
+			</Head>
+			<div className={styles.checkoutPage}>
+				<PageHero title={`הזמנת נסיעה`} />
+				<div className={styles.checkoutContent}>
+					<div className={styles.routeDetails}>
+						<PriceSuggestion
+							route={props?.userRoute}
+							userDetails={props?.userRoute}
+							show={true}
+							eventTypes={eventTypes}
+							formatDateToString={formatDateToString}
+							showDistance={showDistance}
+							formatDuration={formatDuration}
+							price={props?.userRoute?.price}
+							offerId={props?.userRoute?.offerId}
+							sendDataToApp={props.sendDataToApp}
+							handlePopup={props.handlePopup}
 						/>
-					</section>
-					<button
-						className={styles.togglePaymentButton}
-						onClick={() => handlePaymentShow()}>
-						{showPaymentDetailsOnMobile ?
-							<><span>הקטן אזור תשלום</span> <AiOutlineCaretUp /></>
-							: <><span>מעבר לתשלום</span> <AiOutlineCaretDown /></>}
-					</button>
+					</div>
+					<div className={`${styles.checkoutBar} ${showPaymentDetailsOnMobile && styles.show}`} style={!isMobile(props?.windowWidth) ? { top: `${props?.headerHeight + 20}px` } : null}>
+						<section className={styles.section}>
+							<h3 className={styles.sectionTitle}>בחירת תנאי תשלום</h3>
+							<div className={styles.paymentOptions}>
+								<label>
+									<input
+										onChange={(e) => setSelectedPaymentOption(e.target.value)}
+										type="radio"
+										name="paymentOption"
+										value="downPayment"
+										defaultChecked
+									/>
+									תשלום מקדמה של <b className={styles.toPayNow}>₪{advancePayment?.downPayment?.toFixed(0)}</b> וסכום של <b className={styles.toPayLater}>₪{advancePayment?.paymentLeft?.toFixed(0)}</b> מול הנהג
+								</label>
+								<label>
+									<input
+										onChange={(e) => setSelectedPaymentOption(e.target.value)}
+										type="radio"
+										name="paymentOption"
+										value="fullPayment"
+									/>
+									תשלום אונליין של <b className={styles.toPayNow}>₪{fullPayment?.fullPayment?.toFixed(0)}</b> במקום <b className={styles.instead}>₪{props?.userRoute?.price?.toFixed(0)}</b> (הנחה של <b className={styles.discount}>₪{fullPayment?.discountSum?.toFixed(0)}</b>)
+								</label>
+							</div>
+						</section>
+						{
+							!isMobile(props?.windowWidth) && <section className={styles.section}>
+								<h4 className={styles.importantMessage}>
+									הודעה חשובה!
+									<br />
+									לאחר הזנת פרטי התשלום לא נחייב אותך עד לאישור הנסיעה בשיחת טלפון.
+									<br />
+									אך כן תיתפס מסגרת של {selectedPaymentOption == "downPayment" ? `${advancePayment?.downPayment?.toFixed(0)}₪` : `${fullPayment?.fullPayment?.toFixed(0)}₪`} עד אישור או אי אישור הנסיעה מצידנו.
+								</h4>
+							</section>
+						}
+						<section className={`${styles.section} ${styles.ccDetailsWrapper} `} >
+							<PaymentForm
+								showPaymentDetailsOnMobile={showPaymentDetailsOnMobile}
+								cardDetails={cardDetails}
+								userRoute={props?.userRoute}
+								handleCardDetails={handleCardDetails}
+								handleSubmitPayment={handleSubmitPayment}
+								handleSelectListOpenAndFocuses={handleSelectListOpenAndFocuses}
+								isValid={isValid}
+								cardNumberRef={cardNumberRef}
+								isValidCC={isValidCC}
+								yearSelectRef={yearSelectRef}
+								monthSelectRef={monthSelectRef}
+								cvvInputRef={cvvInputRef}
+								selectedPaymentOption={selectedPaymentOption}
+								fullPayment={fullPayment}
+								submitButtonRef={submitButtonRef}
+								error={error}
+								validateIsraeliId={validateIsraeliId}
+								validateCardNumber={validateCardNumber}
+								setCardDetails={setCardDetails}
+								advancePayment={advancePayment}
+								scrolling={props?.scrolling}
+								scrollTopVal={props?.scrollTopVal}
+							/>
+						</section>
+						<button
+							className={styles.togglePaymentButton}
+							onClick={() => handlePaymentShow()}>
+							{showPaymentDetailsOnMobile ?
+								<><span>הקטן אזור תשלום</span> <AiOutlineCaretUp /></>
+								: <><span>מעבר לתשלום</span> <AiOutlineCaretDown /></>}
+						</button>
+					</div>
 				</div>
 			</div>
-		</div>
 		</>
 	);
 };

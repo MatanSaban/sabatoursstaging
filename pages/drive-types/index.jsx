@@ -59,8 +59,9 @@ const DriveTypes = ({ driveTypes }) => {
     <>
     <Head>
       <title>
-        סבן טורס | סוגי הסעות
+        סבן טורס | סוגי ההסעות שלנו
       </title>
+      <meta name="description" content={`סוגי ההסעות של חברת ההסעות סבן טורס`}/>
     </Head>
     <div className={styles.driveTypesWrapper}>
       <PageHero title={"סוגי ההסעות שלנו"}/>

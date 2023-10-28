@@ -35,6 +35,7 @@ const Areas = ({ cities, regions }) => {
                 <title>
                     סבן טורס | אזורי שירות
                 </title>
+                <meta name="description" content={`אזורי השירות של חברת ההסעות סבן טורס`}/>
             </Head>
             <div className={styles.regionsWrapper}>
                 <PageHero title={"אזורי השירות של סבן טורס"} />

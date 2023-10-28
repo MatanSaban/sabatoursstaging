@@ -36,7 +36,7 @@ export async function getStaticProps({ params }) {
 const DriveType = ({ pageData }) => {
 
     return (
-        <SinglePost pageData={pageData}/>
+        <SinglePost spType={"dTypes"} pageData={pageData}/>
     );
 };
 
