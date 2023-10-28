@@ -100,7 +100,7 @@ const HomeComp = (props) => {
         </div>
         <h2 className={styles.sectionTitle} dangerouslySetInnerHTML={{ __html: props?.homepageData?.acf?.section_service_areas?.title }} />
 
-        <RegionsComp regions={props?.regions} cities={props?.cities} />
+        <RegionsComp windowWidth={props?.windowWidth} regions={props?.regions} cities={props?.cities} />
       </section>}
       {servicesToDisplay?.length &&
         <section className={`${styles.whereWeGo} ${styles.section}`}>

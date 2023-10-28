@@ -31,7 +31,7 @@ const SinglePost = ({pageData, spType}) => {
     const postTitle = () => {
         let title;
         if (spType === "area") {
-           title = `שירות הסעות ב ${pageData?.acf?.title}`
+           title = `שירות הסעות ב${pageData?.acf?.title}`
         } else {
             title = `שירות הסעות בנושא: ${pageData?.acf?.title}`
         }  
