@@ -461,7 +461,9 @@ const RouteAndDetails = (props) => {
             <p>הזן את קוד האימות שנשלח אליך במייל</p>
             <div className={styles.inpAndBtn}>
               <input
-                type="text"
+                type="number"
+                pattern="[0-9]*"
+                inputMode='numeric'    
                 value={inputVerificationCode}
                 onChange={(e) => setInputVerificationCode(e.target.value)}
               />
