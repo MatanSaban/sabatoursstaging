@@ -308,6 +308,8 @@ section.section {
     }
   }
   section.section.niceToMeet {
+    overflow-x: hidden;
+    max-width: 100%;
     h5 {
       text-align: center;
     }
