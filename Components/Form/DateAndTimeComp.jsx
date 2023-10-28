@@ -26,8 +26,8 @@ const DateTimePicker = ({
     },[props])
 
     return (
-        <>
-            <div className={`${props.labelAndInputWrapper}`}>
+        <> 
+            <div className={`${props.labelAndInputWrapper}`} style={isMobile ? {marginTop: "20px"} : {}}>
                 <label htmlFor="date">תאריך יציאה:</label>
                 <div className={`${props.inputWrapper} ${props.datePickerWrapper}`}>
                     <DatePicker
@@ -67,7 +67,7 @@ const DateTimePicker = ({
                     />
                 </div>
             </div>
-            <div className={`${props.labelAndInputWrapper}`}>
+            <div className={`${props.labelAndInputWrapper}`} style={isMobile ? {marginTop: "20px"} : {}}>
                 <label htmlFor="time">שעת יציאה:</label>
                 <div className={`${props.inputWrapper} ${props.timeInputWrapper}`}>
                     <i className={props.timePickerIcon}>

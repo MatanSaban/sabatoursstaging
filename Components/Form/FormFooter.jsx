@@ -10,7 +10,8 @@ import RouteAndDetails from "../Popup/RouteAndDetails";
 import axios from "axios";
 import checkIcon from "../../public/media/checkIcon.svg";
 import Image from 'next/image';
-import { formatDateToString, isMobile } from '../../utils/functions';
+import { formatDateToString } from '../../utils/functions';
+import { isMobile } from 'react-device-detect';
 
 
 
@@ -149,8 +150,8 @@ const FormFooter = (props) => {
           <input
             type="number"
             pattern="[0-9]*"
-            inputMode="numeric"
-            readOnly={isMobile() ? true : false}
+            inputMode='none'
+            readOnly={isMobile}
             name="passengersCount"
             id="passengersCount"
             value={props?.route.passengers ? props?.route.passengers : 1}
@@ -189,9 +190,9 @@ const FormFooter = (props) => {
           <input
             type="number"
             pattern="[0-9]*"
-            inputMode="numeric"
+            inputMode='none'
             name="suitcasesCount"
-            readOnly={isMobile() ? true : false}
+            readOnly={isMobile}
             id="suitcasesCount"
             value={props?.route.suitcases ? props?.route.suitcases : 0}
             min={0}

@@ -162,6 +162,9 @@
       i, i svg {
         z-index: 2;
       }
+      svg {
+        margin-left: 10px;
+      }
       .buttonsWrapper {
         display: flex;
         flex-direction: column;

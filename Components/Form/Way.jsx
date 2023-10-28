@@ -230,7 +230,9 @@ const Way = ({
                 </Autocomplete>
               </div>
             </ConditionalWrapper>
-            <ConditionalDateTimeWrapper condition={isMobile(props?.windowWidth)}>
+            {
+              !isMobile(props?.windowWidth) && 
+              <ConditionalDateTimeWrapper condition={isMobile(props?.windowWidth)}>
               <DateTimePicker
                 resolvedMinTimeValue={resolvedMinTimeValue}
                 route={route}
@@ -249,6 +251,7 @@ const Way = ({
                 wayType={wayType}
               />
             </ConditionalDateTimeWrapper>
+            }
           </div>
           {route?.stops?.length > 0 && (
             <div className={styles.hasStops}>
@@ -372,6 +375,28 @@ const Way = ({
                 </Autocomplete>
               </div>
             </ConditionalWrapper>
+            {
+              isMobile(props?.windowWidth) && 
+              <ConditionalDateTimeWrapper condition={isMobile(props?.windowWidth)}>
+              <DateTimePicker
+                resolvedMinTimeValue={resolvedMinTimeValue}
+                route={route}
+                handleDateChange={props.handleDateChange}
+                CustomDateInput={CustomDateInput}
+                datePickerRef={datePickerRef}
+                setDatePickerRef={setDatePickerRef}
+                today={props.today}
+                isMobile={isMobile(props?.windowWidth)}
+                endPointInputRef={endPointInputRef}
+                labelAndInputWrapper={styles.labelAndInputWrapper}
+                inputWrapper={styles.inputWrapper}
+                datePickerWrapper={styles.datePickerWrapper}
+                timeInputWrapper={styles.timeInputWrapper}
+                timePickerIcon={styles.timePickerIcon}
+                wayType={wayType}
+              />
+            </ConditionalDateTimeWrapper>
+            }
             <div
               className={`${styles.addStopWrapper} ${routeInfo?.[wayType]?.legs?.length > 1 &&
                   (!routeInfo?.[wayType]?.legs[
