@@ -307,6 +307,11 @@ section.section {
       line-height: 20px;
     }
   }
+  section.section.niceToMeet {
+    h5 {
+      text-align: center;
+    }
+  }
   .transparentIcon {
     max-width: 100px;
   }

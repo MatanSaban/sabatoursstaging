@@ -32,14 +32,14 @@ const Areas = ({ cities, regions, ...props }) => {
     return (
         <>
             <Head>
-                <title>
+                <title> 
                     סבן טורס | אזורי שירות
                 </title>
                 <meta name="description" content={`אזורי השירות של חברת ההסעות סבן טורס`}/>
             </Head>
             <div className={styles.regionsWrapper}>
                 <PageHero title={"אזורי השירות של סבן טורס"} />
-                <RegionsComp windowWidth={props?.windowWidth} regions={regions} cities={cities} />
+                <RegionsComp regions={regions} cities={cities} />
             </div>
         </>
     );

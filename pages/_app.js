@@ -56,7 +56,7 @@ function MyApp({ Component, pageProps }) {
   };
 
   useEffect(() => {
-    setWindowWidth(window.innerWidth);
+    setWindowWidth(window.innerWidth); 
     // If API calls are done and 6 seconds have passed, set loading to false
     if (minLoadingTimeElapsed) {
       setLoaderShow(false);
@@ -64,7 +64,7 @@ function MyApp({ Component, pageProps }) {
         setLoading(false);
       }, 1000);
     }
-  }, [minLoadingTimeElapsed, /* your dependencies for API calls being complete */]);
+  }, [minLoadingTimeElapsed /* your dependencies for API calls being complete */]);
 
   useEffect(() => {
     setLoading(true);  // Set loading to true when you initiate API calls

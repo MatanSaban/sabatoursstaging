@@ -5,13 +5,12 @@
   text-align: center;
   gap: 10px;
   width: 95%;
+  max-width: 100%;
   margin: 100px auto;
   position: relative;
-  .mySwiper {
-    width: 100dvw;
-    max-width: 100dvw;
-    overflow: visible;
-  }
+  overflow-x: hidden;
+
+  
   .region {
     background-color: #ffffff70;
     border-radius: 20px;
@@ -119,6 +118,28 @@
               }
             }
           }
+        }
+      }
+    }
+  }
+  .regions {
+    margin: 50px auto;
+    width: 100dvw;
+    max-width: 100dvw;
+    position: relative; 
+    display: block;
+    overflow-x: hidden;
+    .mySwiper {
+      width: 100dvw;
+      max-width: 100dvw;
+      height: 100%;
+      min-height: 350px;
+      overflow-x: hidden;
+      overflow-y: visible;
+      .slide {
+        height: auto;
+        .regionName {
+          font-size: 1.2rem;
         }
       }
     }
