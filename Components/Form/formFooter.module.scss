@@ -22,6 +22,9 @@
     }
     .inputWithIconWrapper {
       position: relative;
+      select {
+        margin-right: 10px;
+      }
       i {
         position: absolute;
         top: 50%;
