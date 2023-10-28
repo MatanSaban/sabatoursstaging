@@ -308,8 +308,6 @@ section.section {
     }
   }
   section.section.niceToMeet {
-    overflow-x: hidden;
-    max-width: 100%;
     h5 {
       text-align: center;
     }
@@ -321,6 +319,8 @@ section.section {
     overflow-x: hidden;
   }
   section.section.whereAreWe {
+    overflow-x: hidden;
+    max-width: 100%;
     .areas {
       flex-direction: column;
       .area {
