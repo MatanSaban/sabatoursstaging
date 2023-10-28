@@ -28,7 +28,7 @@ export async function getStaticProps() {
     return { props: { cities, regions: updatedRegions }, revalidate: 60 };
 }
 
-const Areas = ({ cities, regions }) => {
+const Areas = ({ cities, regions, ...props }) => {
     return (
         <>
             <Head>
@@ -39,7 +39,7 @@ const Areas = ({ cities, regions }) => {
             </Head>
             <div className={styles.regionsWrapper}>
                 <PageHero title={"אזורי השירות של סבן טורס"} />
-                <RegionsComp regions={regions} cities={cities} />
+                <RegionsComp windowWidth={props?.windowWidth} regions={regions} cities={cities} />
             </div>
         </>
     );
