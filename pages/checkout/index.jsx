@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import styles from "./checkout.module.scss";
 import {
-	customRound,
 	eventTypes,
 	formatDateToString,
 	formatDuration,
@@ -128,19 +127,22 @@ const Checkout = (props) => {
 		let advancePayment;
 		let fullPayment;
 		let discountSum;
+		let advPaymentDiscount;
 
 		if (fullPrice) {
-			advancePayment = customRound(fullPrice) * 0.15;
-			paymentLeft = Math.floor((customRound(fullPrice) - advancePayment) / 10) * 10;
+			advancePayment = fullPrice * 0.15;
+			paymentLeft = Math.floor((fullPrice - advancePayment) / 10) * 10;
+			advPaymentDiscount = (((fullPrice - advancePayment) / 10) * 10) - (Math.floor((fullPrice - advancePayment) / 10) * 10)
 			setAdvancePayment({
 				downPayment: advancePayment,
 				paymentLeft: paymentLeft,
+				advPaymentDiscount: advPaymentDiscount
 			});
-			fullPayment = customRound(fullPrice) - customRound(fullPrice) * 0.05;
+			fullPayment = fullPrice - fullPrice * 0.05;
 			let fullPaymentRoundedDownToTen = Math.floor(fullPayment / 10) * 10;
 			// Calculate the discount amount and percentage
-			let discountSum = customRound(fullPrice) - fullPaymentRoundedDownToTen;
-			let discountPercentage = (discountSum / customRound(fullPrice)) * 100;
+			let discountSum = fullPrice - fullPaymentRoundedDownToTen;
+			let discountPercentage = (discountSum / fullPrice) * 100;
 
 			setFullPayment({
 				fullPayment: fullPaymentRoundedDownToTen,
@@ -205,7 +207,7 @@ const Checkout = (props) => {
 	};
 
 
-	const [showPaymentDetailsOnMobile, setShowPaymentDetailsOnMobile] = useState(!isMobile() ? true : false);
+	const [showPaymentDetailsOnMobile, setShowPaymentDetailsOnMobile] = useState(false);
 
 	const handlePaymentShow = () => {
 		return setShowPaymentDetailsOnMobile(!showPaymentDetailsOnMobile);
@@ -249,7 +251,7 @@ const Checkout = (props) => {
 										value="downPayment"
 										defaultChecked
 									/>
-									תשלום מקדמה של <b className={styles.toPayNow}>₪{advancePayment?.downPayment?.toFixed(0)}</b> וסכום של <b className={styles.toPayLater}>₪{advancePayment?.paymentLeft?.toFixed(0)}</b> מול הנהג
+									תשלום מקדמה של <b className={styles.toPayNow}>₪{advancePayment?.downPayment?.toFixed(0)}</b> וסכום של <b className={styles.toPayLater}>₪{advancePayment?.paymentLeft?.toFixed(0)}</b> מול הנהג (הנחה של ₪{advancePayment?.advPaymentDiscount.toFixed(0)})
 								</label>
 								<label>
 									<input
