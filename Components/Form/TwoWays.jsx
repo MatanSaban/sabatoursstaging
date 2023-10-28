@@ -9,10 +9,10 @@ const TwoWays = (props) => {
       className={styles.twoWays}
       style={
         props?.stage == 1
-          ? { transform: "translateX(0dvw)" }
+          ? { transform: "translateX(0vw)" }
           : props?.stage == 2
-          ? { transform: "translateX(100dvw)" }
-          : { transform: "translateX(200dvw)" }
+          ? { transform: "translateX(100vw)" }
+          : { transform: "translateX(200vw)" }
       }
     >
       <Way

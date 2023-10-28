@@ -148,8 +148,12 @@
     flex-wrap: wrap;
     justify-content: flex-start;
     align-items: center;
-    width: 90dvw;
-    min-width: 90dvw;
+    width: 90%;
+    width: 90vw;
+    width: 90vw;
+    min-width: 90%;
+    min-width: 90vw;
+    min-width: 90vw;
     .inputWithIconWrapper {
       position: relative;
       input {

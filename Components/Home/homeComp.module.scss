@@ -28,7 +28,7 @@ section.section {
   overflow-x: hidden;
 }
 section.section.hero {
-  height: 100dvh;
+  height: 100vh;
   color: $color-white;
   // background-image: url("../../public/media/heroBg.png");
   background-position: center center;
@@ -55,7 +55,7 @@ section.section.hero {
 }
 section.section.niceToMeet {
   position: relative;
-  min-height: 100dvh;
+  min-height: 100vh;
   z-index: 99;
   h2 {
     margin-top: 20px;
@@ -112,7 +112,7 @@ section.section.whereAreWe {
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
-  min-height: 85dvh;
+  min-height: 85vh;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -121,7 +121,7 @@ section.section.whereAreWe {
   position: relative;
 }
 section.section.whereWeGo {
-  width: 70dvw;
+  width: 70vw;
   margin: 50px auto;
   .services {
     margin-top: 50px;
@@ -175,7 +175,7 @@ section.section.whereWeGo {
   }
 }
 section.section.contact {
-  width: 70dvw;
+  width: 70vw;
   margin: 50px auto;
   .markedText {
     color: $color-green;
@@ -286,7 +286,7 @@ section.section {
 
 @media only screen and (max-width: 768px) {
   section.section.hero {
-    height: 100dvh;
+    height: 100vh;
     background-position: unset;
     justify-content: center;
     padding: 0;
@@ -332,7 +332,7 @@ section.section {
     }
   }
   section.section.whereWeGo {
-    width: 90dvw;
+    width: 90vw;
     .services {
       grid-template-columns: repeat(1, 1fr);
       .service {
@@ -343,7 +343,7 @@ section.section {
     }
   }
   section.section.contact {
-    width: 100dvw;
+    width: 100vw;
     .sectionTitle {
       padding: 20px;
     }
@@ -351,7 +351,7 @@ section.section {
       flex-direction: column;
       .contactWay {
         margin: 0 -50% 20px auto;
-        width: 60dvw;
+        width: 60vw;
         transform: translateX(-105%);
           .iconArea {
             transform: translateX(-50%) !important;
