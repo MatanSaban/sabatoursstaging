@@ -113,20 +113,22 @@ export async function getStaticProps(context) {
 }
 
 const handleButton = () => {
-  Notification.requestPermission().then(perm => {
-    if (perm === "granted") {
-      const notification = new Notification("הודעה חדשה מ-סבן טורס", {
-        body: "רציתי לדעת שאת שלי, \n רציתי לקחת אותך איתי \n למקום אחר, שם נוכל לאהוב ולגדול",
-        data: { hello: "world" },
-        icon: logo.src
-      })
-
-      notification.addEventListener("show", e => {
-        console.log("e")
-        console.log()
-      })
-    }
-  })
+  if (typeof window !== 'undefined' && 'Notification' in window) {
+    Notification.requestPermission().then(perm => {
+      if (perm === "granted") {
+        const notification = new Notification("הודעה חדשה מ-סבן טורס", {
+          body: "רציתי לדעת שאת שלי, \n רציתי לקחת אותך איתי \n למקום אחר, שם נוכל לאהוב ולגדול",
+          data: { hello: "world" },
+          // icon: logo.src
+        })
+  
+        notification.addEventListener("show", e => {
+          console.log("e")
+          console.log()
+        })
+      }
+    })
+  }
 }
 
 
