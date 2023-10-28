@@ -297,7 +297,9 @@
     width: calc(100dvw - 10px);
     margin: 0 auto;
     padding: 10px;
-    overflow-x: hidden;
+    overflow-x: clip;
+    overflow-y: visible;
+    height: max-content;
     .directionButtons {
       display: flex;
       justify-content: center;
