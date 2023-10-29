@@ -101,6 +101,7 @@ function MyApp({ Component, pageProps }) {
     <LoadScript
       googleMapsApiKey={process.env.GOOGLE_MAPS_API_KEY}
       libraries={libraries}
+      loadingElement={<LogoLoader percentage={loadingPercentage} showPercentage={true} show={loaderShow} />}
     >
       <Head>
         <link
