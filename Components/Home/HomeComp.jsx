@@ -13,8 +13,11 @@ import { BsWhatsapp } from 'react-icons/bs'
 import { BsEnvelopeAt } from 'react-icons/bs'
 import { decodeHTMLEntities, isMobile } from "../../utils/functions";
 import RegionsComp from "./RegionsComp";
+import LogoLoader from "../Misc/Loading";
+import { LoadScript } from "@react-google-maps/api";
 
 
+const libraries = ["places"]; // define the libraries needed
 
 const HomeComp = (props) => {
 
@@ -40,9 +43,17 @@ const HomeComp = (props) => {
     }
 }, [props?.services, props?.windowWidth]);
 
-
+const [loadingPercentage, setLoadingPercentage] = useState(0);
+const [loaderShow, setLoaderShow] = useState(true);
+ 
 
   return (
+    <LoadScript
+      googleMapsApiKey={process.env.GOOGLE_MAPS_API_KEY}
+      libraries={libraries}
+      loadingElement={<LogoLoader percentage={loadingPercentage} showPercentage={false} show={false} />}
+    >
+
     <div className={styles.homeWrapper}>
       
       <section className={`${styles.section} ${styles.hero}`} style={{ backgroundImage: `url(${props?.homepageData?.acf?.section_hero[isMobile(props?.windowWidth) ? "hero_image_mobile" : "hero_image_desktop"]})` }}>
@@ -86,6 +97,7 @@ const HomeComp = (props) => {
         <h5>{props?.homepageData?.acf?.section_nicetomeet?.sub_title}</h5>
         <p className={styles.centeredText} dangerouslySetInnerHTML={{ __html: props?.homepageData?.acf?.section_nicetomeet?.text }} />
         <h3>{props?.homepageData?.acf?.section_nicetomeet?.form_start_title}</h3>
+        
         <PriceForm
           handlePopup={props.handlePopup}
           sendDataToApp={props?.sendDataToApp}
@@ -178,6 +190,7 @@ const HomeComp = (props) => {
 
       </section>
     </div>
+    </LoadScript>
   );
 };
 

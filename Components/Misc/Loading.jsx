@@ -7,7 +7,7 @@ const LogoLoader = ({percentage, show, showPercentage}) => {
 
   return (
     <div className={`${styles.LogoAnimationWrapper} ${!show && styles.dontShow}`}>
-        <Lottie className={styles.LogoAnimation} animationData={Logo} alt='סבן טורס, העמוד בטעינה' autoPlay={true}/>
+        <Lottie className={styles.LogoAnimation} animationData={Logo} alt='ברוכים הבאים לסבן טורס, העמוד בטעינה' autoPlay={true}/>
         {
           showPercentage && 
         <div className={styles.LoaderPercentage} style={{background:`linear-gradient(90deg, #76ad24 ${percentage}%,  #ffffff 0%)`, color: `${percentage > 48 && "#fff" }`, textShadow: `${percentage > 48 && "0 0 10px #000"}`}}>{percentage}%</div>

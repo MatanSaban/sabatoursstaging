@@ -12,7 +12,7 @@ import LogoLoader from "../Components/Misc/Loading";
 import PageWrapper from "../Components/Misc/PageWrapper";
 
 
-const libraries = ["places"]; // define the libraries needed
+// const libraries = ["places"]; // define the libraries needed
 
 function MyApp({ Component, pageProps }) {
   const [userRoute, setUserRoute] = useState();
@@ -98,11 +98,12 @@ function MyApp({ Component, pageProps }) {
   }, []);
 
   return (
-    <LoadScript
-      googleMapsApiKey={process.env.GOOGLE_MAPS_API_KEY}
-      libraries={libraries}
-      loadingElement={<LogoLoader percentage={loadingPercentage} showPercentage={true} show={loaderShow} />}
-    >
+    // <LoadScript
+    //   googleMapsApiKey={process.env.GOOGLE_MAPS_API_KEY}
+    //   libraries={libraries}
+    //   loadingElement={<LogoLoader percentage={loadingPercentage} showPercentage={true} show={loaderShow} />}
+    // >
+    <>
       <Head>
         <link
           rel="icon"
@@ -164,7 +165,7 @@ function MyApp({ Component, pageProps }) {
           windowWidth={windowWidth}
         />
       </div>
-    </LoadScript>
+    </>
   );
 }
 
