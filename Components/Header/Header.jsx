@@ -80,11 +80,11 @@ const Header = (props) => {
               מאמרים
             </Link>
           </li> */}
-          <li className={styles.menuItem} >
+          {/* <li className={styles.menuItem} >
             <Link className={styles.menuItemLink} href="/">
               אודותינו
             </Link>
-          </li>
+          </li> */}
           <li className={styles.menuItem} >
             <Link className={styles.menuItemLink} href="/">
               יצירת קשר
@@ -137,11 +137,11 @@ const Header = (props) => {
                 מאמרים
               </Link>
             </li> */}
-            <li className={styles.menuItem} onClick={() => closeMobileMenuDelay()}>
+            {/* <li className={styles.menuItem} onClick={() => closeMobileMenuDelay()}>
               <Link className={styles.menuItemLink} href="/">
                 אודותינו
               </Link>
-            </li>
+            </li> */}
             <li className={styles.menuItem} onClick={() => closeMobileMenuDelay()}>
               <Link className={styles.menuItemLink} href="/">
                 יצירת קשר
