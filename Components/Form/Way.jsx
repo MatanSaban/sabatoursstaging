@@ -179,11 +179,6 @@ const Way = ({
     <>
       <div className={`${styles[wayType]} ${styles.wayStyle} way`} id={wayType}>
         <h3>{wayTitle}</h3>
-        <p>
-          <span>{totalDistance}</span>
-          <br />
-          <span>{totalDuration}</span>
-        </p>
         <div className={styles.fields}>
           <div className={`${styles.startPointWrapper} ${props?.route[wayType]?.stops?.length && styles.hasStops}`}>
             <ConditionalWrapper condition={isMobile(props?.windowWidth)}>

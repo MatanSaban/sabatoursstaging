@@ -59,6 +59,19 @@ section.section.niceToMeet {
   z-index: 99;
   h2 {
     margin-top: 20px;
+    font-weight: 900;
+  }
+  h5 {
+    font-weight: 800;
+  }
+  > .centeredText {
+    padding: 10px 20px;
+    font-weight: 700;
+    margin: 0;
+    margin-bottom: 50px;
+    > p {
+      margin: 0;
+    }
   }
   .transparentIcon {
     position: absolute;
@@ -308,7 +321,11 @@ section.section {
     }
   }
   section.section.niceToMeet {
+    h2 {
+      font-weight: 900;
+    }
     h5 {
+      font-weight: 800;
       text-align: center;
     }
   }

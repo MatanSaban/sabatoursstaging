@@ -45,9 +45,9 @@ function MyApp({ Component, pageProps }) {
     };
   }, []);
 
-  const handlePopup = (bool, content) => {
+  const handlePopup = (bool, content, customStyles) => {
     return setPopup(
-      <Popup show={bool} content={content} setPopup={setPopup} />
+      <Popup show={bool} content={content} setPopup={setPopup} customStyles={customStyles} />
     );
   };
 
@@ -145,6 +145,7 @@ function MyApp({ Component, pageProps }) {
           setHeaderHeight={setHeaderHeight}
           scrolling={scrolling}
           scrollTopVal={scrollTopVal}
+          handlePopup={handlePopup}
         />
         {popup}
         <PageWrapper

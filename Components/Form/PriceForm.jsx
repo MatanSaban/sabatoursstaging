@@ -652,7 +652,7 @@ const PriceForm = (props) => {
   };
 
   return (
-    <div className={styles.formWrapper} id="priceOfferSection">
+    <div className={styles.formWrapper} ref={props?.priceFormRef}>
       <form>
         <div className={styles.routeType}>
           <h5>סוג הנסיעה: </h5>

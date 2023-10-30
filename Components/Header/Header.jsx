@@ -1,9 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 import styles from "./header.module.scss";
-import { AiOutlinePhone } from "react-icons/ai";
+import ActionButton from "./ActionButton";
 import Link from "next/link";
 import LottieLogoAnim from '../../public/media/LogoAnimationLottie.json';
 import Lottie from 'lottie-react';
+import { isMobile } from "../../utils/functions";
+
 
 
 const Header = (props) => {
@@ -32,14 +34,9 @@ const Header = (props) => {
       className={`${styles.Header} ${props?.scrolling ? styles.scrolled : styles.notScrolled
         }`}
     >
-      <div className={styles.ActionButtonWrapper}>
-        <button className={`${styles.actionButton} ${styles.pinkButton}`} >
-          <Link href={'tel:0527984133'}>
-            <AiOutlinePhone />
-            <span>הזמנת נסיעה</span>
-          </Link>
-        </button>
-      </div>
+      {
+        isMobile(props?.windowWidth) && <ActionButton windowWidth={props?.windowWidth} handlePopup={props?.handlePopup} styles={styles}/>
+      }
       <div className={styles.LogoWrapper}>
         <Link className={styles.logoLink} href="/">
           {/* <Image className={styles.logo} src={Logo} alt='סבן טורס, העמוד בטעינה' />
@@ -70,11 +67,11 @@ const Header = (props) => {
               סוגי הסעות
             </Link>
           </li>
-          <li className={styles.menuItem} >
+          {/* <li className={styles.menuItem} >
             <Link className={styles.menuItemLink} href="/drive-types">
               סוגי רכבים
             </Link>
-          </li>
+          </li> */}
           {/* <li className={styles.menuItem} >
             <Link className={styles.menuItemLink} href="/">
               מאמרים
@@ -92,7 +89,9 @@ const Header = (props) => {
           </li>
         </ul>
       </div>
-
+      {
+        !isMobile(props?.windowWidth) && <ActionButton windowWidth={props?.windowWidth} handlePopup={props?.handlePopup} styles={styles}/> 
+      }
       <div className={styles.mobileMenuWrapper}>
         <div
           className={`${styles.MobileMenu} ${mobileMenu && styles.active}`}
@@ -127,11 +126,11 @@ const Header = (props) => {
                 סוגי הסעות
               </Link>
             </li>
-            <li className={styles.menuItem} onClick={() => closeMobileMenuDelay()}>
+            {/* <li className={styles.menuItem} onClick={() => closeMobileMenuDelay()}>
               <Link className={styles.menuItemLink} href="/">
                 סוגי רכבים
               </Link>
-            </li>
+            </li> */}
             {/* <li className={styles.menuItem} onClick={() => closeMobileMenuDelay()}>
               <Link className={styles.menuItemLink} href="/">
                 מאמרים

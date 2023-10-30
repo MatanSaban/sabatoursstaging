@@ -7,13 +7,15 @@ const Popup = (props) => {
     props.setPopup(<Popup show={false} content={props?.content} />);
   };
 
+  console.log({...props?.customStyles});
+
   return (
     <div
       className={`${styles.popupWrapper} ${
         props.show ? styles.showPopup : styles.hiddenPopup
       }`}
     >
-      <div className={styles.popup}>
+      <div className={styles.popup} style={{...props?.customStyles}}>
         <i className={styles.closePopupButton} onClick={handleClose}>
           <AiFillCloseCircle />
         </i>
