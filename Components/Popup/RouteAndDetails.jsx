@@ -3,11 +3,9 @@ import Popup from "./Popup";
 import styles from "./routeanddetails.module.scss";
 import { GoogleMap } from "@react-google-maps/api";
 import { DirectionsService, DirectionsRenderer } from "@react-google-maps/api";
-import PriceSuggestion from "./PriceSuggestion";
 import axios from "axios";
 import generatePDF from "../../utils/generatePDF";
 import { AiFillCloseCircle } from "react-icons/ai";
-import { formatDateToString } from "../../utils/functions";
 import { useRouter } from "next/navigation";
 
 const mapStyles = {
