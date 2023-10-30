@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import styles from "../../Components/Popup/pricesuggestion.module.scss";
 import Logo from "../../public/media/SabanToursLogo.svg";
 import Image from "next/image";
-import BoundInfo from "../../Components/Popup/BoundInfo";
+import BoundInfo from "./BoundInfo";
 import { importantThing, showCarImage, translateCarType } from "../../utils/functions";
 import { formatDateToString, handleEventType, handleRouteTypeLabel } from "../../utils/functions";
 import Head from "next/head";

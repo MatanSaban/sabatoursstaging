@@ -7,13 +7,13 @@ import {
 	isMobile,
 	showDistance,
 } from "../../utils/functions";
-import PriceSuggestion from "../pricesuggestion";
+import PriceSuggestion from "../../Components/Popup/PriceOffer";
 import axios from "axios";
 import useIsraeliIdValidation from '../../Components/Misc/Hooks/IsraeliIdValidation';
 import useCardNumberValidation from '../../Components/Misc/Hooks/CreditCardValidation';
 import PaymentForm from "../../Components/Misc/PaymentForm/PaymentForm";
-import { AiFillMinusCircle, AiFillPlusCircle, AiOutlineCaretDown, AiOutlineCaretUp, AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
-import PageHero from "../../Components/Misc/PageHero";
+import { AiOutlineCaretDown, AiOutlineCaretUp } from "react-icons/ai";
+import PageHero from "../../Components/Misc/PageHero/PageHero";
 import Head from "next/head";
 
 
