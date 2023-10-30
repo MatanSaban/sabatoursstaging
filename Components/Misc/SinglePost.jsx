@@ -1,52 +1,21 @@
 import React from 'react'
 import PricingTable from './PricingTable'
 import PageHero from './PageHero'
-import Head from 'next/head'
-import { renderTitles } from '../../utils/functions'
+import Head from 'next/head' 
+import { metaContent, renderTitles, returnTitle } from '../../utils/functions'
 import styles from './singlePost.module.scss'
 
-const SinglePost = ({pageData, spType}) => {
-
-    const metaTitle = () => {
-        let title;
-        if (spType === "area") {
-            title = `סבן טורס | שירות הסעות ב${pageData?.acf?.title}`
-         } else {
-             title = `סבן טורס | שירות הסעות בנושא: ${pageData?.acf?.title}`
-         }   
-        return title;
-
-    }
-
-    const metaContent = () => {
-        let content;
-        if (spType === "area") {
-            content = `צריכים שירות הסעות ב ${pageData?.acf?.title}? הגעתם למקום הנכון!`
-        } else {
-            content = `מתעניינים בשירות הסעות בנושא ${pageData?.acf?.title}? הגעתם למקום הנכון!`
-        }
-        return content;
-    }
-
-    const postTitle = () => {
-        let title;
-        if (spType === "area") {
-           title = `שירות הסעות ב${pageData?.acf?.title}`
-        } else {
-            title = `שירות הסעות בנושא: ${pageData?.acf?.title}`
-        }  
-        return title;
-    }
+const SinglePost = ({pageData, spType}) => {    
 
   return (
     <div className={styles.singlePostWrapper}>
             <Head>
                 <title>
-                    {metaTitle()}
+                    {returnTitle(true, pageData?.acf?.title, spType)}
                 </title>
-                <meta name="description" content={metaContent()}/>
+                <meta name="description" content={metaContent(spType, pageData?.acf?.title)}/>
             </Head>
-            <PageHero title={postTitle()} />
+            <PageHero title={returnTitle(false, pageData?.acf?.title, spType)} />
             <div className={styles.contentWrapper}>
                 <div className={styles.content}>
                     <div className={styles.introductionWrapper}>

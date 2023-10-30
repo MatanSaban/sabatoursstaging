@@ -342,3 +342,22 @@ export const updateRegionImages = async (reg) => {
   };
   return newReg;
 };
+
+export const metaContent = (spType, title) => {
+  let content;
+  if (spType === "area") {
+      content = `צריכים שירות הסעות ב ${title}? הגעתם למקום הנכון!`
+  } else {
+      content = `מתעניינים בשירות ${title}? הגעתם למקום הנכון!`
+  }
+  return content;
+}
+
+export const returnTitle = (isMetaTitle, title, spType) => {
+  title = decodeHTMLEntities(title)
+  const baseTitle = spType === "area" 
+      ? `שירות הסעות ב${title}` 
+      : `שירות ${title}`;
+  
+  return isMetaTitle ? `סבן טורס | ${baseTitle}` : baseTitle;
+};
