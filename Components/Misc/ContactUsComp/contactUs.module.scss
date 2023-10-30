@@ -1,0 +1,28 @@
+@import "../../../styles/globals.scss"; // Import the _variables.scss file
+@import "../../../styles/variables.scss"; // Import the _variables.scss file
+
+.contactUsAboutWrapper {
+    width: 80%;
+    margin: 0 auto;
+    text-align: center;
+    .contactUsAbout {
+        h3 {
+            font-size: 2rem;
+            font-weight: 900;
+            letter-spacing: 1px;
+            margin: 0;
+            line-height: 30px;
+            color: $color-blue;
+        }
+        h4 {
+            margin: 0;
+            font-size: 1.7rem;
+            color: $color-green;
+            text-shadow: 2px 2px 5px rgb(216, 216, 216);
+        }
+        p {
+            font-weight: 700;
+            margin-top: 10px;
+        }
+    }
+}

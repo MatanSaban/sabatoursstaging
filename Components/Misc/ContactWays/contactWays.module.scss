@@ -1,0 +1,99 @@
+@import "../../../styles/globals.scss"; // Import the _variables.scss file
+@import "../../../styles/_variables.scss"; // Import the _variables.scss file
+
+.contactWays {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 20px;
+  align-items: stretch;
+  justify-content: center;
+  margin-bottom: 100px;
+  .way {
+    background-color: white;
+    box-shadow: 0 0 10px black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    font-size: 1.6rem;
+    padding: 20px;
+    border-radius: 20px;
+    margin: auto 0 0 0;
+    height: 100%;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    .wayTitle {
+        font-size: 1.3rem;
+        color: $color-black;
+    }
+    .wayValue {
+        color: $color-black;
+        font-size: 1rem;
+    }
+    .wayLink {
+        font-weight: 800;
+        color: $color-blue;
+        margin-top: auto;
+        transition: all 0.3s ease;
+        &:hover {
+            color: $color-green;
+        }
+    }
+    &:hover {
+        .wayLink {
+            color: $color-green;
+        }
+    }
+  }
+  .phone {
+    box-shadow: 0 0 5px $color-blue;
+    &:hover {
+      box-shadow: 0 0 20px $color-blue;
+    }
+  }
+  .whatsapp {
+    box-shadow: 0 0 5px $color-green;
+    &:hover {
+      box-shadow: 0 0 20px $color-green;
+    }
+  }
+  .email {
+    box-shadow: 0 0 5px $color-black;
+    &:hover {
+      box-shadow: 0 0 20px $color-black;
+    }
+  }
+  .contactForm {
+    box-shadow: 0 0 5px $color-yellow;
+    &:hover {
+      box-shadow: 0 0 20px $color-yellow;
+    }
+  }
+  .onlineForm {
+    box-shadow: 0 0 5px $color-pink;
+    &:hover {
+      box-shadow: 0 0 20px $color-pink; 
+    }
+  }
+}
+
+
+@media only screen and (max-width: 768px) {
+  .contactWays {
+    margin: 50px auto 0 auto;
+    position: relative; 
+    display: block;
+    .mySwiper {
+      height: 100%;
+      min-height: 250px;
+      overflow-x: visible;
+      overflow-y: visible;
+      border-radius: 20px;
+      
+      .slide {
+        height: auto;
+        border-radius: 20px;
+      }
+    }
+  }
+}

@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './page404.module.scss'
-import PageHero from '../../Components/Misc/PageHero';
+import PageHero from '../../Components/Misc/PageHero/PageHero';
 import Lottie from 'lottie-react';
 import animation from '../../public/media/404animation.json'
 import Link from 'next/link';

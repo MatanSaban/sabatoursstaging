@@ -11,19 +11,6 @@ import "swiper/css/pagination";
 import { isMobile } from "react-device-detect";
 
 const RegionsComp = ({ regions, cities, ...props }) => {
-    console.log("regions");
-    console.log(regions);
-
-    // const renderDesktopView = () => {
-    //     return (
-            
-    //     );
-    // };
-    // const renderMobileView = () => {
-    //     return (
-            
-    //     );
-    // };
 
     const [viewRender, setViewRender] = useState();
 

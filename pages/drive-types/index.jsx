@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./driveTypes.module.scss";
 import Link from "next/link";
-import PageHero from "../../Components/Misc/PageHero";
+import PageHero from "../../Components/Misc/PageHero/PageHero";
 import { decodeHTMLEntities } from "../../utils/functions";
 import Image from "next/image";
 import Head from "next/head";
@@ -68,7 +68,7 @@ const DriveTypes = ({ driveTypes }) => {
       <div className={styles.services}>
         {driveTypes?.map((service) => (
           <Link href={`/drive-types/${service?.slug}`} className={styles.service} key={service?.id}>
-            <Image src={service.acf.feat_image} width={300} height={200} alt="service image" />
+            <Image src={service?.acf?.feat_image} width={300} height={200} alt="service image" />
             <button className={styles.serviceButton}>
               {/* <i className={styles.serviceIcon}><Image src={`/${service.iconName}`}/>service icon here</i> */}
               <span className={styles.serviceName}>

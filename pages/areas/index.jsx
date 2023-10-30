@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './areas.module.scss';
-import PageHero from '../../Components/Misc/PageHero';
+import PageHero from '../../Components/Misc/PageHero/PageHero';
 import RegionsComp from '../../Components/Home/RegionsComp';
 import { fetchImage, updateRegionImages } from '../../utils/functions';
 import Head from 'next/head';

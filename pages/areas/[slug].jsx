@@ -1,5 +1,5 @@
 import React from "react";
-import SinglePost from "../../Components/Misc/SinglePost";
+import SinglePost from "../../Components/Misc/SinglePost/SinglePost";
 
 
 // Function to fetch data for all the paths
