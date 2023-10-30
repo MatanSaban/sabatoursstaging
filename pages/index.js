@@ -112,24 +112,24 @@ export async function getStaticProps(context) {
   }
 }
 
-const handleButton = () => {
-  if (typeof window !== 'undefined' && 'Notification' in window) {
-    Notification.requestPermission().then(perm => {
-      if (perm === "granted") {
-        const notification = new Notification("הודעה חדשה מ-סבן טורס", {
-          body: "רציתי לדעת שאת שלי, \n רציתי לקחת אותך איתי \n למקום אחר, שם נוכל לאהוב ולגדול",
-          data: { hello: "world" },
-          // icon: logo.src
-        })
+// const handleButton = () => {
+//   if (typeof window !== 'undefined' && 'Notification' in window) {
+//     Notification.requestPermission().then(perm => {
+//       if (perm === "granted") {
+//         const notification = new Notification("הודעה חדשה מ-סבן טורס", {
+//           body: "רציתי לדעת שאת שלי, \n רציתי לקחת אותך איתי \n למקום אחר, שם נוכל לאהוב ולגדול",
+//           data: { hello: "world" },
+//           // icon: logo.src
+//         })
   
-        notification.addEventListener("show", e => {
-          console.log("e")
-          console.log()
-        })
-      }
-    })
-  }
-}
+//         notification.addEventListener("show", e => {
+//           console.log("e")
+//           console.log()
+//         })
+//       }
+//     })
+//   }
+// }
 
 
 const Home = (props) => {
@@ -146,7 +146,7 @@ const Home = (props) => {
         media={props?.initialData?.media}
         homepageData={props?.initialData?.homepageData}
       />
-      <button onClick={() => handleButton()}>נוטיפיקיישן</button>
+      {/* <button onClick={() => handleButton()}>נוטיפיקיישן</button> */}
     </div>
   );
 };
