@@ -370,7 +370,7 @@ export const contactWaysJson = [
       title: "טלפון",
       value: "קבלו הצעת מחיר טלפונית במספר הטלפון שלנו : 052-798-4133",
       linkText: "התקשר עכשיו",
-      linkPath: "tel:+97252798433",
+      linkPath: "tel:+972527984133",
       target: false,
   },
   {
@@ -380,7 +380,7 @@ export const contactWaysJson = [
       title: "whatsapp",
       value: "דברו איתנו בוואטסאפ וקבלו הצעת מחיר מיידית",
       linkText: "שליחת הודעה",
-      linkPath: "https://wa.me/+97252798433",
+      linkPath: "https://wa.me/+972527984133",
       target: "_blank",
   },
   {
