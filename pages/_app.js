@@ -58,16 +58,16 @@ function MyApp({ Component, pageProps }) {
   useEffect(() => {
     setWindowWidth(window.innerWidth); 
     // If API calls are done and 6 seconds have passed, set loading to false
-    if (minLoadingTimeElapsed) {
-      setLoaderShow(false);
-      setTimeout(() => {
-        setLoading(false);
-      }, 1000);
-    }
+    // if (minLoadingTimeElapsed) {
+    //   setLoaderShow(false);
+    //   setTimeout(() => {
+    //     setLoading(false);
+    //   }, 1000);
+    // }
   }, [minLoadingTimeElapsed /* your dependencies for API calls being complete */]);
 
   useEffect(() => {
-    setLoading(true);  // Set loading to true when you initiate API calls
+    // setLoading(true);  // Set loading to true when you initiate API calls
 
     // Calculate the interval time needed to go from 0 to 100 in 5 seconds
     const totalDuration = 5500; // 5 seconds in milliseconds
@@ -139,7 +139,7 @@ function MyApp({ Component, pageProps }) {
       </Head>
 
       <div className="appWrapper">
-        {/* {loading && <LogoLoader percentage={loadingPercentage} showPercentage={true} show={loaderShow} />} */}
+        {loading && <LogoLoader percentage={loadingPercentage} showPercentage={true} show={loaderShow} />}
         <Header
           windowWidth={windowWidth}
           setHeaderHeight={setHeaderHeight}
@@ -154,7 +154,7 @@ function MyApp({ Component, pageProps }) {
           {...pageProps}
           handlePopup={handlePopup}
           sendDataToApp={sendDataToApp}
-          userRoute={userRoute} 
+          userRoute={userRoute}
           windowWidth={windowWidth}
           headerHeight={headerHeight}
         >

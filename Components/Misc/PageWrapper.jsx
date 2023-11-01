@@ -21,8 +21,8 @@ function PageWrapper({ children, ...props }) {
 
         // Event handlers
         const handleRouteChangeStart = () => {
-            setLoading(true);
-            setShowChildren(false);
+            setLoading(false);
+            setShowChildren(true);
             updatePercentage(0);
         };
         const handleRouteChangeComplete = () => {
