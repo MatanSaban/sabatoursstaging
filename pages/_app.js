@@ -111,9 +111,10 @@ function MyApp({ Component, pageProps }) {
           href="/media/saban_tours_favicon.svg"
         />
         <title>סבן טורס - חברת ההסעות שלך</title>
-        <meta name="robots" content="all" />
+        <meta name="robots" content="all, index, follow" />
         <meta name="description" content="סבן טורס הינה חברת הסעות מובילה הנותנת שירותי הסעות מקצועיים ואמינים בכל רחבי ישראל."/>
         <meta name="theme-color" content="008bcd" />
+        <meta property='og:site_name' content='סבן טורס - חברת הסעות הנותנת שירות הסעות בפריסה ארצית עם כל סוגי הרכבים ועבור כל סוגי הצרכים.' />
         <script src={`https://www.googletagmanager.com/gtag/js?id=G-4WWJ8F67H9`} async />
         <script async id="google-analytics">
           {`

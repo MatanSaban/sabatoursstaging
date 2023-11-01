@@ -8,6 +8,8 @@ import ContactUsComp from '../ContactUsComp/ContactUsComp'
 
 const SinglePost = ({ pageData, spType }) => {
 
+    const slugSpType = spType === "area" ? "areas" : "drive-types"
+
     return (
         <>
             <div className={styles.singlePostWrapper}>
@@ -15,7 +17,11 @@ const SinglePost = ({ pageData, spType }) => {
                     <title>
                         {returnTitle(true, pageData?.acf?.title, spType)}
                     </title>
-                    <meta name="description" content={metaContent(spType, pageData?.acf?.title)} />
+                    <meta property="og:title" content={returnTitle(false, pageData?.acf?.title, spType)}/>
+                    <meta property="og:description" name="description" content={metaContent(spType, pageData?.acf?.title)} />
+                    <meta property='og:type' content='article' />
+                    <meta property='og:url' content={`https://saban-tours.co.il/${slugSpType}/${pageData?.slug}`} />
+                    <link rel="canonical" href={`https://saban-tours.co.il/${slugSpType}/${pageData?.slug}`}/>
                 </Head>
                 <PageHero title={returnTitle(false, pageData?.acf?.title, spType)} />
                 <div className={styles.contentWrapper}>

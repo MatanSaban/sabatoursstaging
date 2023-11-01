@@ -346,14 +346,20 @@ export const updateRegionImages = async (reg) => {
 export const metaContent = (spType, title) => {
   let content;
   if (spType === "area") {
-      content = `צריכים שירות הסעות ב ${title}? הגעתם למקום הנכון!`
+      content = `צריכים שירות הסעות ב${title}? הגעתם למקום הנכון! \n 
+      שירות הסעות בעיר ${title} מתבטא בנסיעות מהעיר ${title} לעיר אחרת או מעיר אחרת ל${title} או גם שירות נסיעה בתוך ${title}. \n
+      עם חברת ההסעות סבן טורס, תגיעו למעוז חפצכם במהירות, נוחות, אדיבות ושירות שעוד לא חוויתם.`
   } else {
-      content = `מתעניינים בשירות ${title}? הגעתם למקום הנכון!`
+      content = `מתעניינים בשירות ${returnTitle(false, title, spType)}? הגעתם למקום הנכון! \n
+      עם חברת ההסעות סבן טורס, תקבלו שירות ${returnTitle(false, title, spType)} ברמה הגבוהה ביותר, בהבטחה!\n 
+      בתור חברת הסעות מה שמתווה את דרכינו הוא קודם כל שירות איכותי ואדיב, לאחר מכן נוחות ההסעה ולבסוף מחיר הוגן. \n 
+      לכן אנחנו מבטיחים לכם שירות מדהים בשירות ${returnTitle(false, title, spType)}.
+      `
   }
   return content;
 }
 
-export const returnTitle = (isMetaTitle, title, spType) => {
+export const returnTitle = (isMetaTitle, title, spType) => { 
   title = decodeHTMLEntities(title)
   const baseTitle = spType === "area" 
       ? `שירות הסעות ב${title}` 
