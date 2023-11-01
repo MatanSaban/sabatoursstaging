@@ -139,7 +139,7 @@ function MyApp({ Component, pageProps }) {
       </Head>
 
       <div className="appWrapper">
-        {loading && <LogoLoader percentage={loadingPercentage} showPercentage={true} show={loaderShow} />}
+        {/* {loading && <LogoLoader percentage={loadingPercentage} showPercentage={true} show={loaderShow} />} */}
         <Header
           windowWidth={windowWidth}
           setHeaderHeight={setHeaderHeight}
@@ -154,7 +154,7 @@ function MyApp({ Component, pageProps }) {
           {...pageProps}
           handlePopup={handlePopup}
           sendDataToApp={sendDataToApp}
-          userRoute={userRoute}
+          userRoute={userRoute} 
           windowWidth={windowWidth}
           headerHeight={headerHeight}
         >

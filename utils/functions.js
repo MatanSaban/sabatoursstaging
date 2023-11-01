@@ -52,8 +52,8 @@ export const importantThing = {
 };
 
 export const decodeHTMLEntities = (text) => {
-  var parser = new DOMParser();
-  var doc = parser.parseFromString(text, "text/html");
+  let parser = new DOMParser();
+  let doc = parser.parseFromString(text, "text/html");
   return doc.documentElement.textContent;
 };
 
