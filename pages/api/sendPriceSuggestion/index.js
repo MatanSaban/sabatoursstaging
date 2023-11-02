@@ -8,10 +8,12 @@ export default async function handler(req, res) {
 
         // Configure Nodemailer
         const transporter = nodemailer.createTransport({
-            service: "gmail",
+            host: "smtp.inbox.co.il",
+            port: "587",
+            secure: false,
             auth: {
-                user: "matansaban28@gmail.com",
-                pass: "mdktipepukouclbh",
+                user: "office@sabantours.co.il",
+                pass: "Stst199456Stst",
             },
         });
 
@@ -47,7 +49,7 @@ export default async function handler(req, res) {
 
         // Set up email data
         const mailOptions = {
-            from: "matansaban28@gmail.com",
+            from: '"סבן טורס" <office@sabantours.co.il>', 
             to: body.userDetails.email,
             subject: "הצעת המחיר שלך מ-סבן טורס!",
             html: htmlContent,

@@ -12,10 +12,12 @@ export default async function handler(req, res) {
 
         // Configure Nodemailer
         const transporter = nodemailer.createTransport({
-            service: "gmail",
+            host: "smtp.inbox.co.il",
+            port: "587",
+            secure: false,
             auth: {
-                user: "matansaban28@gmail.com",
-                pass: "mdktipepukouclbh",
+                user: "office@sabantours.co.il",
+                pass: "Stst199456Stst",
             },
         });
 
@@ -42,10 +44,9 @@ export default async function handler(req, res) {
                 <body>
                     <div class="header">
                         <h1>היי ${firstname} , קוד האימות שלך מוכן!</h1>
+                        <h2>קוד האימות שלך הוא: ${verificationCode}</h2>
                     </div>
                     <p>
-                        קוד האימות שלך הוא: ${verificationCode}.
-                        <br/>
                         לאחר הזנת קוד האימות תקבל את הצעת המחיר מאיתנו באופן מיידי!
                         <br/>
                         במידה ולא קיבלת את הצעת המחיר, ניתן לפנות אלינו בטלפון - 0527984133
@@ -67,9 +68,9 @@ export default async function handler(req, res) {
             }
         ];
 
-        // Set up email data
+        // Set up email data 
         const mailOptions = {
-            from: "matansaban28@gmail.com",
+            from: '"סבן טורס" <office@sabantours.co.il>',
             to: email,
             subject: "קוד האימות שלך מ-סבן טורס",
             html: htmlContent,
