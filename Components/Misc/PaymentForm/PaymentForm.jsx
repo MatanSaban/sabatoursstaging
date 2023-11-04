@@ -1,13 +1,14 @@
-import React from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import CreditCardPrev from './CreditCardPrev';
 import styles from './paymentForm.module.scss'
+import { isMobile } from 'react-device-detect';
 
 
 const PaymentForm = (props) => {
-    const [containerHeight, setContainerHeight] = React.useState('0px');
-    const containerRef = React.useRef(null);
+    const [containerHeight, setContainerHeight] = useState('0px');
+    const containerRef = useRef(null);
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (props?.showPaymentDetailsOnMobile) {
             const height = containerRef.current.scrollHeight;
             setContainerHeight(`${height}px`);
@@ -29,7 +30,7 @@ const PaymentForm = (props) => {
         <div
             ref={containerRef}
             className={`${styles.formAndCardWrapper} ${props?.showPaymentDetailsOnMobile ? styles.show : styles.hide}`}
-            style={{ height: containerHeight }}
+            style={isMobile ? { height: containerHeight } : {}}
         >
             <h3 className={styles.mainTitle}>פרטי תשלום</h3>
             <CreditCardPrev cardDetails={props?.cardDetails} />

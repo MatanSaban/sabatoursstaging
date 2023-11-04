@@ -1,14 +1,15 @@
 .verificationPopup {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  width: max-content;
-  height: max-content;
+  // position: fixed;
+  // top: 50%;
+  // left: 50%;
+  // width: max-content;
+  // height: max-content;
   max-width: 70%;
+  margin: 0 auto;
   padding: 20px; 
   background-color: rgb(52, 154, 223);
   color: white;
-  transform: translate(-50%, -50%);
+  // transform: translate(-50%, -50%);
   border-radius: 20px;
   box-shadow: 0 0 10px rgb(92, 92, 92);
   z-index: 9;
@@ -19,19 +20,19 @@
   justify-content: center;
   font-weight: bold;
   font-size: 24px;
-  .closeButton {
-    position: absolute;
-    left: 10px;
-    top: 10px;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    svg {
-      width: 25px;
-      height: 25px;
-    }
-  }
+  // .closeButton {
+  //   position: absolute;
+  //   left: 10px;
+  //   top: 10px;
+  //   border-radius: 50%;
+  //   display: flex;
+  //   justify-content: center;
+  //   align-items: center;
+  //   svg {
+  //     width: 25px;
+  //     height: 25px;
+  //   }
+  // }
   p {
   }
   .inpAndBtn {
@@ -221,5 +222,52 @@
     // transform: translate(-50%, -50%);
     // margin-top: auto;
     position: fixed;
+  }
+}
+
+.loadingAnim {
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  background-color: #00000099;
+  text-align: center;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transform: translate(-50%,-50%);
+  z-index: 999;
+  h4 {
+    margin-top: -150px;
+    font-size: 2rem;
+  }
+  svg {
+    // max-width: 50%;
+    // max-height: 50%;
+  }
+}
+
+
+.methodSelectionPopup {
+  padding: 20px;
+  .options {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    .option {
+      box-shadow: 0 0 20px #00000030;
+      text-align: center;
+      padding: 20px;
+      border-radius: 20px;
+      width: 30%;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      &:hover {
+        box-shadow: 0 0 10px #00000070;
+      }
+    }
   }
 }

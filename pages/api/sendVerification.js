@@ -8,16 +8,15 @@ export default async function handler(req, res) {
 
         // Generate a random 6-digit code
         const verificationCode = Math.floor(1000 + Math.random() * 9000).toString();
+        console.log('verificationCode');
         console.log(verificationCode);
 
         // Configure Nodemailer
         const transporter = nodemailer.createTransport({
-            host: "smtp.inbox.co.il",
-            port: "587",
-            secure: false,
+            service: "gmail",
             auth: {
-                user: "office@sabantours.co.il",
-                pass: "Stst199456Stst",
+                user: "matansaban28@gmail.com",
+                pass: "mdktipepukouclbh",
             },
         });
 

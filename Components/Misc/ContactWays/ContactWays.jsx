@@ -43,6 +43,7 @@ const ContactWays = () => {
                             value={way.value}
                             linkText={way.linkText}
                             linkPath={way.linkPath}
+                            target={way.target}
                         />
                     );
                 })

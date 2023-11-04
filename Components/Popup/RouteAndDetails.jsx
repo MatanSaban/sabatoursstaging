@@ -7,6 +7,8 @@ import axios from "axios";
 import generatePDF from "../../utils/generatePDF";
 import { AiFillCloseCircle } from "react-icons/ai";
 import { useRouter } from "next/navigation";
+import LogoAnim from '../../public/media/LogoAnimationLottie.json'
+import Lottie from "lottie-react";
 
 const mapStyles = {
   height: "200px",
@@ -106,6 +108,56 @@ const RouteAndDetails = (props) => {
     setLoaded(false);
   }, [props?.route]);
 
+
+  // const [verificationType, setVerificationType] = useState(null);
+  const [userVerification, setUserVerification] = useState({
+    selecting: false,
+    sms: {
+      selectedMethod: false,
+      verified: false,
+      isVerifying: false,
+    },
+    whatsapp: {
+      selectedMethod: false,
+      verified: false,
+      isVerifying: false,
+    },
+    email: {
+      selectedMethod: false,
+      verified: false,
+      isVerifying: false,
+    },
+  });
+
+  const selectingMethod = () => {
+    const jsx = (
+      <div className={styles.methodSelectionPopup}>
+        <h3>נא לבחור אחת מהאופציות הבאות לאימות</h3>
+        <div className={styles.options}>
+          <div className={styles.option} onClick={() => verificationMethod("SMS")}>
+            <h4>אימות עם סמס</h4>
+            <p>sms image</p>
+          </div>
+          <div className={styles.option} onClick={() => verificationMethod("WHATSAPP")}>
+            <h4>אימות עם וואטסאפ</h4>
+            <p>whatsapp image</p>
+          </div>
+          <div className={styles.option} onClick={() => verificationMethod("EMAIL")}>
+            <h4>אימות עם אימייל</h4>
+            <p>email image</p>
+          </div>
+        </div>
+      </div>
+    )
+    return jsx;
+  }
+
+  useEffect(() => {
+    if (userVerification.selecting == true) {
+      props?.handlePopup(true, selectingMethod());
+    }
+  },[userVerification])
+
   const handleFormSubmit = async (e) => {
     e.preventDefault();
 
@@ -120,205 +172,345 @@ const RouteAndDetails = (props) => {
     });
 
     setUserDetails((prevDetails) => ({ ...prevDetails, ...newDetails }));
+    props?.sendDataToApp(newDetails)
 
-    const response = await fetch("/api/sendVerification", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        email: newDetails.email,
-        firstname: newDetails.firstname,
-      }),
-    });
+    setUserVerification({...userVerification, selecting: true});
 
-    const data = await response.json();
-
-    if (data.success) {
-      setActualVerificationCode(data.code);
-      setIsVerifying(true);
-    } else {
-      // Handle error
-    }
   };
 
-  const handleVerify = async () => {
-    if (inputVerificationCode === actualVerificationCode) {
-      setIsVerifying(false);
-      setUserDetails({ ...userDetails, verified: true });
+
+  const verificationScreen = (method, code) => {
+    const jsx = (
+      <div className={styles.verificationPopup}>
+            <p>הזן את קוד האימות שנשלח אליך ב{method === "EMAIL" ? "אימייל" : method === "SMS" ? "סמס" : "וואטסאפ"}</p>
+              <form className={styles.inpAndBtn} onSubmit={(e) => handleVerify(e.target[0].value, code, userDetails, props, e)}>
+                <input
+                  type="number"
+                  pattern="[0-9]*"
+                  inputMode='numeric'
+                  // value={inputVerificationCode}
+                  onChange={(e) => setInputVerificationCode(e.target.value)}
+                />
+                <button>אמת</button>
+              </form>
+          </div>
+    )
+    return jsx;
+  }
+
+  const verificationMethod = async (method) => {
+    let response;
+    let data;
+    switch (method) {
+      case "SMS":
+        
+        break;
+      case "WHATSAPP":
+        
+        break;
+      case "EMAIL":
+        response = await fetch("/api/sendVerification", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            email: userDetails.email,
+            firstname: userDetails.firstname,
+          }),
+        });
+        break;
+    }
+    data = await response.json();
+    if (await data.success) {
+      setActualVerificationCode(data.code);
+      props?.handlePopup(true, verificationScreen(method, data.code), {boxShadow: "none", background: "none", maxWidth: "fit-content", padding: "0"})
+      setIsVerifying(true);
+    } else {
+
+    }
+  }
+
+  const cst = {
+    width: "200px", height: "200px"
+  }
+
+  const handleVerify = async (inputVerificationCode, actualVerificationCode, userDetails, props, e) => {
+    e.preventDefault();
+    console.log('e');
+    console.log(e);
+    if (verifyCode(inputVerificationCode, actualVerificationCode)) {
+      userDetails = setUserVerificationDetails(userDetails, true);
       props.handlePopup(false, <Popup show={false} />);
-      let offerId;
+      props.handlePopup(true, <>
+      <Lottie animationData={LogoAnim} />
+      <h3>טוען..</h3>
+      </>, {boxShadow: "none", background: "none", maxWidth: "fit-content", padding: "0", textAlign: "center"});
 
-      try {
-        const wpRes = await axios.post(
-          `/api/priceOffers`,
-          {
-            title: {
-              raw: "הצעת מחיר חדשה",
-              rendered: "הצעת מחיר חדשה",
-            },
-            status: "pending",
-          }
-        );
+      let offerId = await createPriceOffer();
 
-        offerId = await wpRes.data.id;
-      } catch (error) {
-        console.log(error);
-      }
-      setTimeout(() => {
-        props?.sendDataToApp(
-          props?.route,
-          { price: props?.price },
-          { carType: props?.carType },
-          { offerId: offerId },
-          userDetails // userRoute={props?.userRoute} - to redirect to new PriceSugg page.
-        );
-        axios
-          .post(`/api/sendPriceSuggestion`, { userDetails: userDetails })
-          .then((res) => {
+      // Assuming sendDataToApp is a synchronous operation
+      sendDataToApp(props, userDetails, offerId);
 
-            // Generate the PDF blob from the user details.
-            generatePDF(
-              userDetails,
-              props?.route,
-              props?.price,
-              props?.carType,
-              offerId,
-              async (pdfBlob) => {
-                // Open the PDF in a new tab for validation
+      // Capture the result of handlePDFGeneration
+      const pdfBlob = await handlePDFGeneration(userDetails, props, offerId);
 
-                const reader = new FileReader();
-                reader.readAsDataURL(pdfBlob);
-                reader.onloadend = async function () {
-                  const base64data = reader.result;
+      // Pass the pdfBlob to uploadPdfAndUpdateOffer
+      await uploadPdfAndUpdateOffer(pdfBlob, offerId, userDetails, props);
 
-                  try {
-                    // Step 1: Create or Update the Post
+      // Send the email with the price offer to the user
+      await sendPriceOfferEmail(userDetails, props?.userRoute, props?.carType, props?.price, offerId, pdfBlob);
+      props.handlePopup(false, <>
+        <Lottie animationData={LogoAnim} />
+        <h3>טוען..</h3>
+        </>, {boxShadow: "none", background: "none", maxWidth: "fit-content", padding: "0", textAlign: "center"});
+  
+      setIsVerifying(false);
 
-                    // Convert Blob to File. The File API is based on Blob, inheriting blob functionality and expanding it to support files on the user's system.
-                    const file = new File(
-                      [pdfBlob],
-                      `price_offer_${offerId}.pdf`,
-                      { type: "application/pdf" }
-                    );
-
-                    // Create a FormData object
-                    const formData = new FormData();
-
-                    // Append the file to the FormData object
-                    formData.append("file", file);
-
-                    // Step 2: Upload PDF to WordPress Media Library
-
-
-                    const mediaRes = await axios.post(
-                      `/api/uploadPdf`,
-                      formData, offerId
-                    );
-                    const mediaID = await mediaRes.data.id;
-
-                    // Step 3: Update Post with Media ID
-                    await axios.put(
-                      `api/priceOffers/`,
-                      {
-                        offerId,
-                        title: {
-                          raw: `הצעת מחיר מספר ${offerId}`,
-                          rendered: `הצעת מחיר מספר ${offerId}`,
-                        },
-                        status: "publish",
-                        acf: {
-                          PO_id: parseInt(offerId),
-                          PO_car_type: props?.carType,
-                          PO_client_email: userDetails.email,
-                          PO_client_name:
-                            userDetails.firstname + " " + userDetails.lastname,
-                          PO_client_phone: userDetails.phone,
-                          PO_date: props?.route?.currentDate,
-                          PO_expiry_date: props?.route?.expDate,
-                          PO_passengers_count: props?.route?.passengers,
-                          PO_price: props?.price?.toString(),
-                          PO_route_event: props?.route?.eventType,
-                          PO_route_type: props?.route?.routeType,
-                          PO_outbound: {
-                            distance:
-                              props?.route?.outbound?.distance?.toString(),
-                            duration:
-                              props?.route?.outbound?.duration?.toString(),
-                            endpoint_address:
-                              props?.route?.outbound?.endPoint?.address,
-                            startpoint_address:
-                              props?.route?.outbound?.startPoint?.address,
-                            startpoint_date:
-                              props?.route?.outbound?.startPoint?.date,
-                            startpoint_time:
-                              props?.route?.outbound?.startPoint?.time,
-                          },
-                          PO_inbound: {
-                            distance: props?.route?.inbound?.distance
-                              ? props?.route?.inbound?.distance?.toString()
-                              : null,
-                            duration: props?.route?.inbound?.duration
-                              ? props?.route?.inbound?.duration?.toString()
-                              : null,
-                            endpoint_address: props?.route?.inbound?.endPoint
-                              ?.address
-                              ? props?.route?.inbound?.endPoint?.address
-                              : null,
-                            startpoint_address: props?.route?.inbound
-                              ?.startPoint?.address
-                              ? props?.route?.inbound?.startPoint?.address
-                              : null,
-                            startpoint_date: props?.route?.inbound?.startPoint
-                              ?.date
-                              ? props?.route?.inbound?.startPoint?.date
-                              : null,
-                            startpoint_time: props?.route?.inbound?.startPoint
-                              ?.time
-                              ? props?.route?.inbound?.startPoint?.time
-                              : null,
-                          },
-                          PO_file: mediaID, // Use the media ID from the first step
-                        },
-                      }
-                    );
-                  } catch (error) {
-                    console.error("An error occurred:", error);
-                  }
-
-                  // Your existing code for sending details to your server and triggering download
-                  axios
-                    .post(`/api/sendPriceSuggestion`, {
-                      userDetails: userDetails,
-                      pdfBlob: base64data,
-                      route: props?.route,
-                      price: props?.price,
-                      carType: props?.carType,
-                      offerId: offerId,
-                    })
-                    .then((res) => {
-
-                      // Triggering download for the user
-                      const blobURL = window.URL.createObjectURL(pdfBlob);
-                      const tempLink = document.createElement("a");
-                      tempLink.href = blobURL;
-                      tempLink.setAttribute(
-                        "download",
-                        `הצעת מחיר סבן טורס-${offerId}.pdf`
-                      );
-                      document.body.appendChild(tempLink);
-                      tempLink.click();
-                      document.body.removeChild(tempLink);
-                      window.URL.revokeObjectURL(blobURL);
-                    });
-                };
-              }
-            );
-          });
-        router.push("/checkout")
-      }, 500);
+      router.push("/checkout");
     } else {
       alert("קוד האימות שגוי, אנא נסה שנית.");
     }
   };
+
+
+
+  // Verify the code
+  const verifyCode = (inputCode, actualCode) => {
+    console.log("inputCode");
+    console.log(inputCode);
+    console.log("actualCode");
+    console.log(actualCode);
+    return inputCode === actualCode;
+  };
+
+  // Set user verification details
+  const setUserVerificationDetails = (userDetails, verified) => {
+    return { ...userDetails, verified };
+  };
+
+  // Create a new price offer
+  const createPriceOffer = async () => {
+    try {
+      const wpRes = await axios.post(`/api/priceOffers`, {
+        title: {
+          raw: "הצעת מחיר חדשה",
+          rendered: "הצעת מחיר חדשה",
+        },
+        status: "pending",
+      });
+      return wpRes.data.id;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  };
+
+  // Send data to the main application
+  const sendDataToApp = (props, userDetails, offerId) => {
+    props.sendDataToApp(
+      props.route,
+      { price: props.price },
+      { carType: props.carType },
+      { offerId: offerId },
+      userDetails
+    );
+  };
+
+
+  const handlePDFGeneration = (userDetails, props, offerId) => {
+    return new Promise((resolve, reject) => {
+      generatePDF(
+        userDetails,
+        props.route,
+        props.price,
+        props.carType,
+        offerId,
+        (pdfBlob) => {
+          if (pdfBlob) {
+            // Trigger the PDF download for the client
+            const blobURL = window.URL.createObjectURL(pdfBlob);
+            const tempLink = document.createElement('a');
+            tempLink.href = blobURL;
+            tempLink.setAttribute('download', `הצעת מחיר סבן טורס-${offerId}.pdf`);
+            document.body.appendChild(tempLink);
+            tempLink.click();
+            document.body.removeChild(tempLink);
+            window.URL.revokeObjectURL(blobURL);
+            resolve(pdfBlob); // Resolve the promise with the pdfBlob
+          } else {
+            reject(new Error('Failed to generate PDF blob')); // Reject the promise if no blob is returned
+          }
+        }
+      );
+    });
+  };
+
+
+
+
+  // Upload PDF and update the offer
+  const uploadPdfAndUpdateOffer = async (pdfBlob, offerId, userDetails, props) => {
+    try {
+      // Convert Blob to File
+      const file = new File([pdfBlob], `price_offer_${offerId}.pdf`, {
+        type: 'application/pdf',
+      });
+
+      console.log("file");
+      console.log(file);
+
+      // Create a FormData object and append the file
+      const formData = new FormData();
+      formData.append('file', file);
+
+      // Upload PDF to WordPress Media Library
+      const mediaRes = await axios.post(`/api/uploadPdf/${offerId}`, formData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      });
+
+      console.log('await mediaRes.data');
+      console.log(await mediaRes.data);
+      const mediaID = mediaRes.data.id;
+
+      // Update the offer post with the media ID and other details
+      const updateRes = await axios.put(`/api/priceOffers`, {
+        offerId: offerId,
+        title: {
+          raw: `הצעת מחיר מספר ${offerId}`,
+          rendered: `הצעת מחיר מספר ${offerId}`,
+        },
+        status: 'publish',
+        acf: {
+          PO_id: parseInt(offerId),
+          PO_car_type: props?.carType,
+          PO_client_email: userDetails.email,
+          PO_client_name:
+            userDetails.firstname + " " + userDetails.lastname,
+          PO_client_phone: userDetails.phone,
+          PO_date: props?.route?.currentDate,
+          PO_expiry_date: props?.route?.expDate,
+          PO_passengers_count: props?.route?.passengers,
+          PO_price: props?.price?.toString(),
+          PO_route_event: props?.route?.eventType,
+          PO_route_type: props?.route?.routeType,
+          PO_outbound: {
+            distance:
+              props?.route?.outbound?.distance?.toString(),
+            duration:
+              props?.route?.outbound?.duration?.toString(),
+            endpoint_address:
+              props?.route?.outbound?.endPoint?.address,
+            startpoint_address:
+              props?.route?.outbound?.startPoint?.address,
+            startpoint_date:
+              props?.route?.outbound?.startPoint?.date,
+            startpoint_time:
+              props?.route?.outbound?.startPoint?.time,
+          },
+          PO_inbound: {
+            distance: props?.route?.inbound?.distance
+              ? props?.route?.inbound?.distance?.toString()
+              : null,
+            duration: props?.route?.inbound?.duration
+              ? props?.route?.inbound?.duration?.toString()
+              : null,
+            endpoint_address: props?.route?.inbound?.endPoint
+              ?.address
+              ? props?.route?.inbound?.endPoint?.address
+              : null,
+            startpoint_address: props?.route?.inbound
+              ?.startPoint?.address
+              ? props?.route?.inbound?.startPoint?.address
+              : null,
+            startpoint_date: props?.route?.inbound?.startPoint
+              ?.date
+              ? props?.route?.inbound?.startPoint?.date
+              : null,
+            startpoint_time: props?.route?.inbound?.startPoint
+              ?.time
+              ? props?.route?.inbound?.startPoint?.time
+              : null,
+          },
+          PO_file: mediaID, // Use the media ID from the first step
+        },
+      });
+
+      // Handle the response from the offer update
+      if (updateRes.status === 200) {
+        console.log('Offer updated successfully');
+        // Trigger the PDF download for the client
+        const blobURL = URL.createObjectURL(pdfBlob);
+        const tempLink = document.createElement('a');
+        tempLink.href = blobURL;
+        tempLink.setAttribute('download', `price_offer_${offerId}.pdf`);
+        document.body.appendChild(tempLink);
+        tempLink.click();
+        document.body.removeChild(tempLink);
+        URL.revokeObjectURL(blobURL);
+
+      } else {
+        console.error('Failed to update the offer');
+      }
+    } catch (error) {
+      console.error('An error occurred while uploading PDF and updating offer:', error);
+      throw error; // Re-throw the error if you want to handle it further up the call stack
+    }
+  };
+
+
+  // This function sends the price offer email with the attached PDF.
+  const sendPriceOfferEmail = async (userDetails, routeDetails, carType, price, offerId, pdfBlob) => {
+    try {
+      // Ensure that pdfBlob is a Blob.
+      console.log('pdfBlob');
+      console.log(pdfBlob);
+      console.log(typeof pdfBlob);
+      if (!(pdfBlob instanceof Blob)) {
+        throw new TypeError("The pdfBlob parameter is not a Blob.");
+      }
+
+      // Convert the PDF blob to a base64 string
+      const reader = new FileReader();
+
+      return new Promise((resolve, reject) => {
+        reader.readAsDataURL(pdfBlob);
+
+        reader.onloadend = async () => {
+          const base64data = reader.result;
+
+          try {
+            // API call to send the price suggestion email with the PDF attached
+            const response = await axios.post(`/api/sendPriceSuggestion`, {
+              userDetails: userDetails,
+              pdfBase64: base64data,
+              route: routeDetails,
+              price: price,
+              carType: carType,
+              offerId: offerId,
+            });
+
+            resolve(response.data);
+            console.log('response.data');
+            console.log(response.data);
+          } catch (error) {
+            console.error('Error sending price offer email:', error);
+            reject(error);
+          }
+        };
+
+        reader.onerror = (error) => {
+          console.error('Error converting PDF blob to base64:', error);
+          reject(error);
+        };
+      });
+    } catch (error) {
+      console.error('An error occurred in sendPriceOfferEmail:', error);
+      throw error;
+    }
+  };
+
+
+
+
 
   return (
     <>
@@ -447,29 +639,6 @@ const RouteAndDetails = (props) => {
           </form>
         </div>
       </div>
-      {isVerifying && (
-        <div className={styles.verificationPopupWrapper}>
-          <div className={styles.verificationPopup}>
-            <i
-              className={styles.closeButton}
-              onClick={() => setIsVerifying(false)}
-            >
-              <AiFillCloseCircle />
-            </i>
-            <p>הזן את קוד האימות שנשלח אליך במייל</p>
-            <div className={styles.inpAndBtn}>
-              <input
-                type="number"
-                pattern="[0-9]*"
-                inputMode='numeric'    
-                value={inputVerificationCode}
-                onChange={(e) => setInputVerificationCode(e.target.value)}
-              />
-              <button onClick={handleVerify}>אמת</button>
-            </div>
-          </div>
-        </div>
-      )}
     </>
   );
 };

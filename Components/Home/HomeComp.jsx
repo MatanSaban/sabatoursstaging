@@ -16,6 +16,7 @@ import RegionsComp from "./RegionsComp";
 import LogoLoader from "../Misc/Loading";
 import { LoadScript } from "@react-google-maps/api";
 import { isMobile } from "react-device-detect";
+import ContactWays from "../Misc/ContactWays/ContactWays";
 
 
 const libraries = ["places"]; // define the libraries needed
@@ -160,52 +161,9 @@ const HomeComp = (props) => {
           <h2 className={styles.sectionTitle}>
             צריכים עזרה בבחירת רכב?
             <br />
-            <span className={styles.markedText}>דברו איתנו!</span>
+            <span className={styles.markedText}>אפשרויות ליצירת קשר</span>
           </h2>
-          <div className={styles.contactWays}>
-            <div className={styles.contactWay}>
-              <div className={styles.textArea}>
-                <h3 className={styles.contactWayTitle}>
-                  בטלפון
-                </h3>
-                <Link className={styles.contactWayLink} href={"tel:0527984133"} target="_blank">
-                  <h4 className={styles.contactWayActionButton}>0527984133</h4>
-                  <span className={styles.contactWayActionButton}>התקשר/י עכשיו</span>
-                </Link>
-              </div>
-              <div className={`${styles.iconArea} ${styles.phone}`}>
-                <BsTelephone />
-              </div>
-            </div>
-            <div className={styles.contactWay}>
-              <div className={styles.textArea}>
-                <h3 className={styles.contactWayTitle}>
-                  בוואטסאפ
-                </h3>
-                <Link className={styles.contactWayLink} href={"https://wa.me/+972527984133"} target="_blank">
-                  <h4 className={styles.contactWayActionButton}>0527984133</h4>
-                  <span className={styles.contactWayActionButton}>שלח/י הודעה</span>
-                </Link>
-              </div>
-              <div className={`${styles.iconArea} ${styles.whatsapp}`}>
-                <BsWhatsapp />
-              </div>
-            </div>
-            <div className={styles.contactWay}>
-              <div className={styles.textArea}>
-                <h3 className={styles.contactWayTitle}>
-                  בטופס
-                </h3>
-                <Link className={styles.contactWayLink} href={"tel:0527984133"} >
-                  <h4 className={styles.contactWayActionButton}>מילוי ושליחת טופס אונליין</h4>
-                  <span className={styles.contactWayActionButton}>השאר/י פנייה</span>
-                </Link>
-              </div>
-              <div className={`${styles.iconArea} ${styles.form}`}>
-                <BsEnvelopeAt />
-              </div>
-            </div>
-          </div>
+          <ContactWays/>
 
         </section>
       </div>

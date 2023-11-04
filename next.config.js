@@ -9,7 +9,7 @@ const nextConfig = {
   env: {
     GOOGLE_MAPS_API_KEY: "AIzaSyDqXMWSWoY417DNKERQid8teEuoxBjMLLo",
     DATA_SOURCE: "https://saban-tours.ussl.co.il/wp-json/wp/v2",
-    WORDPRESSTOKEN: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsIm5hbWUiOiJTdXBlckFkbWluU2FiYW4iLCJpYXQiOjE2OTc5MTY3MjcsImV4cCI6MTg1NTU5NjcyN30.KOfEBQ0jAZlf_rL7svd-JWCym0_V2DTch9EK0u7TP70",
+    WORDPRESSTOKEN: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsIm5hbWUiOiJTdXBlckFkbWluU2FiYW4iLCJpYXQiOjE2OTg5NjY3MzAsImV4cCI6MTg1NjY0NjczMH0.JK2T-hU0Ij3DgNuXSG9zxWRlntMfxfUiy2f1fXk5ryo",
     SUMIT_COMPANYID: "283489399",
     SUMIT_APIKEY: "DewD8H4e3DCDlv15P7tCyp8tf2LZe9c07IFfiAc0GlfYadNDVK",
     SUMIT_CHARGE_ENDPOINT: "https://api.sumit.co.il/billing/payments/charge/",
