@@ -85,7 +85,7 @@ export default async function handler(req, res) {
         // Set up email data for the office
         const mailToOffice = {
             from: "matansaban28@gmail.com",
-            to: "office@sabantours.co.il",
+            to: "office@sabantours.co.il, sabantours@gmail.com",
             subject: "הצעת מחיר חדשה הופקה",
             html: `הצעת מחיר חדשה הופקה באתר! <br/> שם פרטי: ${body.userDetails.firstname} <br/> שם משפחה: ${body.userDetails.lastname} <br/> טלפון: ${body.userDetails.phone} <br/> אימייל: ${body.userDetails.email}`,
             attachments: attachments

@@ -19,6 +19,7 @@ const SinglePost = ({ pageData, spType }) => {
                     </title>
                     <meta property="og:title" content={returnTitle(false, pageData?.acf?.title, spType)}/>
                     <meta property="og:description" name="description" content={metaContent(spType, pageData?.acf?.title)} />
+                    <meta name="description" content={metaContent(spType, pageData?.acf?.title)} />
                     <meta property='og:type' content='article' />
                     <meta property='og:url' content={`https://saban-tours.co.il/${slugSpType}/${pageData?.slug}`} />
                     <link rel="canonical" href={`https://saban-tours.co.il/${slugSpType}/${pageData?.slug}`}/>
