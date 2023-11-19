@@ -1,58 +1,39 @@
 import React from "react";
 import HomeComp from "../Components/Home/HomeComp.jsx";
 import axios from "axios";
-import logo from '../public/media/faviconSquare.png'
+import logo from "../public/media/faviconSquare.png";
 import { updateRegionImages } from "../utils/functions.js";
+import {
+  getFetchRegions,
+  getFetchedCities,
+  getFetchedHomePage,
+  getFetchedServices,
+} from "../utils/home.js";
 
 export async function getStaticProps(context) {
   try {
-    const WORDPRESSTOKEN = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsIm5hbWUiOiJzYWJhbnRvdV9hZG1pbiIsImlhdCI6MTY5Nzg5ODY2MiwiZXhwIjoxODU1NTc4NjYyfQ.oCkMkngRArnT1BwRs6bExWcQ-jsDncZla0SmHMIu588';  // Replace with your actual token
-    const DATA_SOURCE = 'https://saban-tours.ussl.co.il/wp-json/wp/v2';  // Replace with your actual API endpoint
+    const WORDPRESSTOKEN =
+      "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsIm5hbWUiOiJzYWJhbnRvdV9hZG1pbiIsImlhdCI6MTY5Nzg5ODY2MiwiZXhwIjoxODU1NTc4NjYyfQ.oCkMkngRArnT1BwRs6bExWcQ-jsDncZla0SmHMIu588"; // Replace with your actual token
+    const DATA_SOURCE = "https://saban-tours.ussl.co.il/wp-json/wp/v2"; // Replace with your actual API endpoint
 
     // Fetch regions
-    const regionRes = await axios.get(
-      `${DATA_SOURCE}/region?per_page=100`,
-      {
-        headers: {
-          'Authorization': WORDPRESSTOKEN,
-        }
-      }
-    );
-    const fetchedRegions = regionRes.data;
+    const fetchedRegions = await getFetchRegions();
 
     // Fetch cities
-    const citiesRes = await axios.get(
-      `${DATA_SOURCE}/service_areas?per_page=100`,
-      {
-        headers: {
-          'Authorization': WORDPRESSTOKEN,
-        }
-      }
-    );
-    const fetchedCities = citiesRes.data;
+    const fetchedCities = await getFetchedCities();
 
     // Fetch services
-    const servicesRes = await axios.get(
-      `${DATA_SOURCE}/transportation_types?per_page=100`,
-      {
-        headers: {
-          'Authorization': WORDPRESSTOKEN,
-        }
-      }
-    );
-    let fetchedServices = servicesRes.data;
+    let fetchedServices = await getFetchedServices();
 
     // Fetch media
     const mediaPromises = fetchedServices.map((service) => {
       const mainImageId = service?.acf?.feat_image;
       if (mainImageId != null) {
-        return axios.get(`${DATA_SOURCE}/media/${mainImageId}`,
-          {
-            headers: {
-              'Authorization': WORDPRESSTOKEN,
-            }
-          }
-        );
+        return axios.get(`${DATA_SOURCE}/media/${mainImageId}`, {
+          headers: {
+            Authorization: WORDPRESSTOKEN,
+          },
+        });
       }
     });
 
@@ -67,7 +48,9 @@ export async function getStaticProps(context) {
     // });
 
     const mediaResponses = await Promise.all(mediaPromises);
-    const serializableMediaResponses = mediaResponses.map(response => response?.data);
+    const serializableMediaResponses = mediaResponses.map(
+      (response) => response?.data
+    );
 
     fetchedServices = fetchedServices.map((service, index) => {
       return {
@@ -77,18 +60,13 @@ export async function getStaticProps(context) {
     });
 
     // Fetch homepage data
-    const homepageRes = await axios.get(
-      `${DATA_SOURCE}/pages?slug=home&acf_format=standard`,
-      {
-        headers: {
-          'Authorization': WORDPRESSTOKEN,
-        }
-      }
-    );
+    const homepageRes = await getFetchedHomePage();
+
     const fetchedHomepage = homepageRes.data[0];
 
-    const updatedRegions = await Promise.all(fetchedRegions.map(updateRegionImages));
-
+    const updatedRegions = await Promise.all(
+      fetchedRegions.map(updateRegionImages)
+    );
 
     return {
       props: {
@@ -96,18 +74,19 @@ export async function getStaticProps(context) {
           regions: updatedRegions,
           cities: fetchedCities,
           services: fetchedServices,
-          media: serializableMediaResponses,  // Now should be serializable
+          media: serializableMediaResponses, // Now should be serializable
           homepageData: fetchedHomepage,
         },
-      }, revalidate: 60
+      },
+      revalidate: 60,
     };
   } catch (error) {
     console.error("An error occurred:", error);
     return {
       props: {
-        ...initialData
-      }, 
-      revalidate: 60
+        ...initialData,
+      },
+      revalidate: 60,
     };
   }
 }
@@ -121,7 +100,7 @@ export async function getStaticProps(context) {
 //           data: { hello: "world" },
 //           // icon: logo.src
 //         })
-  
+
 //         notification.addEventListener("show", e => {
 //           console.log("e")
 //           console.log()
@@ -130,7 +109,6 @@ export async function getStaticProps(context) {
 //     })
 //   }
 // }
-
 
 const Home = (props) => {
   return (
