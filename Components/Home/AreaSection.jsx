@@ -1,10 +1,22 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import styles from "./homeComp.module.scss";
 import { isMobile } from "react-device-detect";
 import RegionsComp from "./RegionsComp";
+import { getFetchRegions, getFetchedCities } from "../../utils/home";
 
 const AreaSection = (props) => {
+  const [regions, getRegions] = useState([]);
+  const [cities, getCities] = useState([]);
+  useEffect(() => {
+    const fetchedRegions = getFetchRegions();
+    getRegions(fetchedRegions);
+    // Fetch cities
+    const fetchedCities = getFetchedCities();
+    getCities(fetchedCities);
+  }, []);
+  // Fetch regions
+
   return (
     <section className={`${styles.whereAreWe} ${styles.section}`}>
       <Image
@@ -14,10 +26,8 @@ const AreaSection = (props) => {
           ]
         }
         alt="background image"
-        style={{ zIndex: -1 }}
-        layout="fill"
-        objectFit="cover"
-        objectPosition="center"
+        style={{ zIndex: -1, objectFit: "cover", objectPosition: "center" }}
+        fill
       />
       <div className={styles.sectionWhiteGradient}></div>
       <h2
@@ -29,8 +39,8 @@ const AreaSection = (props) => {
 
       <RegionsComp
         windowWidth={props?.windowWidth}
-        regions={props?.regions}
-        cities={props?.cities}
+        regions={regions}
+        cities={cities}
       />
     </section>
   );

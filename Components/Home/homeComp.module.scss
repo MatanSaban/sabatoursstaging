@@ -1,7 +1,6 @@
 @import "../../styles/globals.scss"; // Import the _variables.scss file
 @import "../../styles/variables.scss"; // Import the _variables.scss file
 
-
 .tryush {
   position: fixed;
   left: 50%;
@@ -17,12 +16,12 @@
   justify-content: center;
 }
 
-
 section.section {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  position: static;
 }
 .homeWrapper {
   overflow-x: hidden;
@@ -341,7 +340,6 @@ section.section {
     .areas {
       flex-direction: column;
       .area {
-  
         .cities {
           grid-template-columns: repeat(2, 1fr);
         }
@@ -370,21 +368,20 @@ section.section {
         margin: 0 -50% 20px auto;
         width: 60vw;
         transform: translateX(-105%);
-          .iconArea {
-            transform: translateX(-50%) !important;
-            svg {
-              opacity: 0.3 !important;
-              width: 75%;
-              stroke-width: 0.5px;
-              stroke: #fff;
-            }
+        .iconArea {
+          transform: translateX(-50%) !important;
+          svg {
+            opacity: 0.3 !important;
+            width: 75%;
+            stroke-width: 0.5px;
+            stroke: #fff;
           }
+        }
       }
     }
   }
   section.section .sectionTitle {
     font-size: 32px;
     line-height: 40px;
-
   }
 }

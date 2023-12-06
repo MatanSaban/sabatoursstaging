@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styles from "./homeComp.module.scss";
 // import { FaRoute } from "react-icons/fa";
 // import Logo from "../../public/media/SabanToursLogo.svg";
@@ -29,6 +29,7 @@ const libraries = ["places"]; // define the libraries needed
 
 const HomeComp = (props) => {
   // const [pageData, setPageData] = useState();
+  const priceFormRef = useRef();
 
   // useEffect(() => {
   //   if (props?.homepageData) {
@@ -69,51 +70,43 @@ const HomeComp = (props) => {
   // };
 
   return (
-    <LoadScript
-      googleMapsApiKey={process.env.GOOGLE_MAPS_API_KEY}
-      libraries={libraries}
-      loadingElement={
-        <LogoLoader
-          percentage={loadingPercentage}
-          showPercentage={false}
-          show={false}
-        />
-      }
-    >
-      <div className={styles.homeWrapper}>
-        <HeroSection homepageData={props?.homepageData} />
-        <FormSection
-          handlePopup={props.handlePopup}
-          sendDataToApp={props?.sendDataToApp}
-          userRoute={props?.userRoute}
-          windowWidth={props?.windowWidth}
+    <div className={styles.homeWrapper}>
+      <HeroSection
+        homepageData={props?.homepageData}
+        priceFormRef={priceFormRef}
+      />
+      <FormSection
+        handlePopup={props.handlePopup}
+        sendDataToApp={props?.sendDataToApp}
+        userRoute={props?.userRoute}
+        windowWidth={props?.windowWidth}
+        homepageData={props?.homepageData}
+        priceFormRef={priceFormRef}
+      />
+      {/* style={{ backgroundImage: `url(${props?.homepageData?.acf?.section_service_areas?.desktop_bg_image})` }} */}
+      {props?.regions && (
+        <AreaSection
           homepageData={props?.homepageData}
+          windowWidth={props?.windowWidth}
+          regions={props?.regions}
+          cities={props?.cities}
         />
-        {/* style={{ backgroundImage: `url(${props?.homepageData?.acf?.section_service_areas?.desktop_bg_image})` }} */}
-        {props?.regions && (
-          <AreaSection
-            homepageData={props?.homepageData}
-            windowWidth={props?.windowWidth}
-            regions={props?.regions}
-            cities={props?.cities}
-          />
-        )}
-        {servicesToDisplay?.length && (
-          <DriveTypesSection servicesToDisplay={servicesToDisplay} />
-        )}
+      )}
+      {servicesToDisplay?.length && (
+        <DriveTypesSection servicesToDisplay={servicesToDisplay} />
+      )}
 
-        {/* <section className={`${styles.gallery} ${styles.section}`}></section> */}
-        {/* this will be filled later when i'll create some photos of vehicles Saban Tours can give to customers. */}
-        <section className={`${styles.contact} ${styles.section}`}>
-          <h2 className={styles.sectionTitle}>
-            צריכים עזרה בבחירת רכב?
-            <br />
-            <span className={styles.markedText}>אפשרויות ליצירת קשר</span>
-          </h2>
-          <ContactWays />
-        </section>
-      </div>
-    </LoadScript>
+      {/* <section className={`${styles.gallery} ${styles.section}`}></section> */}
+      {/* this will be filled later when i'll create some photos of vehicles Saban Tours can give to customers. */}
+      <section className={`${styles.contact} ${styles.section}`}>
+        <h2 className={styles.sectionTitle}>
+          צריכים עזרה בבחירת רכב?
+          <br />
+          <span className={styles.markedText}>אפשרויות ליצירת קשר</span>
+        </h2>
+        <ContactWays />
+      </section>
+    </div>
   );
 };
 
