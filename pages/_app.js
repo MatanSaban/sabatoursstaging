@@ -166,11 +166,11 @@ function MyApp({ Component, pageProps }) {
         >
           <Component {...pageProps} />
         </PageWrapper>
-        <Footer
+        {/* <Footer
           scrolling={scrolling}
           scrollTopVal={scrollTopVal}
           windowWidth={windowWidth}
-        />
+        /> */}
       </div>
     </>
   );

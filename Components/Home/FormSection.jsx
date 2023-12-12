@@ -47,19 +47,17 @@ const FormSection = (props) => {
         />
         <h2
           dangerouslySetInnerHTML={{
-            __html: props?.homepageData?.acf?.section_nicetomeet?.title,
+            __html: props?.homepageData?.section_nicetomeet?.title,
           }}
         />
-        <h5>{props?.homepageData?.acf?.section_nicetomeet?.sub_title}</h5>
+        <h5>{props?.homepageData?.section_nicetomeet?.sub_title}</h5>
         <p
           className={styles.centeredText}
           dangerouslySetInnerHTML={{
-            __html: props?.homepageData?.acf?.section_nicetomeet?.text,
+            __html: props?.homepageData?.section_nicetomeet?.text,
           }}
         />
-        <h3>
-          {props?.homepageData?.acf?.section_nicetomeet?.form_start_title}
-        </h3>
+        <h3>{props?.homepageData?.section_nicetomeet?.form_start_title}</h3>
 
         <PriceForm
           handlePopup={props.handlePopup}

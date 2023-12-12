@@ -20,12 +20,13 @@ const HeroSection = (props) => {
       });
     }
   };
+  console.log(props?.homepageData?.section_hero?.h1_title);
   return (
     <section className={`${styles.section} ${styles.hero}`}>
       <Image
         alt="hero image"
         src={
-          props?.homepageData?.acf?.section_hero[
+          props?.homepageData?.section_hero[
             isMobile ? "hero_image_mobile" : "hero_image_desktop"
           ]
         }
@@ -39,21 +40,21 @@ const HeroSection = (props) => {
       <Image
         className={styles.logo}
         src={Logo}
-        height={350}
-        width={350}
+        height={100}
+        width={450}
         alt="לוגו של סבן טורס"
         priority={true}
       />
       <h1
         dangerouslySetInnerHTML={{
-          __html: props?.homepageData?.acf?.section_hero?.h1_title,
+          __html: props?.homepageData?.section_hero?.h1_title,
         }}
       />
       <button
         onClick={() => scrollToEl(props.priceFormRef)}
         className={`${styles.actionButton} ${styles.pinkButton}`}
       >
-        <span>{props?.homepageData?.acf?.section_hero?.CTA_button}</span>
+        <span>{props?.homepageData?.section_hero?.CTA_button}</span>
         <FaRoute />
       </button>
     </section>
