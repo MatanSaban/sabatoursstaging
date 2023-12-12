@@ -6,38 +6,55 @@ import { isMobile } from "react-device-detect";
 import Logo from "../../public/media/SabanToursLogo.svg";
 
 const HeroSection = (props) => {
+  const scrollToEl = (ref) => {
+    const element = ref.current;
+    const topNumber = isMobile ? 150 : 250;
+    console.log(element);
+    if (element) {
+      console.log("there is element");
+      const rect = element.getBoundingClientRect();
+      const absoluteTop = window.pageYOffset + rect.top;
+      window.scrollTo({
+        top: absoluteTop - topNumber,
+        behavior: "smooth",
+      });
+    }
+  };
+  console.log(props?.homepageData?.section_hero?.h1_title);
   return (
     <section className={`${styles.section} ${styles.hero}`}>
       <Image
+        alt="hero image"
         src={
-          props?.homepageData?.acf?.section_hero[
+          props?.homepageData?.section_hero[
             isMobile ? "hero_image_mobile" : "hero_image_desktop"
           ]
         }
-        alt="hero image"
-        style={{ zIndex: -1 }}
-        layout="fill"
-        objectFit="cover"
-        objectPosition="center"
+        style={{ zIndex: -1, objectFit: "cover", layout: "blur" }}
+        fill
+        sizes="100vw"
+        loading="lazy"
+        quality={100}
+        blurDataURL={props?.bgImage}
       />
       <Image
         className={styles.logo}
         src={Logo}
-        height={350}
-        width={350}
+        height={100}
+        width={450}
         alt="לוגו של סבן טורס"
         priority={true}
       />
       <h1
         dangerouslySetInnerHTML={{
-          __html: props?.homepageData?.acf?.section_hero?.h1_title,
+          __html: props?.homepageData?.section_hero?.h1_title,
         }}
       />
       <button
-        onClick={() => scrollToEl(priceFormRef)}
+        onClick={() => scrollToEl(props.priceFormRef)}
         className={`${styles.actionButton} ${styles.pinkButton}`}
       >
-        <span>{props?.homepageData?.acf?.section_hero?.CTA_button}</span>
+        <span>{props?.homepageData?.section_hero?.CTA_button}</span>
         <FaRoute />
       </button>
     </section>

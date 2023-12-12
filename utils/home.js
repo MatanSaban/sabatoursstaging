@@ -54,7 +54,7 @@ export const getMainImageId = async (mainImageId) => {
 //   });
 
 export const getFetchedHomePage = async () =>
-  axios.get(`${DATA_SOURCE}/pages?slug=home&acf_format=standard`, {
+  axios.get(`${DATA_SOURCE}/pages?slug=home&_fields=acf&acf_format=standard`, {
     headers: {
       Authorization: WORDPRESSTOKEN,
     },

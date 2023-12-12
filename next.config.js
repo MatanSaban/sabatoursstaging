@@ -3,6 +3,7 @@
 const nextConfig = {
   reactStrictMode: false,
   swcMinify: true,
+  compress: true,
   // devIndicators: {
   //   buildActivity: false,
   // },
@@ -18,8 +19,20 @@ const nextConfig = {
     SITE_URL: "https://saban-tours.co.il",
   },
   images: {
-    remotePatterns: [{ protocol: "https", hostname: "saban-tours.ussl.co.il" }],
+    formats: ["image/avif", "image/webp"],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "saban-tours.ussl.co.il",
+        port: "",
+        pathname: "/wp-content/uploads/**",
+      },
+    ],
   },
 };
 
-module.exports = nextConfig;
+const withBundleAnalyzer = require("@next/bundle-analyzer")({
+  enabled: process.env.ANALYZE === "true",
+});
+
+module.exports = withBundleAnalyzer(nextConfig);

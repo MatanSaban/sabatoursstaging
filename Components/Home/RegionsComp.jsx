@@ -34,6 +34,14 @@ const RegionsComp = ({ regions, cities, ...props }) => {
                 backgroundImage: `url(${region?.acf?.bg_image_desktop})`,
               }}
             >
+              {/* <Image
+                src={region?.acf?.bg_image_desktop}
+                alt="hero image"
+                style={{ zIndex: -1 }}
+                layout="fill"
+                objectFit="cover"
+                objectPosition="center"
+              /> */}
               <div className={styles.cover}></div>
               <h2 className={styles.regionName}>{region.name}</h2>
               <ul>
@@ -75,10 +83,12 @@ const RegionsComp = ({ regions, cities, ...props }) => {
                   <Image
                     src={region?.acf?.bg_image_mobile}
                     alt="hero image"
-                    style={{ zIndex: -1 }}
-                    layout="fill"
-                    objectFit="cover"
-                    objectPosition="center"
+                    style={{
+                      zIndex: -1,
+                      objectFit: "cover",
+                      objectPosition: "center",
+                    }}
+                    fill
                   />
                   <div className={styles.cover}></div>
                   <h2 className={styles.regionName}>{region.name}</h2>

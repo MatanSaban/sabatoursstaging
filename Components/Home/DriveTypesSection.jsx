@@ -5,6 +5,7 @@ import Link from "next/link";
 import { decodeHTMLEntities } from "../../utils/functions";
 
 const DriveTypesSection = ({ servicesToDisplay }) => {
+  console.log(servicesToDisplay);
   return (
     <section className={`${styles.whereWeGo} ${styles.section}`}>
       <h2 className={styles.sectionTitle}>
@@ -23,6 +24,7 @@ const DriveTypesSection = ({ servicesToDisplay }) => {
                 width={300}
                 height={200}
                 alt="service image"
+                priority={true}
               />
             )}
             <button className={styles.serviceButton}>

@@ -9,10 +9,15 @@ const { v4: uuidv4 } = require("uuid");
 import { format } from "date-fns";
 import { BsCalendar2Event } from "react-icons/bs";
 import FormFooter from "./FormFooter";
-import { eventTypes, formatDateToString, formatDuration, isMobile, showDistance } from "../../utils/functions";
+import {
+  eventTypes,
+  formatDateToString,
+  formatDuration,
+  isMobile,
+  showDistance,
+} from "../../utils/functions";
 
 const PriceForm = (props) => {
-
   const today = new Date();
 
   const outboundAutocompleteRef = useRef(null);
@@ -35,7 +40,6 @@ const PriceForm = (props) => {
   });
 
   const [selectedOption, setSelectedOption] = useState("OneWay");
-  
 
   const [route, setRoute] = useState({
     inbound: {
@@ -130,7 +134,6 @@ const PriceForm = (props) => {
       }
     });
 
-
     // To update the state with the new stops array, you can call `setRoute`
     setRoute((prevRoute) => ({
       ...prevRoute,
@@ -140,8 +143,6 @@ const PriceForm = (props) => {
       },
     }));
   };
-
-  
 
   const handleFields = (e) => {
     const name = e.target.name;
@@ -224,7 +225,7 @@ const PriceForm = (props) => {
       },
     }));
     if (time) {
-      ref?.current?.focus(); 
+      ref?.current?.focus();
     }
   };
 
@@ -232,7 +233,6 @@ const PriceForm = (props) => {
     const parent = e.target.attributes.parent.value;
     const way = e.target.closest(".way").id;
     const value = e.target.value;
-
   };
 
   const isPointFilledCorrectly = (point) => {
@@ -266,8 +266,6 @@ const PriceForm = (props) => {
       return isWayFilledCorrectly(route.outbound);
     }
   };
-
- 
 
   // Function to calculate distances and durations between consecutive addresses
   const calculateRouteInformation = async (addresses, direction, datetime) => {
@@ -372,12 +370,12 @@ const PriceForm = (props) => {
 
   const handlePointSelect = (place, direction, point, indexOfStop, ref) => {
     let address = place?.formatted_address;
-    address = `${place?.name}, ${place?.vicinity}`
+    address = `${place?.name}, ${place?.vicinity}`;
     const latitude = place?.geometry?.location?.lat();
     const longitude = place?.geometry?.location?.lng();
     const city = extractCity(place?.address_components);
 
-    if (point === "endPoint" ) {
+    if (point === "endPoint") {
       ref.current.state.focused = true;
       ref.current.state.open = true;
     }
@@ -643,7 +641,6 @@ const PriceForm = (props) => {
 
   useEffect(() => {}, [route?.routeType]);
 
-
   const [stage, setStage] = useState(1);
 
   const handleStages = (e, action) => {
@@ -765,7 +762,7 @@ const PriceForm = (props) => {
               stage={stage}
               handlePopup={props?.handlePopup}
               eventTypes={eventTypes}
-              canProceed={canProceed}  
+              canProceed={canProceed}
               formatDateToString={formatDateToString}
             />
           ))}
@@ -806,7 +803,7 @@ const PriceForm = (props) => {
             stage={stage}
             handlePopup={props?.handlePopup}
             eventTypes={eventTypes}
-            canProceed={canProceed} 
+            canProceed={canProceed}
             formatDateToString={formatDateToString}
           />
         )}
@@ -840,22 +837,22 @@ const PriceForm = (props) => {
             calculateRouteInformation={calculateRouteInformation}
             calculateMinTime={calculateMinTime}
           />}  */}
-        { props?.windowWidth > 768 &&
-        <>
-        <hr />
-          <FormFooter
-          handlePopup={props?.handlePopup}
-          setRoute={setRoute}
-          route={route}
-          eventTypes={eventTypes}
-          canProceed={canProceed}
-          formatDuration={formatDuration}
-          showDistance={showDistance}
-          formatDateToString={formatDateToString}
-          sendDataToApp={props?.sendDataToApp} 
-          />
-        </>
-        }
+        {props?.windowWidth > 768 && (
+          <>
+            <hr />
+            <FormFooter
+              handlePopup={props?.handlePopup}
+              setRoute={setRoute}
+              route={route}
+              eventTypes={eventTypes}
+              canProceed={canProceed}
+              formatDuration={formatDuration}
+              showDistance={showDistance}
+              formatDateToString={formatDateToString}
+              sendDataToApp={props?.sendDataToApp}
+            />
+          </>
+        )}
       </form>
     </div>
   );
