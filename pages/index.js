@@ -140,7 +140,7 @@ const Home = (props) => {
         Math.floor(props?.initialData?.services?.length / 3) * 3
       );
     } else {
-      return props?.services?.slice(
+      return props?.initialData?.services?.slice(
         0,
         Math.floor(props?.initialData?.services?.length / 2) * 2
       );
